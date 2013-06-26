@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import DB.DB;
 import java.awt.Color;
 import java.awt.image.ImageObserver;
 import java.util.Arrays;
