@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
+    <Property name="title" type="java.lang.String" value="Neuer D&#xfc;nger"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="LblName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="LblStick" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="LblPhos" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="LblKalium" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="LblMag" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="SpinMag" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="LblMagE" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="SpinStick" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="LblStickE" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="TxtName" min="-2" pref="140" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="SpinPhos" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="LblPhosE" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="SpinKalium" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="LblKaliumE" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="BtnOk" min="-2" pref="129" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="BtnAbbr" min="-2" pref="129" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LblName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TxtName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LblStick" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SpinStick" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LblStickE" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LblPhos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SpinPhos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LblPhosE" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LblKalium" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SpinKalium" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LblKaliumE" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LblMag" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SpinMag" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LblMagE" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="BtnOk" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BtnAbbr" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="LblName">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Produktname:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TxtName">
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblStick">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Stickstoff:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SpinStick">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblStickE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="mg"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblPhos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Phosphat:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SpinPhos">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblPhosE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="mg"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblKalium">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kalium:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SpinKalium">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblKaliumE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="mg"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblMag">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Magnesium:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="SpinMag">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LblMagE">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="mg"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnOk">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="OK"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnOkActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="BtnAbbr">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Abbrechen"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAbbrActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>
