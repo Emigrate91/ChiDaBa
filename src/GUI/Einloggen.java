@@ -1,5 +1,4 @@
 package GUI;
-// github test
 import java.awt.Color;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
