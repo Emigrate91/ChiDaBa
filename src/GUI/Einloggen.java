@@ -1,5 +1,9 @@
 package GUI;
+
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -281,7 +285,7 @@ public class Einloggen extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -304,8 +308,8 @@ public class Einloggen extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Einloggen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the dialog */
+        
+        /* Create and display the dialog */   
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Einloggen dialog = new Einloggen(new javax.swing.JFrame(), true);

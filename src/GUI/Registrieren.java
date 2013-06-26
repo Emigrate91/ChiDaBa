@@ -192,47 +192,51 @@ public class Registrieren extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnAbbrActionPerformed
 
     private void BtnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegActionPerformed
-    boolean empty=false;
-    this.LblName.setForeground(Color.black);
-    this.LblPw.setForeground(Color.black);
-    this.LblSecPw.setForeground(Color.black);
+        boolean empty=false;
+        this.LblName.setForeground(Color.black);
+        this.LblPw.setForeground(Color.black);
+        this.LblSecPw.setForeground(Color.black);
     
-    
-    if(this.TxtName.getText().isEmpty())
-        {
-        this.LblName.setForeground(Color.red);
-        empty=true;
+        if(this.TxtName.getText().isEmpty()) {
+            this.LblName.setForeground(Color.red);
+            empty=true;
         }
     
-    if(this.TxtPw.getPassword().length==0)
-        {
-        this.LblPw.setForeground(Color.red);
-        empty=true;
+        if(this.TxtPw.getPassword().length==0) {
+            this.LblPw.setForeground(Color.red);
+            empty=true;
         }
  
-    if(this.TxtPwSec.getPassword().length==0)
-        {
-        this.LblSecPw.setForeground(Color.red);
-        empty=true;
+        if(this.TxtPwSec.getPassword().length==0) {
+            this.LblSecPw.setForeground(Color.red);
+            empty=true;
         }    
     
-    if(empty)
-        {
-        JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus", "Error", JOptionPane.ERROR_MESSAGE);
+        if(empty) {
+            JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus", "Error", JOptionPane.ERROR_MESSAGE);
         }
     
-    if(!Arrays.equals(this.TxtPwSec.getPassword(),this.TxtPw.getPassword()))
-        {
-        JOptionPane.showMessageDialog(this, "Passwörter stimmen nicht überein", "Error", JOptionPane.ERROR_MESSAGE);
-        this.LblSecPw.setForeground(Color.red);
-        this.LblPw.setForeground(Color.red);
+        if(!Arrays.equals(this.TxtPwSec.getPassword(),this.TxtPw.getPassword())) {
+            JOptionPane.showMessageDialog(this, "Passwörter stimmen nicht überein", "Error", JOptionPane.ERROR_MESSAGE);
+            this.LblSecPw.setForeground(Color.red);
+            this.LblPw.setForeground(Color.red);
         }   
     
-    if(!empty)
-        {
-        this.dispose();
-        this.parentForm.ChilliFrame=null; // Parentform has no child
-        this.parentForm.Callback();
+        if(!empty) {
+            this.dispose();
+            this.parentForm.ChilliFrame=null; // Parentform has no child
+            this.parentForm.Callback();
+            String user = this.TxtName.getText();
+            String pass = this.TxtPwSec.getText();
+        
+            DB neuerUser = new DB();
+        
+            try {
+                neuerUser.InsertIntoBenutzer(user, pass);
+            }
+            catch (Exception e) {
+            //
+            }
         }
     
     }//GEN-LAST:event_BtnRegActionPerformed
