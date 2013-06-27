@@ -231,9 +231,17 @@ public class Registrieren extends javax.swing.JDialog {
             String pass = this.TxtPwSec.getText();
         
             DB neuerUser = new DB();
-        
+            boolean userschonVorhanden = false;
+            
             try {
-                neuerUser.InsertIntoBenutzer(user, pass);
+                neuerUser.UsernameExists(user);
+                userschonVorhanden = neuerUser.getuserExistence();
+                if (userschonVorhanden == false) {
+                    neuerUser.InsertIntoBenutzer(user, pass);
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Diesen Benutzer gibt es bereits!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
             catch (Exception e) {
             //

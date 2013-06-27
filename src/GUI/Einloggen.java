@@ -1,9 +1,7 @@
 package GUI;
 
+import DB.DB;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -222,7 +220,7 @@ public class Einloggen extends javax.swing.JFrame {
     private void BtnAnmeldenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAnmeldenMouseClicked
  
     }//GEN-LAST:event_BtnAnmeldenMouseClicked
-
+ 
     private void BtnAnmeldenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAnmeldenActionPerformed
     boolean empty=false;
     this.Lblname.setForeground(Color.black);
@@ -245,12 +243,31 @@ public class Einloggen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus", "Error", JOptionPane.ERROR_MESSAGE);
         return;
         }
-    
-     this.ChilliFrame = new Chilliliste(this);
-     this.SetEditable(false);
-     this.clear();
-     this.ChilliFrame.setVisible(true);
-     
+     if (!empty) {
+        String username = this.TxtUsername.getText();
+        String pw = this.PwField.getText();
+        boolean userExists = false;
+        try {
+            DB userCheck = new DB();
+            userCheck.CheckLogOn(username);
+            userExists = userCheck.getuserValidity();
+            
+            if (userExists == true) {
+                this.ChilliFrame = new Chilliliste(this);
+                this.SetEditable(false);
+                this.clear();
+                this.ChilliFrame.setVisible(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Diesen Benutzer gibt es nicht!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Die Datenbank ist nicht erreichbar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+     }
      
     }//GEN-LAST:event_BtnAnmeldenActionPerformed
 
