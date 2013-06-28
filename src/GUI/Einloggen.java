@@ -247,9 +247,11 @@ public class Einloggen extends javax.swing.JFrame {
         String username = this.TxtUsername.getText();
         String pw = this.PwField.getText();
         boolean userExists = false;
+        boolean pwCorrect = false;
+        
         try {
             DB userCheck = new DB();
-            userCheck.CheckLogOn(username);
+            userCheck.CheckLogOn(username, pw);
             userExists = userCheck.getuserValidity();
             
             if (userExists == true) {

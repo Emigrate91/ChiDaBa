@@ -119,19 +119,24 @@ public class DB {
     }
     
     
-    public void CheckLogOn(String name) throws Exception {
+    public void CheckLogOn(String name, String pw) throws Exception {
         try{
             con = ConnectDB();
-            pstmt = con.prepareStatement("SELECT * FROM benutzer WHERE username like (?);", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstmt = con.prepareStatement("SELECT * FROM benutzer WHERE username like (?) AND pass like (?);", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstmt.setString(1, name);
+            pstmt.setString(2, pw);
             rslt = pstmt.executeQuery();
-            
         
+            // if Table size is >=1 -> username with this password exist!!!!
+            if(rslt.next()){userValidity = true;}
+            
+            /* //
             while (rslt.next()) {
-                if (rslt.getString(1).equals(name)) {
+                System.out.println(rslt.getString(1));
+                if (rslt.getString(1).equals(name) && rslt.getString(2).equals("test")) {
                 userValidity = true;
                 }
-            }
+            }*/
         }
         catch (Exception e) {
             
