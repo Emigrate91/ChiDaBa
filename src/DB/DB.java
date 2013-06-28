@@ -135,6 +135,7 @@ public class DB {
     for(int i=0;i<column.size();i++)
         {result[i]=column.get(i);}
 
+    this.CloseDBConnection();
     return result;
     }
     

@@ -25,6 +25,7 @@ public class Chilliliste extends javax.swing.JDialog {
         this.parentForm=parent;
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
+        writeTblToTblChilli();
     }
 
     /**
@@ -45,7 +46,6 @@ public class Chilliliste extends javax.swing.JDialog {
         BtnNew = new javax.swing.JButton();
         BtnLogout = new javax.swing.JButton();
         BtnErignisse = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Chilliliste");
@@ -167,13 +167,6 @@ public class Chilliliste extends javax.swing.JDialog {
             }
         });
 
-        jToggleButton1.setText("jToggleButton1");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,8 +178,6 @@ public class Chilliliste extends javax.swing.JDialog {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BtnErignisse, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -197,20 +188,24 @@ public class Chilliliste extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BtnErignisse)
-                    .addComponent(jToggleButton1))
+                .addComponent(BtnErignisse)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   /* 
-    public Object[][] getTblFromDB(){
+
+    public void writeTblToTblChilli() throws Exception{
     DB loadTable = new DB();
-    getTblFromDB()
+    DefaultTableModel model = (DefaultTableModel) TblChilli.getModel();
+   
+    Object[] columnIdentifiers = new Object[model.getColumnCount()];
     
-    }*/
+    for(int i=0;i<model.getColumnCount();i++)
+        {columnIdentifiers[i]=model.getColumnName(i);}
+    
+    model.setDataVector(loadTable.getTblFromDB(), columnIdentifiers);
+    }
     
     
     public boolean AskClosing()
@@ -308,13 +303,6 @@ public class Chilliliste extends javax.swing.JDialog {
     this.CleanClose();
     }//GEN-LAST:event_formWindowClosing
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-            DB loadTable = new DB();
-        try {loadTable.getTblFromDB();} 
-        catch (Exception ex) {Logger.getLogger(Chilliliste.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnErignisse;
@@ -326,6 +314,5 @@ public class Chilliliste extends javax.swing.JDialog {
     private javax.swing.JTable TblChilli;
     private javax.swing.JTextField TxtSuche;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
