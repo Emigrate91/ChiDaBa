@@ -27,7 +27,8 @@ public class DüngerNeu extends javax.swing.JDialog {
         initComponents();
     }
 
-    public void SetInfoView(boolean state)
+    
+    public void SetInfoView(boolean state) 
     {
     this.setTitle("InfoView");
     this.TxtName.setEditable(!state);
@@ -38,6 +39,15 @@ public class DüngerNeu extends javax.swing.JDialog {
     this.BtnAbbr.setText("OK");
     this.BtnOk.setVisible(!state);
     this.InfoViewState=state;
+    }
+    
+    public void SetDuengerData(Duenger duenger)
+    {
+    this.TxtName.setText(duenger.getName());
+    this.SpinKalium.setValue(duenger.getKalium());
+    this.SpinMag.setValue(duenger.getMagnesium());
+    this.SpinPhos.setValue(duenger.getPhosphat());  
+    this.SpinStick.setValue(duenger.getPhosphat());  
     }
     
     /**
@@ -215,9 +225,7 @@ public class DüngerNeu extends javax.swing.JDialog {
         else
             {
             JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        
-        
+            }   
     }//GEN-LAST:event_BtnOkActionPerformed
 
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed

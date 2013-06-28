@@ -140,6 +140,25 @@ public class DB {
     return false;
     }
     
+    public Duenger getDuengerInfo(String name) throws Exception{
+        con = ConnectDB();
+        pstmt = con.prepareStatement("SELECT * FROM duenger WHERE name like (?);");
+        pstmt.setString(1, name);
+        rslt = pstmt.executeQuery();
+        
+        if(rslt.next()){   
+            Duenger d =  new Duenger(rslt.getString(1), rslt.getInt(2), rslt.getInt(3), rslt.getInt(4), rslt.getInt(5));
+            this.CloseDBConnection();
+            return d;
+            }
+        
+        else {
+            this.CloseDBConnection();
+            return null;
+            } 
+
+    }
+    
     public ArrayList getDuengerList() throws Exception{
     con = ConnectDB();
     pstmt = con.prepareStatement("SELECT name FROM duenger ORDER BY name DESC");

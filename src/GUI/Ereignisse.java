@@ -5,10 +5,13 @@
 package GUI;
 
 import DB.DB;
+import DataStructur.Duenger;
 import java.awt.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -367,6 +370,15 @@ public class Ereignisse extends javax.swing.JDialog {
         {
         this.DüngerForm = new DüngerNeu(this);
         this.DüngerForm.SetInfoView(true);
+        
+        DB getDuenger = new DB();
+    
+        try {
+            Duenger d = getDuenger.getDuengerInfo(String.valueOf(CBDuenger.getSelectedItem()));
+            this.DüngerForm.SetDuengerData(d);
+        } 
+        catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
+        
         this.DüngerForm.setVisible(true);
         }
     }//GEN-LAST:event_LblInfMouseClicked
