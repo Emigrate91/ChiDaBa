@@ -127,7 +127,7 @@ public class DB {
             pstmt.setString(2, pw);
             rslt = pstmt.executeQuery();
         
-            // if Table size is >=1 -> username with this password exist!!!!
+            // if Table size is >=1 -> username with this password 
             if(rslt.next()){userValidity = true;}
             
             /* //

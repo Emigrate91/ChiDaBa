@@ -118,8 +118,19 @@ public class Einloggen extends javax.swing.JFrame {
 
         TxtUsername.setText("Username");
         TxtUsername.setName("Username"); // NOI18N
+        TxtUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtUsernameMouseClicked(evt);
+            }
+        });
 
-        PwField.setText("jPasswordField1");
+        PwField.setText("PASSWORT");
+        PwField.setToolTipText("");
+        PwField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PwFieldMouseClicked(evt);
+            }
+        });
 
         LblLogin.setText("Bitte loggen sie sich mit ihrem Benutzernamen und Password ein!");
 
@@ -252,16 +263,15 @@ public class Einloggen extends javax.swing.JFrame {
         try {
             DB userCheck = new DB();
             userCheck.CheckLogOn(username, pw);
-            userExists = userCheck.getuserValidity();
             
-            if (userExists == true) {
+            if (userCheck.getuserValidity()) {
                 this.ChilliFrame = new Chilliliste(this);
                 this.SetEditable(false);
                 this.clear();
                 this.ChilliFrame.setVisible(true);
             }
             else {
-                JOptionPane.showMessageDialog(this, "Diesen Benutzer gibt es nicht!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Passwort oder Benutzname falsch", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -300,6 +310,16 @@ public class Einloggen extends javax.swing.JFrame {
         }
     else {this.dispose();}
     }//GEN-LAST:event_formWindowClosing
+
+    private void TxtUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtUsernameMouseClicked
+    if(TxtUsername.getText().equals("Username"))
+    {TxtUsername.setText("");};
+    }//GEN-LAST:event_TxtUsernameMouseClicked
+
+    private void PwFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PwFieldMouseClicked
+    if(this.PwField.getText().equals("PASSWORT"))
+        {PwField.setText("");}
+    }//GEN-LAST:event_PwFieldMouseClicked
 
     /**
      * @param args the command line arguments
