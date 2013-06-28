@@ -6,9 +6,11 @@ package GUI;
 
 import DB.DB;
 import DataStructur.Duenger;
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 
 /**
  *
@@ -39,7 +41,17 @@ public class DüngerNeu extends javax.swing.JDialog {
     this.BtnAbbr.setText("OK");
     this.BtnOk.setVisible(!state);
     this.InfoViewState=state;
+    
+    //Spinner with own Method: SetSpinnerDisablesTextColor
+    this.SetSpinnerDisablesTextColor(this.SpinKalium, Color.BLACK);
+    this.SetSpinnerDisablesTextColor(this.SpinMag, Color.BLACK);
+    this.SetSpinnerDisablesTextColor(this.SpinPhos, Color.BLACK);
+    this.SetSpinnerDisablesTextColor(this.SpinStick, Color.BLACK);
     }
+    
+    // change DefaultEditor to ge a better view
+    private void SetSpinnerDisablesTextColor(JSpinner spinner, Color color)
+        {((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setDisabledTextColor(color);}
     
     public void SetDuengerData(Duenger duenger)
     {
