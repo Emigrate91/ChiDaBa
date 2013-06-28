@@ -219,17 +219,15 @@ public class Registrieren extends javax.swing.JDialog {
         if(empty) {
             JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        else{
+            if(!Arrays.equals(this.TxtPwSec.getPassword(),this.TxtPw.getPassword()) && !empty) {
+                JOptionPane.showMessageDialog(this, "Passwörter stimmen nicht überein", "Error", JOptionPane.ERROR_MESSAGE);
+                this.LblSecPw.setForeground(Color.red);
+                this.LblPw.setForeground(Color.red);
+                }   
     
-        if(!Arrays.equals(this.TxtPwSec.getPassword(),this.TxtPw.getPassword())) {
-            JOptionPane.showMessageDialog(this, "Passwörter stimmen nicht überein", "Error", JOptionPane.ERROR_MESSAGE);
-            this.LblSecPw.setForeground(Color.red);
-            this.LblPw.setForeground(Color.red);
-        }   
-    
-        if(!empty) {
-            this.dispose();
-            this.parentForm.ChilliFrame=null; // Parentform has no child
-            this.parentForm.Callback();
+            else{
             String user = this.TxtName.getText();
             String md5HashedPass="";
             
@@ -238,19 +236,19 @@ public class Registrieren extends javax.swing.JDialog {
             
             DB neuerUser = new DB();
             boolean userschonVorhanden = false;
-            
-            try {
-                neuerUser.UsernameExists(user);
-                userschonVorhanden = neuerUser.getuserExistence();
-                if (userschonVorhanden == false) {
-                    neuerUser.InsertIntoBenutzer(user, md5HashedPass);
+                try {userschonVorhanden=neuerUser.UsernameExists(user);} 
+                catch (Exception ex) {Logger.getLogger(Registrieren.class.getName()).log(Level.SEVERE, null, ex);}
+                            
+            if (!userschonVorhanden) {
+                try {neuerUser.InsertIntoBenutzer(user, md5HashedPass);} 
+                catch (Exception ex) {Logger.getLogger(Registrieren.class.getName()).log(Level.SEVERE, null, ex);}
+                
+                this.dispose();
+                this.parentForm.ChilliFrame=null; // Parentform has no child
+                this.parentForm.Callback();
                 }
-                else {
-                    JOptionPane.showMessageDialog(this, "Diesen Benutzer gibt es bereits!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            catch (Exception e) {
-            //
+                    
+                else {JOptionPane.showMessageDialog(this, "Diesen Benutzer gibt es bereits!", "Error", JOptionPane.ERROR_MESSAGE);}
             }
         }
     

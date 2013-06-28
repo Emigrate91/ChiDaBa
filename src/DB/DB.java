@@ -22,7 +22,6 @@ public class DB {
     private ResultSet rslt = null;
     private PreparedStatement pstmt = null;
     private boolean userValidity = false;
-    private boolean userExistence = false;
     
     private Connection ConnectDB () throws Exception {
         
@@ -71,10 +70,6 @@ public class DB {
     public boolean getuserValidity() {
         return userValidity;
     }
-
-    public boolean getuserExistence() {
-        return userExistence;
-    }
     
     public void InsertIntoBenutzer (String benutzername, String passwort) throws Exception{
         
@@ -96,7 +91,7 @@ public class DB {
         }
     }
     
-    public void UsernameExists (String username) throws Exception {
+    public boolean UsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();
             pstmt = con.prepareStatement("SELECT * FROM benutzer WHERE username = (?);",
@@ -106,16 +101,19 @@ public class DB {
             
             while (rslt.next()) {
                 if (rslt.getString(1).equals(username)) {
-                userExistence = true;
+                return true;
                 }
-            } 
+            }       
         }
+        
         catch (Exception e) {
             
         }
+        
         finally {
             this.CloseDBConnection();
         }
+    return false;
     }
     
     
