@@ -224,15 +224,23 @@ public class DüngerNeu extends javax.swing.JDialog {
             {
             Duenger neu = new Duenger(TxtName.getText(), (int)SpinStick.getValue(), (int)SpinPhos.getValue(), (int)SpinKalium.getValue(), (int)SpinMag.getValue());
             DB InsertDuenger = new DB();
-            
-            try {InsertDuenger.InsertIntoDuenger(neu);} 
-            catch (Exception ex) {Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);}
-            
-            try {this.parentform.setDuengerList();}             
-            catch (Exception ex) {Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);}
-            
-            this.parentform.setDünger(this.TxtName.getText());
-            this.CleanClose();
+            try {
+                if(InsertDuenger.getDuengerInfo(TxtName.getText())==null)
+                    {
+                    try {InsertDuenger.InsertIntoDuenger(neu);} 
+                    catch (Exception ex) {Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);}
+
+                    try {this.parentform.setDuengerList();}             
+                    catch (Exception ex) {Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);}
+
+                    this.parentform.setDünger(this.TxtName.getText());
+                    this.CleanClose();
+                    }
+                
+                else {JOptionPane.showMessageDialog(this, "Name bereits vergeben", "Error", JOptionPane.ERROR_MESSAGE);}
+            } catch (Exception ex) {
+                Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
         else
             {
