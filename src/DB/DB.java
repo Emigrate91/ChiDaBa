@@ -140,6 +140,20 @@ public class DB {
     return false;
     }
     
+    public ArrayList getDuengerList() throws Exception{
+    con = ConnectDB();
+    pstmt = con.prepareStatement("SELECT name FROM duenger ORDER BY name DESC");
+    rslt = pstmt.executeQuery();
+    
+    ArrayList DuengerList= new ArrayList();
+    while (rslt.next()) 
+        {DuengerList.add(rslt.getString(1));}
+    
+    this.CloseDBConnection();
+    return DuengerList;
+    }
+    
+    
     public Object[][] getTblPflanzenFromDB() throws Exception{
     con = ConnectDB();
     pstmt = con.prepareStatement("SELECT sorte, art, herkunft, datum_aussaat FROM pflanzen");

@@ -4,8 +4,12 @@
  */
 package GUI;
 
+import DB.DB;
+import java.awt.List;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,10 +24,11 @@ public class Ereignisse extends javax.swing.JDialog {
     /**
      * Creates new form Eigenschaften
      */
-    public Ereignisse(Chilliliste parent) {
+    public Ereignisse(Chilliliste parent) throws Exception {
         this.ParentForm=parent;
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
+        setDuengerList();
     }
 
     /**
@@ -53,7 +58,7 @@ public class Ereignisse extends javax.swing.JDialog {
         SpinDatDün = new javax.swing.JSpinner();
         SpinM = new javax.swing.JSpinner();
         btnAddD = new javax.swing.JButton();
-        CBDünger = new javax.swing.JComboBox();
+        CBDuenger = new javax.swing.JComboBox();
         LblInf = new javax.swing.JLabel();
         PanelBewässerung = new javax.swing.JPanel();
         LblDMB = new javax.swing.JLabel();
@@ -167,10 +172,10 @@ public class Ereignisse extends javax.swing.JDialog {
             }
         });
 
-        CBDünger.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<neu>" }));
-        CBDünger.addActionListener(new java.awt.event.ActionListener() {
+        CBDuenger.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<neu>" }));
+        CBDuenger.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CBDüngerActionPerformed(evt);
+                CBDuengerActionPerformed(evt);
             }
         });
 
@@ -200,7 +205,7 @@ public class Ereignisse extends javax.swing.JDialog {
                                 .addComponent(SpinM, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(LblCm1))
-                            .addComponent(CBDünger, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(CBDuenger, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(3, 3, 3)
                         .addComponent(LblInf))
                     .addComponent(btnAddD))
@@ -216,7 +221,7 @@ public class Ereignisse extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LblInf)
-                    .addComponent(CBDünger, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBDuenger, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LblD))
                 .addGap(9, 9, 9)
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -302,10 +307,24 @@ public class Ereignisse extends javax.swing.JDialog {
     return this.ParentForm.AskClosing();
     }
     
+    public void setDuengerList() throws Exception{
+    DB con= new DB();
+    ArrayList names = con.getDuengerList();
+    DefaultComboBoxModel model = (DefaultComboBoxModel) this.CBDuenger.getModel();
+    
+    for(Object e : names.toArray()){
+        if(!model.equals(e))
+            {model.insertElementAt(e, 0);}
+        }
+    model.setSelectedItem(model.getElementAt(0));
+    }
+    
    
+    
+    
     public void SetEditable(boolean state)
     {
-    this.CBDünger.setEnabled(state);
+    this.CBDuenger.setEnabled(state);
     this.SpinDatDün.setEnabled(state);
     this.SpinDatMess.setEnabled(state);
     this.SpinH.setEnabled(state);
@@ -332,10 +351,10 @@ public class Ereignisse extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAddMActionPerformed
 
     private void btnAddDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDActionPerformed
-    if(this.CBDünger.getSelectedItem()!="<neu>")
+    if(this.CBDuenger.getSelectedItem()!="<neu>")
         { 
         DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel();
-        deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatDün.getValue()),"Düngevorgang",this.CBDünger.getSelectedItem(), Math.rint((double) this.SpinM.getValue()*100)/100, "/" });
+        deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatDün.getValue()),"Düngevorgang",this.CBDuenger.getSelectedItem(), Math.rint((double) this.SpinM.getValue()*100)/100, "/" });
         }
     else
         {
@@ -344,7 +363,7 @@ public class Ereignisse extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAddDActionPerformed
 
     private void LblInfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblInfMouseClicked
-       if(this.CBDünger.getSelectedIndex()!=this.CBDünger.getItemCount()-1 && this.DüngerForm==null)
+       if(this.CBDuenger.getSelectedIndex()!=this.CBDuenger.getItemCount()-1 && this.DüngerForm==null)
         {
         this.DüngerForm = new DüngerNeu(this);
         this.DüngerForm.SetInfoView(true);
@@ -352,14 +371,14 @@ public class Ereignisse extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_LblInfMouseClicked
 
-    private void CBDüngerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBDüngerActionPerformed
-   if(this.CBDünger.getSelectedIndex()==this.CBDünger.getItemCount()-1 && this.DüngerForm==null)
+    private void CBDuengerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBDuengerActionPerformed
+   if(this.CBDuenger.getSelectedIndex()==this.CBDuenger.getItemCount()-1 && this.DüngerForm==null)
         {
         this.DüngerForm = new DüngerNeu(this);
         this.SetEditable(false);
         this.DüngerForm.setVisible(true);
         } 
-    }//GEN-LAST:event_CBDüngerActionPerformed
+    }//GEN-LAST:event_CBDuengerActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     if(this.DüngerForm!=null)
@@ -376,12 +395,12 @@ public class Ereignisse extends javax.swing.JDialog {
 
     public  void setDünger(String name)
     {
-    this.CBDünger.insertItemAt(name, this.CBDünger.getItemCount()-1);
-    this.CBDünger.setSelectedItem(name);
+    this.CBDuenger.insertItemAt(name, this.CBDuenger.getItemCount()-1);
+    this.CBDuenger.setSelectedItem(name);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox CBDünger;
+    private javax.swing.JComboBox CBDuenger;
     private javax.swing.JLabel LblCm;
     private javax.swing.JLabel LblCm1;
     private javax.swing.JLabel LblCmB;

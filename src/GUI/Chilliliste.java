@@ -5,12 +5,10 @@
 package GUI;
 
 import DB.DB;
-import java.awt.Container;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class Chilliliste extends javax.swing.JDialog {
 
@@ -195,7 +193,7 @@ public class Chilliliste extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void writeTblToTblChilli() throws Exception{
+    public final void writeTblToTblChilli() throws Exception{
     DB loadTable = new DB();
     DefaultTableModel model = (DefaultTableModel) TblChilli.getModel();
    
@@ -260,9 +258,11 @@ public class Chilliliste extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnNewActionPerformed
 
     private void BtnErignisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnErignisseActionPerformed
-    this.EreignisFrame = new Ereignisse(this);
-    this.SetEditable(false);
-    this.EreignisFrame.setVisible(true);
+        try {this.EreignisFrame = new Ereignisse(this);} 
+        catch (Exception ex) {Logger.getLogger(Chilliliste.class.getName()).log(Level.SEVERE, null, ex);}
+        
+        this.SetEditable(false);
+        this.EreignisFrame.setVisible(true);
     }//GEN-LAST:event_BtnErignisseActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
