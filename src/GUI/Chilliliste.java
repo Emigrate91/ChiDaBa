@@ -258,7 +258,8 @@ public class Chilliliste extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnNewActionPerformed
 
     private void BtnErignisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnErignisseActionPerformed
-        try {this.EreignisFrame = new Ereignisse(this);} 
+        Object selectedSort=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
+        try {this.EreignisFrame = new Ereignisse(this, selectedSort);} 
         catch (Exception ex) {Logger.getLogger(Chilliliste.class.getName()).log(Level.SEVERE, null, ex);}
         
         this.SetEditable(false);

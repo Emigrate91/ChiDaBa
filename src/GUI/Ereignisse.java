@@ -24,11 +24,14 @@ public class Ereignisse extends javax.swing.JDialog {
 
     private Chilliliste ParentForm;
     DüngerNeu DüngerForm;
+    Object selectedSort;
     /**
      * Creates new form Eigenschaften
      */
-    public Ereignisse(Chilliliste parent) throws Exception {
+    public Ereignisse(Chilliliste parent, Object selectedSort) throws Exception {
         this.ParentForm=parent;
+        this.selectedSort=selectedSort;
+        this.setTitle("Ereignisse für "+ selectedSort);
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
         setDuengerList();
@@ -68,7 +71,8 @@ public class Ereignisse extends javax.swing.JDialog {
         LblCmB = new javax.swing.JLabel();
         SpinMB = new javax.swing.JSpinner();
         LblDateD1 = new javax.swing.JLabel();
-        SpinDatDün1 = new javax.swing.JSpinner();
+        SpinDatB = new javax.swing.JSpinner();
+        btnAddW = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(599, 398));
@@ -121,20 +125,20 @@ public class Ereignisse extends javax.swing.JDialog {
             PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelMessungLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAddM, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelMessungLayout.createSequentialGroup()
                         .addGroup(PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LblDateH)
                             .addComponent(LblH))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SpinDatMess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelMessungLayout.createSequentialGroup()
-                                .addComponent(SpinH)
+                        .addGroup(PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelMessungLayout.createSequentialGroup()
+                                .addComponent(SpinH, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LblCm))))
-                    .addComponent(btnAddM))
-                .addContainerGap(185, Short.MAX_VALUE))
+                                .addComponent(LblCm))
+                            .addComponent(SpinDatMess))))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         PanelMessungLayout.setVerticalGroup(
             PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,14 +147,14 @@ public class Ereignisse extends javax.swing.JDialog {
                 .addGroup(PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LblDateH)
                     .addComponent(SpinDatMess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addGroup(PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LblH)
                     .addComponent(SpinH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LblCm))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(btnAddM)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("Höhen Messung", PanelMessung);
@@ -196,23 +200,24 @@ public class Ereignisse extends javax.swing.JDialog {
             .addGroup(PanelDüngerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAddD, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelDüngerLayout.createSequentialGroup()
                         .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LblDateD)
                             .addComponent(LblD)
                             .addComponent(LblDM))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SpinDatDün)
+                        .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelDüngerLayout.createSequentialGroup()
-                                .addComponent(SpinM, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(SpinM, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(LblCm1))
-                            .addComponent(CBDuenger, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(3, 3, 3)
-                        .addComponent(LblInf))
-                    .addComponent(btnAddD))
-                .addContainerGap(144, Short.MAX_VALUE))
+                            .addGroup(PanelDüngerLayout.createSequentialGroup()
+                                .addComponent(CBDuenger, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LblInf))
+                            .addComponent(SpinDatDün, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         PanelDüngerLayout.setVerticalGroup(
             PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,17 +226,21 @@ public class Ereignisse extends javax.swing.JDialog {
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LblDateD)
                     .addComponent(SpinDatDün, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LblInf)
-                    .addComponent(CBDuenger, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblD))
-                .addGap(9, 9, 9)
+                    .addGroup(PanelDüngerLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CBDuenger, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblD)))
+                    .addGroup(PanelDüngerLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LblInf)))
+                .addGap(15, 15, 15)
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SpinM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LblDM)
                     .addComponent(LblCm1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(btnAddD)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -246,8 +255,15 @@ public class Ereignisse extends javax.swing.JDialog {
 
         LblDateD1.setText("Datum:");
 
-        SpinDatDün1.setModel(new javax.swing.SpinnerDateModel());
+        SpinDatB.setModel(new javax.swing.SpinnerDateModel());
         SpinDatDün.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDün, "dd.MM.yyyy"));
+
+        btnAddW.setText("Bewässerung hinzufügen");
+        btnAddW.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddWActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelBewässerungLayout = new javax.swing.GroupLayout(PanelBewässerung);
         PanelBewässerung.setLayout(PanelBewässerungLayout);
@@ -255,31 +271,35 @@ public class Ereignisse extends javax.swing.JDialog {
             PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBewässerungLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LblDMB)
-                    .addComponent(LblDateD1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAddW, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelBewässerungLayout.createSequentialGroup()
-                        .addComponent(SpinMB, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LblDMB)
+                            .addComponent(LblDateD1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LblCmB))
-                    .addComponent(SpinDatDün1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .addContainerGap(186, Short.MAX_VALUE))
+                        .addGroup(PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SpinMB)
+                            .addComponent(SpinDatB))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LblCmB)))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         PanelBewässerungLayout.setVerticalGroup(
             PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBewässerungLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(12, 12, 12)
                 .addGroup(PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LblDateD1)
-                    .addComponent(SpinDatDün1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(SpinDatB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SpinMB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LblDMB)
                     .addComponent(LblCmB))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAddW)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("Bewässerung", PanelBewässerung);
@@ -405,6 +425,12 @@ public class Ereignisse extends javax.swing.JDialog {
         {if(this.ParentForm.AskClosing()){this.CleanClose();}} 
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnAddWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWActionPerformed
+        DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel();
+        deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatB.getValue()),"Bewässerung","/", Math.rint((double) this.SpinM.getValue()*100)/100, "/" });
+        
+    }//GEN-LAST:event_btnAddWActionPerformed
+
     public  void setDünger(String name)
     {
     this.CBDuenger.insertItemAt(name, this.CBDuenger.getItemCount()-1);
@@ -428,8 +454,8 @@ public class Ereignisse extends javax.swing.JDialog {
     private javax.swing.JPanel PanelDünger;
     private javax.swing.JPanel PanelMessung;
     private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JSpinner SpinDatB;
     private javax.swing.JSpinner SpinDatDün;
-    private javax.swing.JSpinner SpinDatDün1;
     private javax.swing.JSpinner SpinDatMess;
     private javax.swing.JSpinner SpinH;
     private javax.swing.JSpinner SpinM;
@@ -438,6 +464,7 @@ public class Ereignisse extends javax.swing.JDialog {
     private javax.swing.JTable TblEreignisse;
     private javax.swing.JButton btnAddD;
     private javax.swing.JButton btnAddM;
+    private javax.swing.JButton btnAddW;
     // End of variables declaration//GEN-END:variables
 
  
