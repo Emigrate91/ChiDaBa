@@ -4,6 +4,10 @@
  */
 package GUI;
 
+import DB.DB;
+import DataStructur.Duenger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,7 +19,7 @@ public class DüngerNeu extends javax.swing.JDialog {
     Ereignisse parentform;
     private boolean InfoViewState=false;
     /**
-     * Creates new form Dünger
+     * Creates new form Duenger
      */
     public DüngerNeu(Ereignisse parent) {
         this.parentform = parent;
@@ -197,6 +201,12 @@ public class DüngerNeu extends javax.swing.JDialog {
         if (!this.TxtName.getText().isEmpty()) 
             {
             this.parentform.setDünger(this.TxtName.getText());
+            Duenger neu = new Duenger(TxtName.getText(), (int)SpinStick.getValue(), (int)SpinPhos.getValue(), (int)SpinKalium.getValue(), (int)SpinMag.getValue());
+            DB InsertDünger = new DB();
+            
+            try {InsertDünger.InsertIntoDuenger(neu);} 
+            catch (Exception ex) {Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);}
+            
             this.CleanClose();
             }
         else

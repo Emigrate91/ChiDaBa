@@ -204,7 +204,7 @@ public class Chilliliste extends javax.swing.JDialog {
     for(int i=0;i<model.getColumnCount();i++)
         {columnIdentifiers[i]=model.getColumnName(i);}
     
-    model.setDataVector(loadTable.getTblFromDB(), columnIdentifiers);
+    model.setDataVector(loadTable.getTblPflanzenFromDB(), columnIdentifiers);
     }
     
     

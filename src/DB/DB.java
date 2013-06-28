@@ -4,6 +4,7 @@
  */
 package DB;
 
+import DataStructur.Duenger;
 import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -93,6 +94,27 @@ public class DB {
         }
     }
     
+    public void InsertIntoDuenger(Duenger duenger) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("INSERT INTO duenger VALUES(?,?,?,?,?)");
+            //Query erstellen
+            pstmt.setString(1, duenger.getName());  
+            pstmt.setString(2, String.valueOf(duenger.getStickstoff())); 
+            pstmt.setString(3, String.valueOf(duenger.getPhosphat()));
+            pstmt.setString(4, String.valueOf(duenger.getKalium()));
+            pstmt.setString(5, String.valueOf(duenger.getKalium()));
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {}
+        
+        finally{this.CloseDBConnection();}
+    }
+    
     public boolean UsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();
@@ -118,7 +140,7 @@ public class DB {
     return false;
     }
     
-    public Object[][] getTblFromDB() throws Exception{
+    public Object[][] getTblPflanzenFromDB() throws Exception{
     con = ConnectDB();
     pstmt = con.prepareStatement("SELECT sorte, art, herkunft, datum_aussaat FROM pflanzen");
     rslt = pstmt.executeQuery();
@@ -138,6 +160,7 @@ public class DB {
     this.CloseDBConnection();
     return result;
     }
+    
     
     public void CheckLogOn(String name, String pw) throws Exception {
         try{
