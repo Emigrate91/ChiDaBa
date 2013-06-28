@@ -4,12 +4,14 @@
  */
 package DB;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -116,6 +118,25 @@ public class DB {
     return false;
     }
     
+    public Object[][] getTblFromDB() throws Exception{
+    con = ConnectDB();
+    pstmt = con.prepareStatement("SELECT sorte, art, herkunft, datum_aussaat FROM pflanzen");
+    rslt = pstmt.executeQuery();
+    ArrayList row = new ArrayList();
+    ArrayList<Object[]> column = new ArrayList();
+    
+    while (rslt.next()) {
+        for(int i=1 ; i<=4;i++){row.add(rslt.getObject(i));}
+        column.add(row.toArray());
+        row.clear();
+        }
+    
+    Object[][] result = new Object[column.size()][4];
+    for(int i=0;i<column.size();i++)
+        {result[i]=column.get(i);}
+
+    return result;
+    }
     
     public void CheckLogOn(String name, String pw) throws Exception {
         try{

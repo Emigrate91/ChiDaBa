@@ -6,12 +6,11 @@ package GUI;
 
 import DB.DB;
 import java.awt.Color;
-import java.awt.image.ImageObserver;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import sun.security.util.Password;
 
 /**
  *
@@ -76,6 +75,12 @@ public class Registrieren extends javax.swing.JDialog {
         LblSecPw.setText("Passwort erneut eingeben :");
 
         LblName.setText("Name :");
+
+        TxtPwSec.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtPwSecKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanInputLayout = new javax.swing.GroupLayout(PanInput);
         PanInput.setLayout(PanInputLayout);
@@ -259,6 +264,10 @@ public class Registrieren extends javax.swing.JDialog {
     this.parentForm.ChilliFrame=null; // Parentform has no child
     this.parentForm.Callback();
     }//GEN-LAST:event_formWindowClosed
+
+    private void TxtPwSecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtPwSecKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){this.BtnReg.doClick();}
+    }//GEN-LAST:event_TxtPwSecKeyPressed
 
     /**
      * @param args the command line arguments

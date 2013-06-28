@@ -4,8 +4,13 @@
  */
 package GUI;
 
+import DB.DB;
 import java.awt.Container;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Chilliliste extends javax.swing.JDialog {
 
@@ -16,7 +21,7 @@ public class Chilliliste extends javax.swing.JDialog {
      /**
      * Creates new form Chilliliste
      */
-    public Chilliliste(Einloggen parent) {
+    public Chilliliste(Einloggen parent) throws Exception {
         this.parentForm=parent;
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
@@ -40,6 +45,7 @@ public class Chilliliste extends javax.swing.JDialog {
         BtnNew = new javax.swing.JButton();
         BtnLogout = new javax.swing.JButton();
         BtnErignisse = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Chilliliste");
@@ -81,7 +87,7 @@ public class Chilliliste extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Chilliname", "Gattung", "Schärfe", "Aussaat"
+                "Sorte", "Art", "Herkunft", "Aussaat"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -161,6 +167,13 @@ public class Chilliliste extends javax.swing.JDialog {
             }
         });
 
+        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,6 +185,8 @@ public class Chilliliste extends javax.swing.JDialog {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BtnErignisse, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jToggleButton1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -182,12 +197,22 @@ public class Chilliliste extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnErignisse)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnErignisse)
+                    .addComponent(jToggleButton1))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+   /* 
+    public Object[][] getTblFromDB(){
+    DB loadTable = new DB();
+    getTblFromDB()
+    
+    }*/
+    
+    
     public boolean AskClosing()
     {
     int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Alle nicht gespeicherten Änderungen gehen verloren", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
@@ -283,6 +308,13 @@ public class Chilliliste extends javax.swing.JDialog {
     this.CleanClose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+            DB loadTable = new DB();
+        try {loadTable.getTblFromDB();} 
+        catch (Exception ex) {Logger.getLogger(Chilliliste.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnErignisse;
@@ -294,5 +326,6 @@ public class Chilliliste extends javax.swing.JDialog {
     private javax.swing.JTable TblChilli;
     private javax.swing.JTextField TxtSuche;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
