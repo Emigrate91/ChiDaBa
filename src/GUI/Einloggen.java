@@ -2,6 +2,11 @@ package GUI;
 
 import DB.DB;
 import java.awt.Color;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -256,13 +261,14 @@ public class Einloggen extends javax.swing.JFrame {
         }
      if (!empty) {
         String username = this.TxtUsername.getText();
-        String pw = this.PwField.getText();
-        boolean userExists = false;
-        boolean pwCorrect = false;
+            String md5HashedPass="";
+            
+            try {md5HashedPass = getPasswordMd5Hash(PwField.getPassword());} 
+            catch (Exception ex) {Logger.getLogger(Registrieren.class.getName()).log(Level.SEVERE, null, ex);}
         
         try {
             DB userCheck = new DB();
-            userCheck.CheckLogOn(username, pw);
+            userCheck.CheckLogOn(username, md5HashedPass);
             
             if (userCheck.getuserValidity()) {
                 this.ChilliFrame = new Chilliliste(this);
@@ -321,6 +327,21 @@ public class Einloggen extends javax.swing.JFrame {
         {PwField.setText("");}
     }//GEN-LAST:event_PwFieldMouseClicked
 
+    public String getPasswordMd5Hash(char[] password) throws Exception
+    {
+    // convert char array to byte array with String:
+    byte[] bytePassword = new String(password).getBytes();
+        
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        md5.update(bytePassword,0, bytePassword.length);
+        
+        String hashedPass = new BigInteger(1,md5.digest()).toString(16);  
+        if (hashedPass.length() < 32) {hashedPass = "0" + hashedPass;}
+        
+        return hashedPass;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */

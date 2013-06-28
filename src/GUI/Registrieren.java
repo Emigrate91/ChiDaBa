@@ -8,7 +8,10 @@ import DB.DB;
 import java.awt.Color;
 import java.awt.image.ImageObserver;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import sun.security.util.Password;
 
 /**
  *
@@ -228,8 +231,11 @@ public class Registrieren extends javax.swing.JDialog {
             this.parentForm.ChilliFrame=null; // Parentform has no child
             this.parentForm.Callback();
             String user = this.TxtName.getText();
-            String pass = this.TxtPwSec.getText();
-        
+            String md5HashedPass="";
+            
+            try {md5HashedPass = this.parentForm.getPasswordMd5Hash(this.TxtPwSec.getPassword());} 
+            catch (Exception ex) {Logger.getLogger(Registrieren.class.getName()).log(Level.SEVERE, null, ex);}
+            
             DB neuerUser = new DB();
             boolean userschonVorhanden = false;
             
@@ -237,7 +243,7 @@ public class Registrieren extends javax.swing.JDialog {
                 neuerUser.UsernameExists(user);
                 userschonVorhanden = neuerUser.getuserExistence();
                 if (userschonVorhanden == false) {
-                    neuerUser.InsertIntoBenutzer(user, pass);
+                    neuerUser.InsertIntoBenutzer(user, md5HashedPass);
                 }
                 else {
                     JOptionPane.showMessageDialog(this, "Diesen Benutzer gibt es bereits!", "Error", JOptionPane.ERROR_MESSAGE);
