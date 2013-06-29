@@ -11,11 +11,15 @@ import DataStructur.PflanzenHoehe;
 import java.awt.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.ldap.SortKey;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,6 +41,8 @@ public class Ereignisse extends javax.swing.JDialog {
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
         setDuengerList();
+        writeHoeheToTable(selectedSort);
+        sortTble();
     }
 
     /**
@@ -332,7 +338,7 @@ public class Ereignisse extends javax.swing.JDialog {
     return this.ParentForm.AskClosing();
     }
     
-    public void setDuengerList() throws Exception{
+    public final void setDuengerList() throws Exception{
     DB con= new DB();
     ArrayList names = con.getDuengerList();
     DefaultComboBoxModel model = (DefaultComboBoxModel) this.CBDuenger.getModel();
@@ -344,8 +350,25 @@ public class Ereignisse extends javax.swing.JDialog {
     model.setSelectedItem(model.getElementAt(0));
     }
     
-   
+    public final void writeHoeheToTable(Object selectedSort) throws Exception
+    {
+    DB con = new DB();
+    ArrayList<Object[]> hoehenMessungen = con.getPflanzenHoeheList(String.valueOf(selectedSort));
     
+    DefaultTableModel model = (DefaultTableModel) this.TblEreignisse.getModel();
+    
+    for(Object[] e : hoehenMessungen){model.addRow(e);}
+   
+    }
+   
+    public final void sortTble()
+    {
+    // nach Datum sortieren:
+    RowSorter sorter = TblEreignisse.getRowSorter();
+    ArrayList sortKeys = new ArrayList();
+    sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+    sorter.setSortKeys(sortKeys);
+    }
     
     public void SetEditable(boolean state)
     {

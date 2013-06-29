@@ -30,7 +30,7 @@ public class DB {
     private PreparedStatement pstmt = null;
     private boolean userValidity = false;
     
-    private SimpleDateFormat myformatter = new SimpleDateFormat("yyyy.MM.dd");
+    private SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy.MM.dd");
     
     private Connection ConnectDB () throws Exception {
         
@@ -108,7 +108,7 @@ public class DB {
             pstmt = con.prepareStatement("INSERT INTO pflanzen_hoehe VALUES(?,?,?);");
             //Query erstellen 
             pstmt.setString(1, h.getSorte());  
-            pstmt.setString(2, String.valueOf(myformatter.format((Date)h.getDatum()))); 
+            pstmt.setString(2, String.valueOf(dbFormat.format((Date)h.getDatum()))); 
             pstmt.setString(3, String.valueOf(h.getHoehe()));
             pstmt.executeUpdate();
             }
@@ -124,7 +124,7 @@ public class DB {
             // Statement erstellen                   
             pstmt = con.prepareStatement("INSERT INTO duengvorgang VALUES(?,?,?);");
             //Query erstellen 
-            pstmt.setString(1, String.valueOf(myformatter.format((Date)dw.getDatum())));  
+            pstmt.setString(1, String.valueOf(dbFormat.format((Date)dw.getDatum())));  
             pstmt.setString(2, dw.getDuenger()); 
             pstmt.setString(3, String.valueOf(dw.getMenge()));
             pstmt.executeUpdate();
@@ -212,6 +212,35 @@ public class DB {
     return DuengerList;
     }
     
+    public ArrayList<Object[]> getPflanzenHoeheList(String name) throws Exception{
+    con = ConnectDB();
+    pstmt = con.prepareStatement("SELECT * FROM pflanzen_hoehe WHERE sorte like (?);");
+    pstmt.setString(1, name);
+    rslt = pstmt.executeQuery();
+    
+
+    ArrayList<Object[]> PflanzenHoeheList= new ArrayList();
+    while (rslt.next()) 
+        {
+        ArrayList tmp = new ArrayList();
+        tmp.add(convertDBDate(rslt.getString(2)));
+        tmp.add("Höhen Messung");
+        tmp.add("/");
+        tmp.add("/");
+        tmp.add(rslt.getString(3));
+        PflanzenHoeheList.add(tmp.toArray());
+        tmp.clear();
+        }
+    
+    this.CloseDBConnection();
+    return PflanzenHoeheList;
+    }
+    
+    private String convertDBDate(String db)
+    {
+    String[] datum=db.split("-");
+    return datum[2]+"."+datum[1]+"."+datum[0];
+    }
     
     public Object[][] getTblPflanzenFromDB() throws Exception{
     con = ConnectDB();
