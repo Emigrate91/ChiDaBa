@@ -5,6 +5,7 @@
 package GUI;
 
 import DB.DB;
+import DataStructur.DuengUndWasser;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
 import java.awt.List;
@@ -62,7 +63,7 @@ public class Ereignisse extends javax.swing.JDialog {
         LblD = new javax.swing.JLabel();
         LblDM = new javax.swing.JLabel();
         LblCm1 = new javax.swing.JLabel();
-        SpinDatDün = new javax.swing.JSpinner();
+        SpinDatDuen = new javax.swing.JSpinner();
         SpinM = new javax.swing.JSpinner();
         btnAddD = new javax.swing.JButton();
         CBDuenger = new javax.swing.JComboBox();
@@ -168,10 +169,10 @@ public class Ereignisse extends javax.swing.JDialog {
 
         LblCm1.setText("ml");
 
-        SpinDatDün.setModel(new javax.swing.SpinnerDateModel());
-        SpinDatDün.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDün, "dd.MM.yyyy"));
+        SpinDatDuen.setModel(new javax.swing.SpinnerDateModel());
+        SpinDatDuen.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, "dd.MM.yyyy"));
 
-        SpinM.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 200.0d, 0.009999999776482582d));
+        SpinM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 1));
 
         btnAddD.setText("Düngvorgang hinzufügen");
         btnAddD.addActionListener(new java.awt.event.ActionListener() {
@@ -217,7 +218,7 @@ public class Ereignisse extends javax.swing.JDialog {
                                 .addComponent(CBDuenger, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(LblInf))
-                            .addComponent(SpinDatDün, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(SpinDatDuen, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(135, Short.MAX_VALUE))
         );
         PanelDüngerLayout.setVerticalGroup(
@@ -226,7 +227,7 @@ public class Ereignisse extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LblDateD)
-                    .addComponent(SpinDatDün, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SpinDatDuen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDüngerLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -252,12 +253,12 @@ public class Ereignisse extends javax.swing.JDialog {
 
         LblCmB.setText("ml");
 
-        SpinMB.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 200.0d, 0.009999999776482582d));
+        SpinMB.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 1));
 
         LblDateD1.setText("Datum:");
 
         SpinDatB.setModel(new javax.swing.SpinnerDateModel());
-        SpinDatDün.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDün, "dd.MM.yyyy"));
+        SpinDatDuen.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, "dd.MM.yyyy"));
 
         btnAddW.setText("Bewässerung hinzufügen");
         btnAddW.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +350,7 @@ public class Ereignisse extends javax.swing.JDialog {
     public void SetEditable(boolean state)
     {
     this.CBDuenger.setEnabled(state);
-    this.SpinDatDün.setEnabled(state);
+    this.SpinDatDuen.setEnabled(state);
     this.SpinDatMess.setEnabled(state);
     this.SpinH.setEnabled(state);
     this.SpinM.setEnabled(state);
@@ -381,8 +382,12 @@ public class Ereignisse extends javax.swing.JDialog {
     private void btnAddDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDActionPerformed
     if(this.CBDuenger.getSelectedItem()!="<neu>")
         { 
+        DuengUndWasser dw = new DuengUndWasser((Date)this.SpinDatDuen.getValue(),String.valueOf(this.CBDuenger.getSelectedItem()),(int)(this.SpinM.getValue()));
+        try {dw.saveInDB();} 
+        catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}    
+                   
         DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel();
-        deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatDün.getValue()),"Düngevorgang",this.CBDuenger.getSelectedItem(), Math.rint((double) this.SpinM.getValue()*100)/100, "/" });
+        deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatDuen.getValue()),"Düngevorgang",this.CBDuenger.getSelectedItem(), SpinM.getValue(), "/" });
         }
     else
         {
@@ -431,9 +436,12 @@ public class Ereignisse extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnAddWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWActionPerformed
-        DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel();
-        deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatB.getValue()),"Bewässerung","/", Math.rint((double) this.SpinM.getValue()*100)/100, "/" });
+        DuengUndWasser dw = new DuengUndWasser((Date)this.SpinDatDuen.getValue(),"Bewässerung",(int)(this.SpinMB.getValue()));
+        try {dw.saveInDB();} 
+        catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
         
+        DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel();
+        deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatB.getValue()),"Bewässerung","/", SpinMB.getValue(), "/" });  
     }//GEN-LAST:event_btnAddWActionPerformed
 
     public  void setDünger(String name)
@@ -460,7 +468,7 @@ public class Ereignisse extends javax.swing.JDialog {
     private javax.swing.JPanel PanelMessung;
     private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JSpinner SpinDatB;
-    private javax.swing.JSpinner SpinDatDün;
+    private javax.swing.JSpinner SpinDatDuen;
     private javax.swing.JSpinner SpinDatMess;
     private javax.swing.JSpinner SpinH;
     private javax.swing.JSpinner SpinM;

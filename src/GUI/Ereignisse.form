@@ -242,7 +242,7 @@
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Component id="LblInf" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="SpinDatDün" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
+                                  <Component id="SpinDatDuen" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -256,7 +256,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="LblDateD" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="SpinDatDün" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="SpinDatDuen" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -305,20 +305,20 @@
                 <Property name="text" type="java.lang.String" value="ml"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSpinner" name="SpinDatD&#xfc;n">
+            <Component class="javax.swing.JSpinner" name="SpinDatDuen">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                   <SpinnerModel initial="now" stepSize="5" type="date"/>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SpinDatD&#xfc;n.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatD&#xfc;n, &quot;dd.MM.yyyy&quot;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SpinDatDuen.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, &quot;dd.MM.yyyy&quot;));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JSpinner" name="SpinM">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="0.0" maximum="200.0" minimum="0.0" numberType="java.lang.Double" stepSize="0.009999999776482582" type="number"/>
+                  <SpinnerModel initial="0" maximum="200" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                 </Property>
               </Properties>
             </Component>
@@ -423,7 +423,7 @@
             <Component class="javax.swing.JSpinner" name="SpinMB">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="0.0" maximum="200.0" minimum="0.0" numberType="java.lang.Double" stepSize="0.009999999776482582" type="number"/>
+                  <SpinnerModel initial="0" maximum="200" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
                 </Property>
               </Properties>
             </Component>
@@ -439,7 +439,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SpinDatD&#xfc;n.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatD&#xfc;n, &quot;dd.MM.yyyy&quot;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SpinDatDuen.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, &quot;dd.MM.yyyy&quot;));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="btnAddW">

@@ -4,6 +4,7 @@
  */
 package DB;
 
+import DataStructur.DuengUndWasser;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
 import java.awt.List;
@@ -115,6 +116,23 @@ public class DB {
         
         finally{this.CloseDBConnection();}    
     }
+ 
+    public void InsertIntoDuengvorgang(DuengUndWasser dw) throws Exception{   
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen                   
+            pstmt = con.prepareStatement("INSERT INTO duengvorgang VALUES(?,?,?);");
+            //Query erstellen 
+            pstmt.setString(1, String.valueOf(myformatter.format((Date)dw.getDatum())));  
+            pstmt.setString(2, dw.getDuenger()); 
+            pstmt.setString(3, String.valueOf(dw.getMenge()));
+            pstmt.executeUpdate();
+            }
+        catch (Exception e) {}
+        
+        finally{this.CloseDBConnection();}    
+    }    
     
     public void InsertIntoDuenger(Duenger duenger) throws Exception{
       
