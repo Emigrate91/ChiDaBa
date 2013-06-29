@@ -6,6 +6,7 @@ package GUI;
 
 import DB.DB;
 import DataStructur.Duenger;
+import DataStructur.PflanzenHoehe;
 import java.awt.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -108,9 +109,9 @@ public class Ereignisse extends javax.swing.JDialog {
         SpinDatMess.setModel(new javax.swing.SpinnerDateModel());
         SpinDatMess.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatMess, "dd.MM.yyyy"));
 
-        SpinH.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 200.0d, 0.009999999776482582d));
+        SpinH.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 1));
 
-        LblCm.setText("cm");
+        LblCm.setText("mm");
 
         btnAddM.setText("Messung hinzufügen");
         btnAddM.addActionListener(new java.awt.event.ActionListener() {
@@ -369,8 +370,12 @@ public class Ereignisse extends javax.swing.JDialog {
     private SimpleDateFormat myformatter = new SimpleDateFormat("dd.MM.yyyy");
     
     private void btnAddMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMActionPerformed
+    PflanzenHoehe h = new PflanzenHoehe(String.valueOf(selectedSort), (Date)this.SpinDatMess.getValue(),(int)this.SpinH.getValue());
+        try {h.saveInDB();} 
+        catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
+        
     DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel(); 
-    deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatMess.getValue()),"Höhen Messung","/","/", Math.rint((double) this.SpinH.getValue()*100)/100    }); 
+    deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatMess.getValue()),"Höhen Messung","/","/", (int)this.SpinH.getValue()   }); 
     }//GEN-LAST:event_btnAddMActionPerformed
 
     private void btnAddDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDActionPerformed

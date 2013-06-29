@@ -5,6 +5,7 @@
 package DB;
 
 import DataStructur.Duenger;
+import DataStructur.PflanzenHoehe;
 import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -25,6 +28,8 @@ public class DB {
     private ResultSet rslt = null;
     private PreparedStatement pstmt = null;
     private boolean userValidity = false;
+    
+    private SimpleDateFormat myformatter = new SimpleDateFormat("dd.MM.yyyy");
     
     private Connection ConnectDB () throws Exception {
         
@@ -92,6 +97,23 @@ public class DB {
         finally {
             this.CloseDBConnection();
         }
+    }
+    
+    public void InsertIntoPflanzen_hohe(PflanzenHoehe h) throws Exception{   
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen                   
+            pstmt = con.prepareStatement("INSERT INTO pflanzen_hoehe VALUES(?,?,?);");
+            //Query erstellen 
+            pstmt.setString(1, h.getSorte());  
+            pstmt.setString(2, String.valueOf(myformatter.format((Date)h.getDatum()))); 
+            pstmt.setString(3, String.valueOf(h.getHoehe()));
+            pstmt.executeUpdate();
+            }
+        catch (Exception e) {}
+        
+        finally{this.CloseDBConnection();}    
     }
     
     public void InsertIntoDuenger(Duenger duenger) throws Exception{
