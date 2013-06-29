@@ -30,7 +30,7 @@ public class DB {
     private PreparedStatement pstmt = null;
     private boolean userValidity = false;
     
-    private SimpleDateFormat myformatter = new SimpleDateFormat("dd.MM.yyyy");
+    private SimpleDateFormat myformatter = new SimpleDateFormat("yyyy.MM.dd");
     
     private Connection ConnectDB () throws Exception {
         
