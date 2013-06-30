@@ -338,15 +338,17 @@ public class Ereignisse extends javax.swing.JDialog {
     return this.ParentForm.AskClosing();
     }
     
-    public final void setDuengerList() throws Exception{
+    public final void setDuengerList() throws Exception{    
     DB con= new DB();
     ArrayList names = con.getDuengerList();
     DefaultComboBoxModel model = (DefaultComboBoxModel) this.CBDuenger.getModel();
     
     for(Object e : names.toArray()){
-        if(!model.equals(e))
-            {model.insertElementAt(e, 0);}
+        if(model.getIndexOf(e)==-1)
+            {model.insertElementAt(e, names.indexOf(e));}
         }
+    
+
     model.setSelectedItem(model.getElementAt(0));
     }
     
@@ -468,10 +470,7 @@ public class Ereignisse extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAddWActionPerformed
 
     public  void setDünger(String name)
-    {
-    this.CBDuenger.insertItemAt(name, this.CBDuenger.getItemCount()-1);
-    this.CBDuenger.setSelectedItem(name);
-    }
+    {this.CBDuenger.setSelectedItem(name);}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox CBDuenger;

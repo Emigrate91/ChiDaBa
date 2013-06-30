@@ -228,19 +228,18 @@ public class DüngerNeu extends javax.swing.JDialog {
                 if(InsertDuenger.getDuengerInfo(TxtName.getText())==null)
                     {
                     try {InsertDuenger.InsertIntoDuenger(neu);} 
-                    catch (Exception ex) {Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);}
+                    catch (Exception ex) {System.err.println(ex.getMessage());}
 
                     try {this.parentform.setDuengerList();}             
-                    catch (Exception ex) {Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);}
+                    catch (Exception ex) {System.err.println(ex.getMessage());}
 
                     this.parentform.setDünger(this.TxtName.getText());
                     this.CleanClose();
                     }
                 
                 else {JOptionPane.showMessageDialog(this, "Name bereits vergeben", "Error", JOptionPane.ERROR_MESSAGE);}
-            } catch (Exception ex) {
-                Logger.getLogger(DüngerNeu.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                } 
+            catch (Exception ex) {System.err.println(ex.getMessage());}
             }
         else
             {

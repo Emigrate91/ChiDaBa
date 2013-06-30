@@ -140,13 +140,14 @@ public class DB {
             // Zur Datenbank verbinden
             con = ConnectDB();
             // Statement erstellen
-            pstmt = con.prepareStatement("INSERT INTO duenger VALUES(?,?,?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO tbl_duenger VALUES(?,?,?,?,?,?)");
             //Query erstellen
-            pstmt.setString(1, duenger.getName());  
-            pstmt.setString(2, String.valueOf(duenger.getStickstoff())); 
-            pstmt.setString(3, String.valueOf(duenger.getPhosphat()));
-            pstmt.setString(4, String.valueOf(duenger.getKalium()));
+            pstmt.setString(1, null); 
+            pstmt.setString(2, duenger.getName());  
+            pstmt.setString(3, String.valueOf(duenger.getStickstoff())); 
+            pstmt.setString(4, String.valueOf(duenger.getPhosphat()));
             pstmt.setString(5, String.valueOf(duenger.getKalium()));
+            pstmt.setString(6, String.valueOf(duenger.getKalium()));
             pstmt.executeUpdate();
         }
     
@@ -181,12 +182,12 @@ public class DB {
     
     public Duenger getDuengerInfo(String name) throws Exception{
         con = ConnectDB();
-        pstmt = con.prepareStatement("SELECT * FROM duenger WHERE name like (?);");
+        pstmt = con.prepareStatement("SELECT * FROM tbl_duenger WHERE name like (?);");
         pstmt.setString(1, name);
         rslt = pstmt.executeQuery();
         
         if(rslt.next()){   
-            Duenger d =  new Duenger(rslt.getString(1), rslt.getInt(2), rslt.getInt(3), rslt.getInt(4), rslt.getInt(5));
+            Duenger d =  new Duenger(rslt.getString(2), rslt.getInt(3), rslt.getInt(4), rslt.getInt(5), rslt.getInt(6));
             this.CloseDBConnection();
             return d;
             }
@@ -200,7 +201,7 @@ public class DB {
     
     public ArrayList getDuengerList() throws Exception{
     con = ConnectDB();
-    pstmt = con.prepareStatement("SELECT name FROM tbl_duenger ORDER BY name DESC");
+    pstmt = con.prepareStatement("SELECT name FROM tbl_duenger ORDER BY name");
     rslt = pstmt.executeQuery();
     
     ArrayList DuengerList= new ArrayList();
