@@ -200,7 +200,7 @@ public class DB {
     
     public ArrayList getDuengerList() throws Exception{
     con = ConnectDB();
-    pstmt = con.prepareStatement("SELECT name FROM duenger ORDER BY name DESC");
+    pstmt = con.prepareStatement("SELECT name FROM tbl_duenger ORDER BY name DESC");
     rslt = pstmt.executeQuery();
     
     ArrayList DuengerList= new ArrayList();

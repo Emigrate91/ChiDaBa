@@ -41,7 +41,7 @@ public class Ereignisse extends javax.swing.JDialog {
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
         setDuengerList();
-        writeHoeheToTable(selectedSort);
+   //     writeHoeheToTable(selectedSort);
         sortTble();
     }
 

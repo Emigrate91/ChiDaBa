@@ -262,7 +262,7 @@ public class Chilliliste extends javax.swing.JDialog {
     if(this.TblChilli.getSelectedRow()!=-1) {
         Object selectedSort=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
         try {this.EreignisFrame = new Ereignisse(this, selectedSort);} 
-        catch (Exception ex) {Logger.getLogger(Chilliliste.class.getName()).log(Level.SEVERE, null, ex);}
+        catch (Exception ex) {System.out.println(ex.getMessage());}
         
         this.SetEditable(false);
         this.EreignisFrame.setVisible(true);
