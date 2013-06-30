@@ -9,6 +9,7 @@ import DataStructur.Duengung;
 import DataStructur.Duenger;
 import DataStructur.PflanzenDatenObjekt;
 import DataStructur.PflanzenHoehe;
+import DataStructur.Sorte;
 import GUI.PflanzenDaten;
 import java.awt.Color;
 import java.sql.Connection;
@@ -357,6 +358,26 @@ public class DB {
         
         finally{this.CloseDBConnection();}
     }
+    
+        public void InsertIntoSorte(Sorte sorte) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("INSERT INTO tbl_sorte VALUES(?,?,?)");
+            //Query erstellen
+            pstmt.setString(1, null); 
+            pstmt.setString(2, sorte.getSorte());  
+            pstmt.setString(3, String.valueOf(sorte.getReifezeit())); 
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {}
+        
+        finally{this.CloseDBConnection();}
+    }
+    
     
     public boolean UsernameExists (String username) throws Exception {
         try {

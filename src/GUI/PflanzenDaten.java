@@ -6,11 +6,14 @@ package GUI;
 
 import DB.DB;
 import DataStructur.PflanzenDatenObjekt;
+import DataStructur.Sorte;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -18,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.JTextField;
 
 /**
  *
@@ -826,11 +830,29 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void CBSorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBSorteActionPerformed
         if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1)
         {
-        String eingabe = JOptionPane.showInputDialog(this, "Bitte geben Sie den Namen einer Sorte ein:", "Neue Sorte",JOptionPane.PLAIN_MESSAGE);
-        if(eingabe!=null)
+        // Texfeld und Spinner für das JOptionPane erstellen    
+        JTextField sorte = new JTextField();
+        JSpinner reifezeit = new JSpinner();
+        reifezeit.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
+        
+        // Objekte für das JOptionPane
+        Object[] message = {"Sortenname:", sorte,"Reifezeit", reifezeit};
+        
+        // JOptionPane erstellen 
+        JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+        pane.createDialog(this, "Neue Sorte").setVisible(true);
+        
+        // Eingaben überprüfen:
+        if(sorte.getText()!=null && reifezeit.getValue()!=null)
             {
-            this.CBSorte.insertItemAt(eingabe, this.CBSorte.getItemCount()-1);
-            this.CBSorte.setSelectedItem(eingabe);
+            DB con = new DB();
+            Sorte s = new Sorte(sorte.getText(), (int) reifezeit.getValue());
+            try {
+                con.InsertIntoSorte(s);
+                this.CBSorte.insertItemAt(sorte.getText(), this.CBSorte.getItemCount()-1);
+                this.CBSorte.setSelectedItem(sorte.getText());} 
+            
+            catch (Exception ex) {System.err.println(ex.getMessage());}
             }
         else
             {this.CBSorte.setSelectedIndex(0);}
