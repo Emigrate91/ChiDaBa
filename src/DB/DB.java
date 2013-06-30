@@ -158,7 +158,6 @@ public class DB {
             // Zur Datenbank verbinden
             con = ConnectDB();
             
-            Object eID = this.getEreignissID(h.getPlantID());
             // Statement erstellen                   
             StringBuilder sb = new StringBuilder();
             sb.append("INSERT INTO tbl_hoehenmessungen VALUES(?,?,?,?);");
@@ -168,7 +167,7 @@ public class DB {
             
             //Query erstellen
             pstmt.setString(1, null);
-            pstmt.setString(2, String.valueOf(eID));
+            pstmt.setString(2, String.valueOf(h.getEreignissID()));
             pstmt.setString(3, String.valueOf(dbFormat.format((Date)h.getDatum()))); 
             pstmt.setString(4, String.valueOf(h.getHoehe()));
             pstmt.executeUpdate();
@@ -183,8 +182,6 @@ public class DB {
             // Zur Datenbank verbinden
             con = ConnectDB();
             
-            Object eID = this.getEreignissID(bw.getPlantID());
-            
             // Statement erstellen                   
             StringBuilder sb = new StringBuilder();
             sb.append("INSERT INTO tbl_bewaesserung VALUES(?,?,?,?);");
@@ -194,7 +191,7 @@ public class DB {
             
             //Query erstellen
             pstmt.setString(1, null);
-            pstmt.setString(2, String.valueOf(eID));
+            pstmt.setString(2, String.valueOf(bw.getEreignissID()));
             pstmt.setString(3, String.valueOf(dbFormat.format((Date)bw.getDatum())));  
             pstmt.setString(4, String.valueOf(bw.getMenge()));       
 
@@ -210,7 +207,6 @@ public class DB {
             // Zur Datenbank verbinden
             con = ConnectDB();
             
-            Object eID = this.getEreignissID(dv.getPlantID());
             String name = String.valueOf(getDuengerID(dv.getDuenger()));
             
             // Statement erstellen                   
@@ -222,7 +218,7 @@ public class DB {
             
             //Query erstellen
             pstmt.setString(1, null);
-            pstmt.setString(2, String.valueOf(eID));
+            pstmt.setString(2, String.valueOf(dv.getEreignissID()));
             pstmt.setString(3, String.valueOf(dbFormat.format((Date)dv.getDatum())));  
             pstmt.setString(4, String.valueOf(dv.getMenge()));      
             pstmt.setString(5, name); 
@@ -258,6 +254,31 @@ public class DB {
     else
         return null;
     }
+    
+    public Object getDuengerName(Object ID) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT name ");
+    sb.append("FROM tbl_duenger ");
+    sb.append("WHERE ID like (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1, String.valueOf(ID));
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        return rslt.getObject(1);
+    
+    else
+        return null;
+    }    
     
     public void InsertIntoDuenger(Duenger duenger) throws Exception{
       
@@ -337,10 +358,10 @@ public class DB {
     return DuengerList;
     }
     
-    public ArrayList<Object[]> getEreignissHoeheList(String name) throws Exception{
+    public ArrayList<Object[]> getEreignissHoeheList(Object EreignissID) throws Exception{
     con = ConnectDB();
-    pstmt = con.prepareStatement("SELECT * FROM pflanzen_hoehe WHERE sorte like (?);");
-    pstmt.setString(1, name);
+    pstmt = con.prepareStatement("SELECT * FROM tbl_hoehenmessungen WHERE tbl_ereignisse_fk like (?);");
+    pstmt.setString(1, String.valueOf(EreignissID));
     rslt = pstmt.executeQuery();
     
 
@@ -348,17 +369,42 @@ public class DB {
     while (rslt.next()) 
         {
         ArrayList tmp = new ArrayList();
-        tmp.add(convertDBDate(rslt.getString(2)));
+        tmp.add(convertDBDate(rslt.getString(3)));
         tmp.add("Höhen Messung");
         tmp.add("/");
         tmp.add("/");
-        tmp.add(rslt.getString(3));
+        tmp.add(rslt.getString(4));
         PflanzenHoeheList.add(tmp.toArray());
         tmp.clear();
         }
     
     this.CloseDBConnection();
     return PflanzenHoeheList;
+    }
+    
+    public ArrayList<Object[]> getEreignissDuengVList(Object EreignissID) throws Exception{
+    con = ConnectDB();
+    ResultSet privateRslt; // temporär, solange der rslt shit noch global ist :D
+    pstmt = con.prepareStatement("SELECT * FROM tbl_duengvorgaenge WHERE tbl_ereignisse_fk like (?);");
+    pstmt.setString(1, String.valueOf(EreignissID));
+    privateRslt = pstmt.executeQuery();
+
+    ArrayList<Object[]> DuengVList= new ArrayList();
+    while (privateRslt.next()) 
+        {
+        ArrayList tmp = new ArrayList();
+        tmp.add(convertDBDate(privateRslt.getString(3)));
+        tmp.add("Düngevorgang");
+        tmp.add(this.getDuengerName(privateRslt.getString(5)));
+        tmp.add(privateRslt.getString(4));
+        tmp.add("/");
+        DuengVList.add(tmp.toArray());
+        tmp.clear();
+        }
+    
+    this.CloseDBConnection();
+    privateRslt.close();
+    return DuengVList;
     }
     
     private String convertDBDate(String db)

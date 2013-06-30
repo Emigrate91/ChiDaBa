@@ -263,10 +263,11 @@ public class Chilliliste extends javax.swing.JDialog {
         DB con = new DB();
         Object sorte=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
         Object art=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 1);
-       
+
         try {
             Object PlantID =con.getPlantID(sorte, art);
-            this.EreignisFrame = new Ereignisse(this, PlantID);
+            Object EreignissID = con.getEreignissID(PlantID);
+            this.EreignisFrame = new Ereignisse(this, EreignissID);
             this.SetEditable(false);
             this.EreignisFrame.setVisible(true);
             } 

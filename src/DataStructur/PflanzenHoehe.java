@@ -12,7 +12,7 @@ import java.util.Date;
  * @author mn
  */
 public class PflanzenHoehe {
-    Object PlantID;
+    Object EreignissID;
     Date datum;
     int hoehe;
     
@@ -21,18 +21,18 @@ public class PflanzenHoehe {
     connection.InsertIntoPflanzen_hohe(this);
     }
     
-    public PflanzenHoehe(Object PlantID, Date datum, int hoehe) {
-        this.PlantID = PlantID;
+    public PflanzenHoehe(Object EreignissID, Date datum, int hoehe) {
+        this.EreignissID = EreignissID;
         this.datum = datum;
         this.hoehe = hoehe;
     }
 
-    public Object getPlantID() {
-        return PlantID;
+    public Object getEreignissID() {
+        return EreignissID;
     }
 
-    public void setSorte(String sorte) {
-        this.PlantID = sorte;
+    public void setEreignissID(Object EreignissID) {
+        this.EreignissID = EreignissID;
     }
 
     

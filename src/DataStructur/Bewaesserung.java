@@ -12,12 +12,12 @@ import java.util.Date;
  * @author mn
  */
 public class Bewaesserung {
-Object PlantID;    
+Object EreignissID;    
 Date datum;
 int menge;
 
-    public Bewaesserung(Object PlantID, Date datum, int menge) {
-        this.PlantID = PlantID;
+    public Bewaesserung(Object EreignissID, Date datum, int menge) {
+        this.EreignissID = EreignissID;
         this.datum = datum;
         this.menge = menge;
     }
@@ -27,12 +27,12 @@ int menge;
         connection.InsertIntoBewaesserung(this);
     } 
 
-    public Object getPlantID() {
-        return PlantID;
+    public Object getEreignissID() {
+        return EreignissID;
     }
 
-    public void setPlantID(Object PlantID) {
-        this.PlantID = PlantID;
+    public void setEreignissID(Object EreignissID) {
+        this.EreignissID = EreignissID;
     }
 
     public Date getDatum() {

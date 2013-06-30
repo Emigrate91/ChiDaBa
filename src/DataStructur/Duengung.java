@@ -12,13 +12,13 @@ import java.util.Date;
  * @author mn
  */
 public class Duengung {
-Object PlantID;    
+Object EreignissID;    
 Date datum;
 String duenger;
 int menge;
 
-    public Duengung(Object PlantID, Date datum, String duenger, int menge) {
-        this.PlantID = PlantID;
+    public Duengung(Object EreignissID, Date datum, String duenger, int menge) {
+        this.EreignissID = EreignissID;
         this.datum = datum;
         this.duenger = duenger;
         this.menge = menge;
@@ -29,12 +29,12 @@ int menge;
         connection.InsertIntoDuengvorgaenge(this);
     } 
 
-    public Object getPlantID() {
-        return PlantID;
+    public Object getEreignissID() {
+        return EreignissID;
     }
 
-    public void setPlantID(Object PlantID) {
-        this.PlantID = PlantID;
+    public void setEreignissID(Object EreignissID) {
+        this.EreignissID = EreignissID;
     }
 
     public Date getDatum() {

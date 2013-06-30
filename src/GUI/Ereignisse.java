@@ -28,18 +28,18 @@ public class Ereignisse extends javax.swing.JDialog {
 
     private Chilliliste ParentForm;
     DüngerNeu DüngerForm;
-    Object PlantID;
+    Object EreignissID;
     /**
      * Creates new form Eigenschaften
      */
-    public Ereignisse(Chilliliste parent, Object PlantID) throws Exception {
+    public Ereignisse(Chilliliste parent, Object EreignissID) throws Exception {
         this.ParentForm=parent;
-        this.PlantID=PlantID;
-        this.setTitle("Ereignisse für "+ PlantID);
+        this.EreignissID=EreignissID;
+        this.setTitle("Ereignisse für "+ EreignissID);
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
         setDuengerList();
-   //     writeHoeheToTable(selectedSort);
+        writeAllToTable(EreignissID);
         sortTble();
     }
 
@@ -350,17 +350,35 @@ public class Ereignisse extends javax.swing.JDialog {
     model.setSelectedItem(model.getElementAt(0));
     }
     
-    public final void writeHoeheToTable(Object selectedSort) throws Exception
+    public void writeHoeheToTable(Object EreignissID) throws Exception
     {
     DB con = new DB();
-    ArrayList<Object[]> hoehenMessungen = con.getEreignissHoeheList(String.valueOf(selectedSort));
+    ArrayList<Object[]> hoehenMessungen = con.getEreignissHoeheList(this.EreignissID);
     
     DefaultTableModel model = (DefaultTableModel) this.TblEreignisse.getModel();
     
     for(Object[] e : hoehenMessungen){model.addRow(e);}
-   
+    }
+    
+    public void writeDuengVToTable(Object EreignissID) throws Exception
+    {
+    DB con = new DB();
+    ArrayList<Object[]> DuengVMessungen = con.getEreignissDuengVList(this.EreignissID);
+    
+    DefaultTableModel model = (DefaultTableModel) this.TblEreignisse.getModel();
+    
+    for(Object[] e : DuengVMessungen){model.addRow(e);}
+    }
+    
+    
+    public final void writeAllToTable(Object EreignissID) throws Exception
+    {
+    this.writeHoeheToTable(EreignissID);
+    this.writeDuengVToTable(EreignissID);
     }
    
+    
+    
     public final void sortTble()
     {
     // nach Datum sortieren:
@@ -394,7 +412,7 @@ public class Ereignisse extends javax.swing.JDialog {
     private SimpleDateFormat myformatter = new SimpleDateFormat("dd.MM.yyyy");
     
     private void btnAddMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMActionPerformed
-    PflanzenHoehe h = new PflanzenHoehe(PlantID, (Date)this.SpinDatMess.getValue(),(int)this.SpinH.getValue());
+    PflanzenHoehe h = new PflanzenHoehe(EreignissID, (Date)this.SpinDatMess.getValue(),(int)this.SpinH.getValue());
         try {h.saveInDB();} 
         catch (Exception ex) {System.err.println(ex.getMessage());}
         
@@ -405,7 +423,7 @@ public class Ereignisse extends javax.swing.JDialog {
     private void btnAddDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDActionPerformed
     if(this.CBDuenger.getSelectedItem()!="<neu>")
         { 
-        Duengung dw = new Duengung(PlantID, (Date)this.SpinDatDuen.getValue(),String.valueOf(this.CBDuenger.getSelectedItem()),(int)(this.SpinM.getValue()));
+        Duengung dw = new Duengung(EreignissID, (Date)this.SpinDatDuen.getValue(),String.valueOf(this.CBDuenger.getSelectedItem()),(int)(this.SpinM.getValue()));
         try {dw.saveInDB();} 
         catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}    
                    
@@ -459,7 +477,7 @@ public class Ereignisse extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnAddWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWActionPerformed
-        Bewaesserung bw = new Bewaesserung(PlantID, (Date)this.SpinDatDuen.getValue(),(int)(this.SpinMB.getValue()));
+        Bewaesserung bw = new Bewaesserung(EreignissID, (Date)this.SpinDatDuen.getValue(),(int)(this.SpinMB.getValue()));
         try {bw.saveInDB();} 
         catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
         
