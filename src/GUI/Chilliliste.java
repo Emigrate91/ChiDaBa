@@ -260,12 +260,17 @@ public class Chilliliste extends javax.swing.JDialog {
 
     private void BtnErignisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnErignisseActionPerformed
     if(this.TblChilli.getSelectedRow()!=-1) {
-        Object selectedSort=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
-        try {this.EreignisFrame = new Ereignisse(this, selectedSort);} 
-        catch (Exception ex) {System.out.println(ex.getMessage());}
-        
-        this.SetEditable(false);
-        this.EreignisFrame.setVisible(true);
+        DB con = new DB();
+        Object sorte=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
+        Object art=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 1);
+       
+        try {
+            Object PlantID =con.getPlantID(sorte, art);
+            this.EreignisFrame = new Ereignisse(this, PlantID);
+            this.SetEditable(false);
+            this.EreignisFrame.setVisible(true);
+            } 
+        catch (Exception ex) { System.err.println(ex.getMessage());}
         }
     }//GEN-LAST:event_BtnErignisseActionPerformed
 

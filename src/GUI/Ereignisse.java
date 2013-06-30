@@ -30,14 +30,14 @@ public class Ereignisse extends javax.swing.JDialog {
 
     private Chilliliste ParentForm;
     DüngerNeu DüngerForm;
-    Object selectedSort;
+    Object PlantID;
     /**
      * Creates new form Eigenschaften
      */
-    public Ereignisse(Chilliliste parent, Object selectedSort) throws Exception {
+    public Ereignisse(Chilliliste parent, Object PlantID) throws Exception {
         this.ParentForm=parent;
-        this.selectedSort=selectedSort;
-        this.setTitle("Ereignisse für "+ selectedSort);
+        this.PlantID=PlantID;
+        this.setTitle("Ereignisse für "+ PlantID);
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
         setDuengerList();
@@ -396,9 +396,9 @@ public class Ereignisse extends javax.swing.JDialog {
     private SimpleDateFormat myformatter = new SimpleDateFormat("dd.MM.yyyy");
     
     private void btnAddMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMActionPerformed
-    PflanzenHoehe h = new PflanzenHoehe(String.valueOf(selectedSort), (Date)this.SpinDatMess.getValue(),(int)this.SpinH.getValue());
+    PflanzenHoehe h = new PflanzenHoehe(PlantID, (Date)this.SpinDatMess.getValue(),(int)this.SpinH.getValue());
         try {h.saveInDB();} 
-        catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
+        catch (Exception ex) {System.err.println(ex.getMessage());}
         
     DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel(); 
     deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatMess.getValue()),"Höhen Messung","/","/", (int)this.SpinH.getValue()   }); 

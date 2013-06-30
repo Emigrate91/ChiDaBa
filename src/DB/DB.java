@@ -100,16 +100,76 @@ public class DB {
         }
     }
     
+    public Object getPlantID(Object sort, Object art) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT p.ID ");
+    sb.append("FROM tbl_pflanzen p ");
+    sb.append("WHERE p.art_fk IN (SELECT a.ID FROM tbl_art a WHERE a.art like (?))");
+    sb.append("AND p.sorte_fk IN (SELECT s.ID FROM tbl_sorte s WHERE s.sorte like (?)) ");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,String.valueOf(art));
+    pstmt.setString(2,String.valueOf(sort));
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        {return rslt.getObject(1);}
+    
+    else
+        {return null;}
+    }
+    
+    public Object getEreignissID(Object PlantID) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT p.ereignisse_fk ");
+    sb.append("FROM tbl_pflanzen p ");
+    sb.append("WHERE p.ID = (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,String.valueOf(PlantID));
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        return rslt.getObject(1);
+    
+    else
+        return null;
+    }
+    
     public void InsertIntoPflanzen_hohe(PflanzenHoehe h) throws Exception{   
         try { 
             // Zur Datenbank verbinden
             con = ConnectDB();
+            
+            Object eID = this.getEreignissID(h.getPlantID());
             // Statement erstellen                   
-            pstmt = con.prepareStatement("INSERT INTO pflanzen_hoehe VALUES(?,?,?);");
-            //Query erstellen 
-            pstmt.setString(1, h.getSorte());  
-            pstmt.setString(2, String.valueOf(dbFormat.format((Date)h.getDatum()))); 
-            pstmt.setString(3, String.valueOf(h.getHoehe()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("INSERT INTO tbl_hoehenmessungen VALUES(?,?,?,?);");
+            String sql = sb.toString();            
+            
+            pstmt = con.prepareStatement(sql);
+            
+            //Query erstellen
+            pstmt.setString(1, null);
+            pstmt.setString(2, String.valueOf(eID));
+            pstmt.setString(3, String.valueOf(dbFormat.format((Date)h.getDatum()))); 
+            pstmt.setString(4, String.valueOf(h.getHoehe()));
             pstmt.executeUpdate();
             }
         catch (Exception e) {}
@@ -252,7 +312,6 @@ public class DB {
     sb.append("WHERE a.ID = p.art_fk ");
     sb.append("AND s.ID = p.sorte_fk ");
     sb.append("AND e.ID = p.ereignisse_fk ");
-    
     String sql = sb.toString();
     
     pstmt = con.prepareStatement(sql);
