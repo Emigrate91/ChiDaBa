@@ -5,8 +5,10 @@
 package GUI;
 
 import DB.DB;
+import DataStructur.PflanzenDatenObjekt;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
@@ -21,10 +23,11 @@ import javax.swing.JSpinner.DefaultEditor;
  *
  * @author Wraith
  */
-public class Zusatzinformation extends javax.swing.JDialog  {
+public final class PflanzenDaten extends javax.swing.JDialog  {
     
     public Chilliliste ParentForm;
-    Object PlantID;
+    Object PlantID; // indicates new / info
+    private SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy.MM.dd");
     
     DefaultListCellRenderer renderer = new DefaultListCellRenderer()
         {
@@ -39,29 +42,86 @@ public class Zusatzinformation extends javax.swing.JDialog  {
     /**
      * Creates new form Neu
      */
-    public Zusatzinformation(Chilliliste parent, Object PlantID) throws Exception {
+    public PflanzenDaten(Chilliliste parent, Object PlantID) throws Exception {
         setIconImage(getToolkit().getImage("Icon.png"));
         this.ParentForm=parent;
         this.PlantID=PlantID;
         initComponents();       
+        loadCBboxes();
+        setAttributeFields();
         this.setInfoView(true);    
-        this.SetDisabledComponentsReadable();
-        setSorteList();
-        setArtList();
+        this.SetDisabledComponentsReadable();        
     }
-      
-    public final void setSorteList() throws Exception{    
+    
+    // Konstruktor für "neu"
+    public PflanzenDaten(Chilliliste parent) throws Exception {
+        setIconImage(getToolkit().getImage("Icon.png"));
+        this.ParentForm=parent;
+        initComponents();          
+        this.SetDisabledComponentsReadable();
+        loadCBboxes();
+        this.CheckBox.setVisible(false);
+        this.BtnSave.setSize(BtnSave.getSize().width, 57);
+    }
+    
+    public ArrayList getPflanzenDatenObjekt(Object PlantID) throws Exception {
+        DB con =new DB();
+        return con.getPlantAttributes(PlantID);
+    }
+    
+    public void setAttributeFields() throws Exception {
+    // get Attributes from DB:
+    ArrayList daten=getPflanzenDatenObjekt(PlantID);
+    
+    // set AttributeFields:
+    this.TxtName.setText(String.valueOf(daten.get(0)));
+    this.CBSorte.setSelectedItem(daten.get(1));
+    this.CBArt.setSelectedItem(daten.get(2));
+    this.CBTopfgröße.setSelectedItem(daten.get(3));
+    this.CBHerkunft.setSelectedItem(daten.get(4));
+    this.BtnColorChoose.setBackground((Color) daten.get(5));
+    this.SpinScoville.setValue(daten.get(6));
+    this.TxtGrad.setText(String.valueOf(daten.get(7)));
+    this.SpinReifPfl.setValue(daten.get(8));
+    this.SpinReifSort.setValue(daten.get(9));
+    this.SpinZeit.setValue(daten.get(10));
+    this.SpinReifErtragGw.setValue(daten.get(11));
+    this.SpinReifErtragStk.setValue(daten.get(12));
+    this.SpinDatAussaat.setValue(new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(daten.get(13))));
+    this.SpinDatAussaat.setValue(new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(daten.get(14))));
+    }
+    
+    public final void loadCBboxes() throws Exception
+    {
+    setSorteList();
+    setArtList();
+    setTopfgroesseList();
+    setHerkunftList();    
+    }
+    
+    public void setSorteList() throws Exception{    
     DB con= new DB();
     ArrayList names = con.getList("sorte", "tbl_sorte");
     updateCB(CBSorte, names);
     }
     
-    public final void setArtList() throws Exception{    
+    public void setArtList() throws Exception{    
     DB con= new DB();
     ArrayList names = con.getList("art", "tbl_art");
     updateCB(CBArt, names);
     }
     
+    public void setTopfgroesseList() throws Exception{    
+    DB con= new DB();
+    ArrayList names = con.getList("topf_gr", "tbl_pflanzen_daten");
+    updateCB(CBTopfgröße, names);
+    }
+
+    public void setHerkunftList() throws Exception{    
+    DB con= new DB();
+    ArrayList names = con.getList("herkunft", "tbl_art");
+    updateCB(CBHerkunft, names);
+    }  
     
     public void updateCB(JComboBox t, ArrayList upToDate)
         {
@@ -145,7 +205,6 @@ public class Zusatzinformation extends javax.swing.JDialog  {
         LblInfo2.setText("einsehen, bearbeiten und Löschen!");
 
         BtnDel.setText("Löschen");
-        BtnDel.setEnabled(false);
         BtnDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnDelActionPerformed(evt);
@@ -165,7 +224,6 @@ public class Zusatzinformation extends javax.swing.JDialog  {
         });
 
         BtnSave.setText("Speichern");
-        BtnSave.setEnabled(false);
         BtnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnSaveActionPerformed(evt);

@@ -7,7 +7,10 @@ package DB;
 import DataStructur.Bewaesserung;
 import DataStructur.Duengung;
 import DataStructur.Duenger;
+import DataStructur.PflanzenDatenObjekt;
 import DataStructur.PflanzenHoehe;
+import GUI.PflanzenDaten;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -79,6 +82,59 @@ public class DB {
     public boolean getuserValidity() {
         return userValidity;
     }
+    
+    public ArrayList getPlantAttributes(Object PlantID) throws Exception{
+        // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT s.sorte, a.art, pd.topf_gr, a.herkunft, pd.farbe, ");
+    sb.append("pd.scoville, pd. schaerfegrad, pd.reifezeit, s.reifezeit, ");
+    sb.append("pd.gesamtzeit, pd.ertrag_gewicht, pd.ertrag_stk, ");
+    sb.append("e.datum_aussaat, e.datum_keimung ");
+    
+    sb.append("FROM tbl_pflanzen p, tbl_sorte s, tbl_art a, ");
+    sb.append("tbl_pflanzen_daten pd, tbl_ereignisse e ");
+            
+    sb.append("WHERE p.ID = (?) ");
+    sb.append("AND a.ID = p.art_fk ");
+    sb.append("AND s.ID = p.sorte_fk ");    
+    sb.append("AND pd.ID = p.pflanzen_daten_fk ");
+    sb.append("AND e.ID = p.ereignisse_fk ");
+    
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,String.valueOf(PlantID));        
+    // execute:
+    rslt = pstmt.executeQuery(); 
+    
+    if(rslt.next()){
+        ArrayList l = new ArrayList();
+            l.add(rslt.getString(1)+"_"+rslt.getString(2)); //00 - name=Sorte_Art
+            l.add(rslt.getString(1));                       //01 - sorte
+            l.add(rslt.getString(2));                       //02 - art
+            l.add(rslt.getString(3));                       //03 - topfgröße
+            l.add(rslt.getString(4));                       //04 - herkunft
+            l.add(Color.decode(rslt.getString(5)));         //05 - farbe
+            l.add(rslt.getInt(6));                          //06 - scoville
+            l.add(rslt.getInt(7));                          //07 - schaefegrad
+            l.add(rslt.getInt(8));                          //08 - reifezeit_pfl
+            l.add(rslt.getInt(9));                          //09 - reifezeit_sorte
+            l.add(rslt.getInt(10));                         //10 - gesamtzeit
+            l.add(rslt.getInt(11));                         //11 - ertrag_g
+            l.add(rslt.getInt(12));                         //12 - ertrag_stk            
+            l.add(convertDBDate(rslt.getString(13)));       //13 - aussaat
+            l.add(convertDBDate(rslt.getString(14)));       //14 - Keimung  
+            
+            return l;         
+    }
+    
+    else{    
+        return null;
+    }
+}
     
     public void InsertIntoBenutzer (String benutzername, String passwort) throws Exception{
         

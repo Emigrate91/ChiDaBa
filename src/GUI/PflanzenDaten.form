@@ -129,7 +129,6 @@
         <Component class="javax.swing.JButton" name="BtnDel">
           <Properties>
             <Property name="text" type="java.lang.String" value="L&#xf6;schen"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnDelActionPerformed"/>
@@ -147,7 +146,6 @@
         <Component class="javax.swing.JButton" name="BtnSave">
           <Properties>
             <Property name="text" type="java.lang.String" value="Speichern"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnSaveActionPerformed"/>

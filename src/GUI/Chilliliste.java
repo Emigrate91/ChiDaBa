@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class Chilliliste extends javax.swing.JDialog {
 
     private Einloggen parentForm;
-    Zusatzinformation ZusatzFrame;
+    PflanzenDaten ZusatzFrame;
     Ereignisse EreignisFrame;
     Neu NeuFrame;
      /**
@@ -252,9 +252,9 @@ public class Chilliliste extends javax.swing.JDialog {
         Object art=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 1);
         try {
             Object PlantID =con.getPlantID(sorte, art);
-            this.ZusatzFrame = new Zusatzinformation(this, PlantID);
+            this.ZusatzFrame = new PflanzenDaten(this, PlantID);
             this.SetEditable(false);
-            this.ZusatzFrame.setVisible(true);  
+            this.ZusatzFrame.setVisible(true); 
             } 
         
         catch (Exception ex) {System.err.println(ex.getMessage());}
