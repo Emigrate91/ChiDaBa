@@ -243,13 +243,28 @@ public class DB {
     
     public Object[][] getTblPflanzenFromDB() throws Exception{
     con = ConnectDB();
-    pstmt = con.prepareStatement("SELECT sorte, art, herkunft, datum_aussaat FROM pflanzen");
+    
+    // erzeuge Statement:
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT s.sorte, a.art, a.herkunft, e.datum_aussaat  ");
+    sb.append("FROM tbl_pflanzen p, tbl_art a, tbl_sorte s, tbl_ereignisse e ");
+    sb.append("WHERE a.ID = p.art_fk ");
+    sb.append("AND s.ID = p.sorte_fk ");
+    sb.append("AND e.ID = p.ereignisse_fk ");
+    
+    String sql = sb.toString();
+    
+    pstmt = con.prepareStatement(sql);
     rslt = pstmt.executeQuery();
+
     ArrayList row = new ArrayList();
     ArrayList<Object[]> column = new ArrayList();
     
     while (rslt.next()) {
-        for(int i=1 ; i<=4;i++){row.add(rslt.getObject(i));}
+        for(int i=1 ; i<=4;i++){    
+            if(i==4){row.add(convertDBDate(String.valueOf(rslt.getObject(i))));}
+            else {row.add(rslt.getObject(i));}
+            }   
         column.add(row.toArray());
         row.clear();
         }
