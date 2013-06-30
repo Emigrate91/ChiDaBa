@@ -11,12 +11,14 @@ import java.util.Date;
  *
  * @author mn
  */
-public class DuengUndWasser {
+public class DuengVorgang {
+Object PlantID;    
 Date datum;
 String duenger;
 int menge;
 
-    public DuengUndWasser(Date datum, String duenger, int menge) {
+    public DuengVorgang(Object PlantID, Date datum, String duenger, int menge) {
+        this.PlantID = PlantID;
         this.datum = datum;
         this.duenger = duenger;
         this.menge = menge;
@@ -25,8 +27,16 @@ int menge;
     public void saveInDB() throws Exception{
         DB connection =new DB();
         connection.InsertIntoDuengvorgang(this);
-    }    
-    
+    } 
+
+    public Object getPlantID() {
+        return PlantID;
+    }
+
+    public void setPlantID(Object PlantID) {
+        this.PlantID = PlantID;
+    }
+
     public Date getDatum() {
         return datum;
     }
@@ -50,6 +60,7 @@ int menge;
     public void setMenge(int menge) {
         this.menge = menge;
     }
-
     
-}
+    
+    
+ }

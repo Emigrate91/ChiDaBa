@@ -5,7 +5,7 @@
 package GUI;
 
 import DB.DB;
-import DataStructur.DuengUndWasser;
+import DataStructur.DuengVorgang;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
 import java.awt.List;
@@ -407,7 +407,7 @@ public class Ereignisse extends javax.swing.JDialog {
     private void btnAddDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDActionPerformed
     if(this.CBDuenger.getSelectedItem()!="<neu>")
         { 
-        DuengUndWasser dw = new DuengUndWasser((Date)this.SpinDatDuen.getValue(),String.valueOf(this.CBDuenger.getSelectedItem()),(int)(this.SpinM.getValue()));
+        DuengVorgang dw = new DuengVorgang(PlantID, (Date)this.SpinDatDuen.getValue(),String.valueOf(this.CBDuenger.getSelectedItem()),(int)(this.SpinM.getValue()));
         try {dw.saveInDB();} 
         catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}    
                    
@@ -461,7 +461,7 @@ public class Ereignisse extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnAddWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWActionPerformed
-        DuengUndWasser dw = new DuengUndWasser((Date)this.SpinDatDuen.getValue(),"Bewässerung",(int)(this.SpinMB.getValue()));
+        DuengVorgang dw = new DuengVorgang(PlantID, (Date)this.SpinDatDuen.getValue(),"Bewässerung",(int)(this.SpinMB.getValue()));
         try {dw.saveInDB();} 
         catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
         

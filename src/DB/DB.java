@@ -4,7 +4,7 @@
  */
 package DB;
 
-import DataStructur.DuengUndWasser;
+import DataStructur.DuengVorgang;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
 import java.sql.Connection;
@@ -177,22 +177,59 @@ public class DB {
         finally{this.CloseDBConnection();}    
     }
  
-    public void InsertIntoDuengvorgang(DuengUndWasser dw) throws Exception{   
+    public void InsertIntoDuengvorgang(DuengVorgang dv) throws Exception{   
         try { 
             // Zur Datenbank verbinden
             con = ConnectDB();
+            
+            Object eID = this.getEreignissID(dv.getPlantID());
+            String name = String.valueOf(getDuengerID(dv.getDuenger()));
+            
             // Statement erstellen                   
-            pstmt = con.prepareStatement("INSERT INTO duengvorgang VALUES(?,?,?);");
-            //Query erstellen 
-            pstmt.setString(1, String.valueOf(dbFormat.format((Date)dw.getDatum())));  
-            pstmt.setString(2, dw.getDuenger()); 
-            pstmt.setString(3, String.valueOf(dw.getMenge()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("INSERT INTO tbl_duengvorgaenge VALUES(?,?,?,?,?);");
+            String sql = sb.toString();            
+            
+            pstmt = con.prepareStatement(sql);
+            
+            //Query erstellen
+            pstmt.setString(1, null);
+            pstmt.setString(2, String.valueOf(eID));
+            pstmt.setString(3, String.valueOf(dbFormat.format((Date)dv.getDatum())));  
+            pstmt.setString(4, String.valueOf(dv.getMenge()));      
+            pstmt.setString(5, name); 
+
             pstmt.executeUpdate();
             }
-        catch (Exception e) {}
+        catch (Exception e) {System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}    
     }    
+    
+    public Object getDuengerID(String d) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT ID ");
+    sb.append("FROM tbl_duenger ");
+    sb.append("WHERE name like (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,d);
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        return rslt.getObject(1);
+    
+    else
+        return null;
+    }
     
     public void InsertIntoDuenger(Duenger duenger) throws Exception{
       
