@@ -432,7 +432,7 @@ public class Ereignisse extends javax.swing.JDialog {
             Duenger d = getDuenger.getDuengerInfo(String.valueOf(CBDuenger.getSelectedItem()));
             this.DüngerForm.SetDuengerData(d);
         } 
-        catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
+        catch (Exception ex) {System.err.println(ex.getMessage());}
         
         this.DüngerForm.setVisible(true);
         }

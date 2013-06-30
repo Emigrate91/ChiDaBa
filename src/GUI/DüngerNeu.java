@@ -59,7 +59,7 @@ public class DüngerNeu extends javax.swing.JDialog {
     this.SpinKalium.setValue(duenger.getKalium());
     this.SpinMag.setValue(duenger.getMagnesium());
     this.SpinPhos.setValue(duenger.getPhosphat());  
-    this.SpinStick.setValue(duenger.getPhosphat());  
+    this.SpinStick.setValue(duenger.getStickstoff());  
     }
     
     /**
@@ -248,7 +248,7 @@ public class DüngerNeu extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnOkActionPerformed
 
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
-    if(!this.InfoViewState)
+    if(this.InfoViewState)
         {this.CleanClose();}
     else
         {
@@ -258,7 +258,8 @@ public class DüngerNeu extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnAbbrActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-    if(this.parentform.AskClosingforChild())
+    
+        if(this.InfoViewState || this.parentform.AskClosingforChild())
         {this.CleanClose();}
     }//GEN-LAST:event_formWindowClosing
     /**

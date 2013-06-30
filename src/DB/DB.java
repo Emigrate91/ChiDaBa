@@ -147,7 +147,7 @@ public class DB {
             pstmt.setString(3, String.valueOf(duenger.getStickstoff())); 
             pstmt.setString(4, String.valueOf(duenger.getPhosphat()));
             pstmt.setString(5, String.valueOf(duenger.getKalium()));
-            pstmt.setString(6, String.valueOf(duenger.getKalium()));
+            pstmt.setString(6, String.valueOf(duenger.getMagnesium()));
             pstmt.executeUpdate();
         }
     
