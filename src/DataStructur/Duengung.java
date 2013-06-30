@@ -11,13 +11,13 @@ import java.util.Date;
  *
  * @author mn
  */
-public class DuengVorgang {
+public class Duengung {
 Object PlantID;    
 Date datum;
 String duenger;
 int menge;
 
-    public DuengVorgang(Object PlantID, Date datum, String duenger, int menge) {
+    public Duengung(Object PlantID, Date datum, String duenger, int menge) {
         this.PlantID = PlantID;
         this.datum = datum;
         this.duenger = duenger;
@@ -26,7 +26,7 @@ int menge;
 
     public void saveInDB() throws Exception{
         DB connection =new DB();
-        connection.InsertIntoDuengvorgang(this);
+        connection.InsertIntoDuengvorgaenge(this);
     } 
 
     public Object getPlantID() {

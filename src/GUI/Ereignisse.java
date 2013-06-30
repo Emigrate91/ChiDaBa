@@ -5,17 +5,15 @@
 package GUI;
 
 import DB.DB;
-import DataStructur.DuengVorgang;
+import DataStructur.Bewaesserung;
+import DataStructur.Duengung;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
-import java.awt.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.ldap.SortKey;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
@@ -264,7 +262,7 @@ public class Ereignisse extends javax.swing.JDialog {
         LblDateD1.setText("Datum:");
 
         SpinDatB.setModel(new javax.swing.SpinnerDateModel());
-        SpinDatDuen.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, "dd.MM.yyyy"));
+        SpinDatB.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, "dd.MM.yyyy"));
 
         btnAddW.setText("Bewässerung hinzufügen");
         btnAddW.addActionListener(new java.awt.event.ActionListener() {
@@ -407,7 +405,7 @@ public class Ereignisse extends javax.swing.JDialog {
     private void btnAddDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDActionPerformed
     if(this.CBDuenger.getSelectedItem()!="<neu>")
         { 
-        DuengVorgang dw = new DuengVorgang(PlantID, (Date)this.SpinDatDuen.getValue(),String.valueOf(this.CBDuenger.getSelectedItem()),(int)(this.SpinM.getValue()));
+        Duengung dw = new Duengung(PlantID, (Date)this.SpinDatDuen.getValue(),String.valueOf(this.CBDuenger.getSelectedItem()),(int)(this.SpinM.getValue()));
         try {dw.saveInDB();} 
         catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}    
                    
@@ -461,8 +459,8 @@ public class Ereignisse extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnAddWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWActionPerformed
-        DuengVorgang dw = new DuengVorgang(PlantID, (Date)this.SpinDatDuen.getValue(),"Bewässerung",(int)(this.SpinMB.getValue()));
-        try {dw.saveInDB();} 
+        Bewaesserung bw = new Bewaesserung(PlantID, (Date)this.SpinDatDuen.getValue(),(int)(this.SpinMB.getValue()));
+        try {bw.saveInDB();} 
         catch (Exception ex) {Logger.getLogger(Ereignisse.class.getName()).log(Level.SEVERE, null, ex);}
         
         DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel();

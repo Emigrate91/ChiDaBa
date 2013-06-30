@@ -439,7 +439,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SpinDatDuen.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, &quot;dd.MM.yyyy&quot;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SpinDatB.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, &quot;dd.MM.yyyy&quot;));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="btnAddW">

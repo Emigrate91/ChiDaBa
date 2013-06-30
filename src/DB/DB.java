@@ -4,7 +4,8 @@
  */
 package DB;
 
-import DataStructur.DuengVorgang;
+import DataStructur.Bewaesserung;
+import DataStructur.Duengung;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
 import java.sql.Connection;
@@ -177,7 +178,34 @@ public class DB {
         finally{this.CloseDBConnection();}    
     }
  
-    public void InsertIntoDuengvorgang(DuengVorgang dv) throws Exception{   
+    public void InsertIntoBewaesserung(Bewaesserung bw) throws Exception{   
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            
+            Object eID = this.getEreignissID(bw.getPlantID());
+            
+            // Statement erstellen                   
+            StringBuilder sb = new StringBuilder();
+            sb.append("INSERT INTO tbl_bewaesserung VALUES(?,?,?,?);");
+            String sql = sb.toString();            
+            
+            pstmt = con.prepareStatement(sql);
+            
+            //Query erstellen
+            pstmt.setString(1, null);
+            pstmt.setString(2, String.valueOf(eID));
+            pstmt.setString(3, String.valueOf(dbFormat.format((Date)bw.getDatum())));  
+            pstmt.setString(4, String.valueOf(bw.getMenge()));       
+
+            pstmt.executeUpdate();
+            }
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}    
+    }    
+    
+    public void InsertIntoDuengvorgaenge(Duengung dv) throws Exception{   
         try { 
             // Zur Datenbank verbinden
             con = ConnectDB();
