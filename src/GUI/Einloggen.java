@@ -257,7 +257,7 @@ public class Einloggen extends javax.swing.JFrame {
             String md5HashedPass="";
             
             try {md5HashedPass = getPasswordMd5Hash(PwField.getPassword());} 
-            catch (Exception ex) {Logger.getLogger(Registrieren.class.getName()).log(Level.SEVERE, null, ex);}
+            catch (Exception e) {System.err.println(e.getMessage());}
         
         try {
             DB userCheck = new DB();
@@ -275,6 +275,7 @@ public class Einloggen extends javax.swing.JFrame {
             }
         }
         catch (Exception e) {
+            System.err.println(e.getMessage());
             JOptionPane.showMessageDialog(this, "Die Datenbank ist nicht erreichbar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }

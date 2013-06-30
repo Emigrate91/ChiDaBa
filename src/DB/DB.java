@@ -7,7 +7,6 @@ package DB;
 import DataStructur.DuengUndWasser;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,7 +36,7 @@ public class DB {
         // Informationen zusammensuchen
         String dbHost = "localhost";
         String dbPort = "3306";
-        String dbName = "projekt";
+        String dbName = "chilli_database";
         String dbUser = "root";
         String dbPassword = "test";
         
@@ -86,10 +85,11 @@ public class DB {
             // Zur Datenbank verbinden
             con = ConnectDB();
             // Statement erstellen
-            pstmt = con.prepareStatement("INSERT INTO benutzer VALUES(?,?)");
+            pstmt = con.prepareStatement("INSERT INTO tbl_benutzer VALUES(?,?,?)");
             //Query erstellen
-            pstmt.setString(1, benutzername);
-            pstmt.setString(2, passwort);
+            pstmt.setString(1, null);
+            pstmt.setString(2, benutzername);
+            pstmt.setString(3, passwort);
             pstmt.executeUpdate();
         }
         catch (Exception e) {
@@ -158,13 +158,12 @@ public class DB {
     public boolean UsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();
-            pstmt = con.prepareStatement("SELECT * FROM benutzer WHERE username = (?);",
-                                    ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstmt = con.prepareStatement("SELECT * FROM tbl_benutzer WHERE username = (?);",ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstmt.setString(1, username);
             rslt = pstmt.executeQuery();
             
             while (rslt.next()) {
-                if (rslt.getString(1).equals(username)) {
+                if (rslt.getString(2).equals(username)) {
                 return true;
                 }
             }       
@@ -212,7 +211,7 @@ public class DB {
     return DuengerList;
     }
     
-    public ArrayList<Object[]> getPflanzenHoeheList(String name) throws Exception{
+    public ArrayList<Object[]> getEreignissHoeheList(String name) throws Exception{
     con = ConnectDB();
     pstmt = con.prepareStatement("SELECT * FROM pflanzen_hoehe WHERE sorte like (?);");
     pstmt.setString(1, name);
@@ -267,9 +266,12 @@ public class DB {
     public void CheckLogOn(String name, String pw) throws Exception {
         try{
             con = ConnectDB();
-            pstmt = con.prepareStatement("SELECT * FROM benutzer WHERE username like (?) AND pass like (?);", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            pstmt = con.prepareStatement("SELECT * FROM tbl_benutzer WHERE username like (?) AND pass like (?);", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             pstmt.setString(1, name);
-            pstmt.setString(2, pw);
+            pstmt.setString(2, pw);  
+           
+            boolean test = pstmt.execute();
+            
             rslt = pstmt.executeQuery();
         
             // if Table size is >=1 -> username with this password 
@@ -283,7 +285,7 @@ public class DB {
                 }
             }*/
         }
-        catch (Exception e) {
+        catch (Exception e) {System.out.println(e.getMessage());
             
         }
         finally {

@@ -353,7 +353,7 @@ public class Ereignisse extends javax.swing.JDialog {
     public final void writeHoeheToTable(Object selectedSort) throws Exception
     {
     DB con = new DB();
-    ArrayList<Object[]> hoehenMessungen = con.getPflanzenHoeheList(String.valueOf(selectedSort));
+    ArrayList<Object[]> hoehenMessungen = con.getEreignissHoeheList(String.valueOf(selectedSort));
     
     DefaultTableModel model = (DefaultTableModel) this.TblEreignisse.getModel();
     

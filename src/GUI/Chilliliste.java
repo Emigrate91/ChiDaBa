@@ -23,7 +23,7 @@ public class Chilliliste extends javax.swing.JDialog {
         this.parentForm=parent;
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
-        writeTblToTblChilli();
+     //   writeTblToTblChilli();
     }
 
     /**
