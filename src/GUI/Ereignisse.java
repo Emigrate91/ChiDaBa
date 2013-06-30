@@ -38,7 +38,7 @@ public class Ereignisse extends javax.swing.JDialog {
         this.setTitle("Ereignisse für "+ EreignissID);
         setIconImage(getToolkit().getImage("Icon.png"));
         initComponents();
-        setDuengerList();
+        updateCBDuengerList();
         writeAllToTable(EreignissID);
         sortTble();
     }
@@ -336,9 +336,9 @@ public class Ereignisse extends javax.swing.JDialog {
     return this.ParentForm.AskClosing();
     }
     
-    public final void setDuengerList() throws Exception{    
+    public final void updateCBDuengerList() throws Exception{    
     DB con= new DB();
-    ArrayList names = con.getDuengerList();
+    ArrayList names = con.getList("name", "tbl_duenger");
     DefaultComboBoxModel model = (DefaultComboBoxModel) this.CBDuenger.getModel();
     
     for(Object e : names.toArray()){
@@ -370,11 +370,22 @@ public class Ereignisse extends javax.swing.JDialog {
     for(Object[] e : DuengVMessungen){model.addRow(e);}
     }
     
+    public void writeBeWToTable(Object EreignissID) throws Exception
+    {
+    DB con = new DB();
+    ArrayList<Object[]> BeWMessungen = con.getEreignissBeWList(this.EreignissID);
+    
+    DefaultTableModel model = (DefaultTableModel) this.TblEreignisse.getModel();
+    
+    for(Object[] e : BeWMessungen){model.addRow(e);}
+    }
+    
     
     public final void writeAllToTable(Object EreignissID) throws Exception
     {
     this.writeHoeheToTable(EreignissID);
     this.writeDuengVToTable(EreignissID);
+    this.writeBeWToTable(EreignissID);
     }
    
     

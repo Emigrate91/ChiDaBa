@@ -4,11 +4,15 @@
  */
 package GUI;
 
+import DB.DB;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
@@ -20,6 +24,8 @@ import javax.swing.JSpinner.DefaultEditor;
 public class Zusatzinformation extends javax.swing.JDialog  {
     
     public Chilliliste ParentForm;
+    Object PlantID;
+    
     DefaultListCellRenderer renderer = new DefaultListCellRenderer()
         {
         @Override
@@ -28,20 +34,47 @@ public class Zusatzinformation extends javax.swing.JDialog  {
             setForeground(Color.BLACK);
             super.paint(g);
             }
-
-};
+        };
     
     /**
      * Creates new form Neu
      */
-    public Zusatzinformation(Chilliliste parent) {
+    public Zusatzinformation(Chilliliste parent, Object PlantID) throws Exception {
         setIconImage(getToolkit().getImage("Icon.png"));
         this.ParentForm=parent;
+        this.PlantID=PlantID;
         initComponents();       
         this.setInfoView(true);    
         this.SetDisabledComponentsReadable();
+        setSorteList();
+        setArtList();
     }
-        
+      
+    public final void setSorteList() throws Exception{    
+    DB con= new DB();
+    ArrayList names = con.getList("sorte", "tbl_sorte");
+    updateCB(CBSorte, names);
+    }
+    
+    public final void setArtList() throws Exception{    
+    DB con= new DB();
+    ArrayList names = con.getList("art", "tbl_art");
+    updateCB(CBArt, names);
+    }
+    
+    
+    public void updateCB(JComboBox t, ArrayList upToDate)
+        {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) t.getModel();
+
+        for(Object e : upToDate.toArray()){
+            if(model.getIndexOf(e)==-1)
+                {model.insertElementAt(e, upToDate.indexOf(e));}
+            }   
+
+    model.setSelectedItem(model.getElementAt(0));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

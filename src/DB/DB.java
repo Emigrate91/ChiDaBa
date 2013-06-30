@@ -344,18 +344,46 @@ public class DB {
             } 
 
     }
+        
+    public ArrayList getList(String listVariable, String tble) throws Exception
+        {
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT ");
+        sb.append(listVariable);
+        sb.append(" FROM ");
+        sb.append(tble);
+        sb.append(" ORDER BY ");
+        sb.append(listVariable);
+        String sql = sb.toString();   
+        
+        pstmt = con.prepareStatement(sql);
+        
+        // Ausführen 
+        rslt = pstmt.executeQuery();
+        
+        // in Liste speichern
+        ArrayList Liste= new ArrayList();
+            while (rslt.next()) 
+                {Liste.add(rslt.getString(1));}
     
-    public ArrayList getDuengerList() throws Exception{
+        this.CloseDBConnection();
+        return Liste;
+        }
+    
+    public ArrayList getSorteList() throws Exception{
     con = ConnectDB();
-    pstmt = con.prepareStatement("SELECT name FROM tbl_duenger ORDER BY name");
+    pstmt = con.prepareStatement("SELECT sorte FROM tbl_sorte ORDER BY sorte");
     rslt = pstmt.executeQuery();
     
-    ArrayList DuengerList= new ArrayList();
+    ArrayList SorteList= new ArrayList();
     while (rslt.next()) 
-        {DuengerList.add(rslt.getString(1));}
+        {SorteList.add(rslt.getString(1));}
     
     this.CloseDBConnection();
-    return DuengerList;
+    return SorteList;
     }
     
     public ArrayList<Object[]> getEreignissHoeheList(Object EreignissID) throws Exception{
@@ -381,6 +409,30 @@ public class DB {
     this.CloseDBConnection();
     return PflanzenHoeheList;
     }
+    
+    public ArrayList<Object[]> getEreignissBeWList(Object EreignissID) throws Exception{
+    con = ConnectDB();
+    pstmt = con.prepareStatement("SELECT * FROM tbl_bewaesserung WHERE tbl_ereignisse_fk like (?);");
+    pstmt.setString(1, String.valueOf(EreignissID));
+    rslt = pstmt.executeQuery();
+    
+
+    ArrayList<Object[]> BeWList= new ArrayList();
+    while (rslt.next()) 
+        {
+        ArrayList tmp = new ArrayList();
+        tmp.add(convertDBDate(rslt.getString(3)));
+        tmp.add("Bewässerung");
+        tmp.add("/");
+        tmp.add(rslt.getString(4));
+        tmp.add("/");     
+        BeWList.add(tmp.toArray());
+        tmp.clear();
+        }
+    
+    this.CloseDBConnection();
+    return BeWList;
+    }    
     
     public ArrayList<Object[]> getEreignissDuengVList(Object EreignissID) throws Exception{
     con = ConnectDB();

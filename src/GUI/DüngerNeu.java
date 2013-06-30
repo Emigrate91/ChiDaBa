@@ -230,7 +230,7 @@ public class DüngerNeu extends javax.swing.JDialog {
                     try {InsertDuenger.InsertIntoDuenger(neu);} 
                     catch (Exception ex) {System.err.println(ex.getMessage());}
 
-                    try {this.parentform.setDuengerList();}             
+                    try {this.parentform.updateCBDuengerList();}             
                     catch (Exception ex) {System.err.println(ex.getMessage());}
 
                     this.parentform.setDünger(this.TxtName.getText());

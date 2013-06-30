@@ -96,7 +96,6 @@ public class Chilliliste extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        TblChilli.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(TblChilli);
 
         PanListe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -246,9 +245,20 @@ public class Chilliliste extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnLogoutActionPerformed
 
     private void BtnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInfoActionPerformed
-    this.ZusatzFrame = new Zusatzinformation(this);
-    this.SetEditable(false);
-    this.ZusatzFrame.setVisible(true);
+    if(this.TblChilli.getSelectedRow()!=-1) {    
+        
+        DB con = new DB();
+        Object sorte=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
+        Object art=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 1);
+        try {
+            Object PlantID =con.getPlantID(sorte, art);
+            this.ZusatzFrame = new Zusatzinformation(this, PlantID);
+            this.SetEditable(false);
+            this.ZusatzFrame.setVisible(true);  
+            } 
+        
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+        }
     }//GEN-LAST:event_BtnInfoActionPerformed
 
     private void BtnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNewActionPerformed
