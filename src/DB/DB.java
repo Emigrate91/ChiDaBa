@@ -92,16 +92,19 @@ public class DB {
     con = ConnectDB();
     // Statement erstellen                   
     StringBuilder sb = new StringBuilder();
-    sb.append("SELECT s.sorte, a.art, pd.topf_gr, a.herkunft, pd.farbe, ");
+    sb.append("SELECT s.sorte, a.art, t.topf_gr, h.herkunft, pd.farbe, ");
     sb.append("pd.scoville, pd. schaerfegrad, pd.reifezeit, s.reifezeit, ");
     sb.append("pd.gesamtzeit, pd.ertrag_gewicht, pd.ertrag_stk, ");
     sb.append("e.datum_aussaat, e.datum_keimung ");
     
     sb.append("FROM tbl_pflanzen p, tbl_sorte s, tbl_art a, ");
-    sb.append("tbl_pflanzen_daten pd, tbl_ereignisse e ");
-            
+    sb.append("tbl_pflanzen_daten pd, tbl_ereignisse e, ");
+    sb.append("tbl_topf t, tbl_herkunft h ");
+    
     sb.append("WHERE p.ID = (?) ");
     sb.append("AND a.ID = p.art_fk ");
+    sb.append("AND t.ID = pd.topf_fk ");
+    sb.append("AND h.ID = a.herkunft_fk ");
     sb.append("AND s.ID = p.sorte_fk ");    
     sb.append("AND pd.ID = p.pflanzen_daten_fk ");
     sb.append("AND e.ID = p.ereignisse_fk ");
