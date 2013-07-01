@@ -21,8 +21,8 @@ import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author mn
+ * This Class enables the user to store information of a certain point in time for an Chiliplant
+ * @author Team ChiDaBa
  */
 public class Ereignisse extends javax.swing.JDialog {
 

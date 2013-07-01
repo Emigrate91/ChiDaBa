@@ -8,8 +8,10 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wraith
+ * This Class assembels the login window and 
+ * gives the User the possibility to either Log in 
+ * or to register a new User
+ * @author Team ChiDaBa
  */
 public class Einloggen extends javax.swing.JFrame {
     Chilliliste ChilliFrame;
@@ -21,10 +23,16 @@ public class Einloggen extends javax.swing.JFrame {
         setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         initComponents();
      }
-    
+    /**
+     * Uses the SetEditable to renew the 
+     * activity in Einloggen
+     */
     public void Callback()
     { this.SetEditable(true);}
-             
+    /**
+     * Enables or disables the Textfield, the Pwfield and the two buttons
+     * @param state The boolean value of state dictates whether the window Einloggen is enabled or not
+     */         
     public void SetEditable(boolean state)
     {
     this.TxtUsername.setEnabled(state);
@@ -32,13 +40,19 @@ public class Einloggen extends javax.swing.JFrame {
     this.BtnAnmelden.setEnabled(state);
     this.BtnReg.setEnabled(state);
     }
-    
+    /**
+     *sets the text and passwordfield to NULL 
+     */
     public void clear()
     {
     this.TxtUsername.setText(null);
     this.PwField.setText(null);
     }
-
+    /**
+     * Checks if the JDialoge in question exists
+     * @return if the return-Value is true then the Frame does exist, othewise false
+     * @param b gets the boolean value to iconify or deiconify all frames
+     */
     public boolean SetJDialogVisibleIfExist(JDialog Dialog, boolean b)
     {
     if(Dialog!=null)
@@ -50,7 +64,9 @@ public class Einloggen extends javax.swing.JFrame {
     else
         {return false;}
     }
-  
+    /**
+     * this method sets all Windows setVisible values to False
+     */  
     public void IconifiedAllWindows()
     {
     if(this.SetJDialogVisibleIfExist(this.ChilliFrame, false))
@@ -65,7 +81,9 @@ public class Einloggen extends javax.swing.JFrame {
         }
     this.SetJDialogVisibleIfExist(this.RegFrame, false); 
     }        
-                
+    /**
+     * this method sets all Windows setVisible values to True 
+     */            
     public void DeiconifiedAllWindows()
     {
     if(this.SetJDialogVisibleIfExist(this.ChilliFrame, true))
@@ -80,7 +98,9 @@ public class Einloggen extends javax.swing.JFrame {
         }
     this.SetJDialogVisibleIfExist(this.RegFrame, true);         
     }    
-
+    /**
+     * builds the frame and initialises all components
+     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -227,7 +247,10 @@ public class Einloggen extends javax.swing.JFrame {
     private void BtnAnmeldenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAnmeldenMouseClicked
  
     }//GEN-LAST:event_BtnAnmeldenMouseClicked
- 
+    /**
+     * @exception e is trown when there is no conection to the database to check the Password
+     * if the button Anmelden is clicked the action shall be performed
+     */
     private void BtnAnmeldenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAnmeldenActionPerformed
     boolean empty=false;
     this.Lblname.setForeground(Color.black);
@@ -280,7 +303,9 @@ public class Einloggen extends javax.swing.JFrame {
      }
      
     }//GEN-LAST:event_BtnAnmeldenActionPerformed
-
+    /**
+     * calls the Registrieren frame
+     */
     private void BtnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegActionPerformed
     this.clear();
     this.RegFrame = new Registrieren(this);
@@ -291,15 +316,21 @@ public class Einloggen extends javax.swing.JFrame {
     private void BtnRegMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegMouseClicked
 
     }//GEN-LAST:event_BtnRegMouseClicked
-
+    /**
+     * minimizes all windows
+     */
     private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified
     this.IconifiedAllWindows();
     }//GEN-LAST:event_formWindowIconified
-
+    /**
+     * maximizes all windows
+     */
     private void formWindowDeiconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeiconified
     this.DeiconifiedAllWindows();
     }//GEN-LAST:event_formWindowDeiconified
-
+    /**
+     * gives a warning if you would like to close Einloggen while Chililiste is still open
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     if(this.ChilliFrame!=null)
         {
@@ -308,17 +339,23 @@ public class Einloggen extends javax.swing.JFrame {
         }
     else {this.dispose();}
     }//GEN-LAST:event_formWindowClosing
-
+    /**
+     * sets the Username = "" if the textfield is still filled with "Username"
+     */
     private void TxtUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtUsernameMouseClicked
     if(TxtUsername.getText().equals("Username"))
     {TxtUsername.setText("");};
     }//GEN-LAST:event_TxtUsernameMouseClicked
-
+    /**
+     * clears the PwField if PASSWORT is still in it
+     */
     private void PwFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PwFieldMouseClicked
     if(this.PwField.getText().equals("PASSWORT"))
         {PwField.setText("");}
     }//GEN-LAST:event_PwFieldMouseClicked
-
+    /**
+     * encrypts the password
+     */
     public String getPasswordMd5Hash(char[] password) throws Exception
     {
     // convert char array to byte array with String:
