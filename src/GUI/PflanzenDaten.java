@@ -12,6 +12,8 @@ import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -226,11 +228,11 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         PanNeuLayout.setVerticalGroup(
             PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanNeuLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(40, 40, 40)
                 .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblInfo2)
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         InfoPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -411,7 +413,21 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             }
         });
 
+        BtnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/save_24.png"))); // NOI18N
         BtnSave.setText("Speichern");
+        BtnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BtnSave.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnSave.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        BtnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnSave.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
+            }
+        });
         BtnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnSaveActionPerformed(evt);
@@ -425,17 +441,38 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             }
         });
 
+        BtnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/arrow_circle_left_24.png"))); // NOI18N
         BtnReset.setText("Zurücksetzen");
+        BtnReset.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnReset.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        BtnReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnReset.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
+            }
+        });
         BtnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnResetActionPerformed(evt);
             }
         });
 
+        BtnAbbr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/cancel_24.png"))); // NOI18N
+        BtnAbbr.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnAbbr.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnAbbr.setLabel("Abbrechen");
         BtnAbbr.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnAbbrMouseClicked(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnAbbr.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
             }
         });
         BtnAbbr.addActionListener(new java.awt.event.ActionListener() {
@@ -444,7 +481,21 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             }
         });
 
+        BtnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/trash_24.png"))); // NOI18N
         BtnDel.setText("Löschen");
+        BtnDel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnDel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        BtnDel.setVerifyInputWhenFocusTarget(false);
+        BtnDel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnDel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
+            }
+        });
         BtnDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnDelActionPerformed(evt);
@@ -459,7 +510,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnReset, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                    .addComponent(BtnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnAbbr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -468,7 +519,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(CheckBox)
                 .addGap(18, 18, 18)
                 .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -729,10 +780,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnSaveActionPerformed
-
-    private void BtnAbbrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAbbrMouseClicked
-
-    }//GEN-LAST:event_BtnAbbrMouseClicked
 
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
     if(this.ParentForm.AskClosing())
@@ -1054,8 +1101,19 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_lblEditHerkunftMouseClicked
 
     private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
-        // TODO add your handling code here:
+        try {this.setAttributeFields();} 
+        catch (Exception ex) {System.err.println(ex.getMessage());}
     }//GEN-LAST:event_BtnResetActionPerformed
+
+    private void BtnMouseMovedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseMovedSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    
+    }//GEN-LAST:event_BtnMouseMovedSetColor
+
+    private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
+//    evt.getComponent().setBackground(new Color(238,238,238));
+      evt.getComponent().setBackground(null);
+    }//GEN-LAST:event_BtnMouseExitedSetColor
 
     
     public void setBtnColor(Color color)
