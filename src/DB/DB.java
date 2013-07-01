@@ -4,6 +4,7 @@
  */
 package DB;
 
+import DataStructur.Art;
 import DataStructur.Bewaesserung;
 import DataStructur.Duengung;
 import DataStructur.Duenger;
@@ -21,6 +22,8 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -210,6 +213,34 @@ public class DB {
         return null;
     }
     
+    public void UpdateTopfG(String h, Object PlantID) throws Exception{
+        try {
+        // Zur Datenbank verbinden
+        con = ConnectDB();         
+
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE tbl_pflanzen_daten pd ");
+        sb.append("SET pd.topf_gr=(?) ");
+        sb.append("WHERE pd.ID IN( ");
+        sb.append("SELECT p.pflanzen_daten_fk FROM tbl_pflanzen p WHERE p.ID = (?)) ");
+        
+        String sql = sb.toString();            
+
+        pstmt = con.prepareStatement(sql);
+        
+        //Query erstellen
+        pstmt.setString(1, h);
+        pstmt.setString(2, String.valueOf(PlantID));
+        
+        // Update durchführen
+        pstmt.executeUpdate();
+          
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+    
+    }
+    
     public void InsertIntoPflanzen_hohe(PflanzenHoehe h) throws Exception{   
         try { 
             // Zur Datenbank verbinden
@@ -354,7 +385,7 @@ public class DB {
             pstmt.executeUpdate();
         }
     
-        catch (Exception e) {}
+        catch (Exception e) {System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}
     }
@@ -373,10 +404,29 @@ public class DB {
             pstmt.executeUpdate();
         }
     
-        catch (Exception e) {}
+        catch (Exception e) {System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}
     }
+        
+        public void InsertIntoArt(Art art) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("INSERT INTO tbl_art VALUES(?,?,?)");
+            //Query erstellen
+            pstmt.setString(1, null); 
+            pstmt.setString(2, art.getArt());  
+            pstmt.setString(3, String.valueOf(art.getHerkunft())); 
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+    }        
     
     
     public boolean UsernameExists (String username) throws Exception {

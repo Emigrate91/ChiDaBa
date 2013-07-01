@@ -4,6 +4,8 @@
  */
 package DataStructur;
 
+import DB.DB;
+
 /**
  *
  * @author mn
@@ -15,6 +17,11 @@ public class Sorte {
     public Sorte(String sorte, int reifezeit) {
         this.sorte = sorte;
         this.reifezeit = reifezeit;
+    }
+    
+    public void saveInDB() throws Exception{
+        DB con = new DB();
+        con.InsertIntoSorte(this);
     }
     
     public String getSorte() {
