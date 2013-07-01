@@ -4,8 +4,6 @@ import DB.DB;
 import java.awt.Color;
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -20,7 +18,7 @@ public class Einloggen extends javax.swing.JFrame {
      * Creates new form Einloggen
      */
     public Einloggen(java.awt.Frame parent, boolean modal) {
-        setIconImage(getToolkit().getImage("Icon.png"));
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         initComponents();
      }
     

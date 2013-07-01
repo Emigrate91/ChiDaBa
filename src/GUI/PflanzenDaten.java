@@ -30,6 +30,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     public Chilliliste ParentForm;
     Object PlantID; // indicates new / info
     private SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy.MM.dd");
+    public boolean InfoView=false;
+    int ReifzeitSorte=1;
     
     DefaultListCellRenderer renderer = new DefaultListCellRenderer()
         {
@@ -45,19 +47,20 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
      * Creates new form Neu
      */
     public PflanzenDaten(Chilliliste parent, Object PlantID) throws Exception {
-        setIconImage(getToolkit().getImage("Icon.png"));
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         this.ParentForm=parent;
         this.PlantID=PlantID;
         initComponents();       
         loadCBboxes();
        // setAttributeFields();
-        this.setInfoView(true);    
+        this.InfoView=true;
+        this.setInfoView(InfoView);    
         this.SetDisabledComponentsReadable();        
     }
     
     // Konstruktor für "neu"
     public PflanzenDaten(Chilliliste parent) throws Exception {
-        setIconImage(getToolkit().getImage("Icon.png"));
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         this.ParentForm=parent;
         initComponents();          
         this.SetDisabledComponentsReadable();
@@ -189,6 +192,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         CBTopfgröße = new javax.swing.JComboBox();
         CBSorte = new javax.swing.JComboBox();
         CBArt = new javax.swing.JComboBox();
+        lblEditReifeSort = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Zusatzinformation");
@@ -248,7 +252,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LblInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
                 .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                     .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -348,11 +352,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
         SpinReifSort.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
         SpinReifSort.setToolTipText("");
-        SpinReifSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SpinReifSortMouseClicked(evt);
-            }
-        });
         SpinReifSort.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 SpinReifSortStateChanged(evt);
@@ -386,6 +385,12 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         });
 
         CBHerkunft.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<neues Land>" }));
+        CBHerkunft.setEnabled(false);
+        CBHerkunft.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CBHerkunftMouseClicked(evt);
+            }
+        });
         CBHerkunft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CBHerkunftActionPerformed(evt);
@@ -446,6 +451,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             }
         });
 
+        lblEditReifeSort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/edit.png"))); // NOI18N
+        lblEditReifeSort.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEditReifeSortMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout InfoPanelLayout = new javax.swing.GroupLayout(InfoPanel);
         InfoPanel.setLayout(InfoPanelLayout);
         InfoPanelLayout.setHorizontalGroup(
@@ -483,16 +495,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SpinDatAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(InfoPanelLayout.createSequentialGroup()
-                        .addComponent(LblReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SpinReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LblReifSortTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(InfoPanelLayout.createSequentialGroup()
-                        .addComponent(LblErtragGw, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SpinReifErtragGw, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addComponent(LblReifPfl, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SpinReifPfl, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -503,16 +505,28 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CBHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(InfoPanelLayout.createSequentialGroup()
+                        .addComponent(LblReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SpinReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LblReifSortTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(InfoPanelLayout.createSequentialGroup()
+                        .addComponent(LblErtragGw, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SpinReifErtragGw, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addComponent(LblErtragStk, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SpinReifErtragStk, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(InfoPanelLayout.createSequentialGroup()
-                        .addComponent(LblGesZeit, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LblGesZeit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEditReifeSort)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SpinZeit, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LblGesZeitTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         InfoPanelLayout.setVerticalGroup(
             InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -532,15 +546,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                                 .addComponent(CBSorte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(InfoPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(CBArt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(InfoPanelLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(LblArt)
-                                    .addComponent(LblGesZeitTag)
-                                    .addComponent(SpinZeit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LblGesZeit)))
-                            .addGroup(InfoPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(CBArt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(LblGesZeit)))))
                     .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(LblReifPfl)
@@ -550,8 +562,14 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(LblReifSortTag)
                             .addComponent(SpinReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LblReifSort))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(LblReifSort))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEditReifeSort, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(SpinZeit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(LblGesZeitTag)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -601,7 +619,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(PanNeu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -654,8 +672,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.BtnSave.setEnabled(!b);
     this.BtnDel.setEnabled(!b);
     this.CBArt.setEnabled(!b);    
-    this.CBHerkunft.setEnabled(!b);
     this.CBSorte.setEnabled(!b);
+    this.CBHerkunft.setEnabled(false);
     this.CBTopfgröße.setEnabled(!b);
     this.SliderGrad.setEnabled(!b);
     this.SpinDatAussaat.setEnabled(!b);
@@ -663,7 +681,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.SpinReifErtragGw.setEnabled(!b);
     this.SpinReifErtragStk.setEnabled(!b);
     this.SpinReifPfl.setEnabled(!b);
-    this.SpinReifSort.setEnabled(!b);
+    this.SpinReifSort.setEnabled(false);
     this.SpinScoville.setEnabled(!b);
     this.SpinZeit.setEnabled(!b);
     this.TxtGrad.setEditable(!b);
@@ -702,10 +720,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     }//GEN-LAST:event_BtnDelActionPerformed
 
-    private void SpinReifSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinReifSortMouseClicked
-
-    }//GEN-LAST:event_SpinReifSortMouseClicked
-
     private void TxtGradActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtGradActionPerformed
 
     }//GEN-LAST:event_TxtGradActionPerformed
@@ -719,6 +733,15 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinReifPflStateChanged
 
     private void SpinReifSortStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinReifSortStateChanged
+        if(!this.SpinReifSort.isEnabled() && !this.InfoView){
+            int eingabe = JOptionPane.showConfirmDialog(this,
+                        "Möchten Sie die Reifezeit für die gesamte Sorte:\""+this.CBSorte.getSelectedItem()+"\" ändern?",
+                        "Das Reifezeit ist sortenbezogen",
+                        JOptionPane.YES_NO_OPTION);
+
+        if(eingabe==0){this.SpinReifSort.setEnabled(true);}
+        if(eingabe==1){this.SpinReifSort.setEnabled(false);}
+        }
     if(this.SpinReifSort.getValue()==1)
         this.LblReifSortTag.setText("Tag");
     
@@ -743,6 +766,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinReifErtragStkStateChanged
 
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
+        // Aufruf der statischen Methode showConfirmDialog()              
         if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1){    
             // Texfeld für das JOptionPane erstellen    
             JTextField herkunft = new JTextField();
@@ -847,7 +871,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Möchten Sie sich wirklich Einträge editieren/löschen?", "Schreibberechtigung",JOptionPane.YES_NO_OPTION ,JOptionPane.WARNING_MESSAGE);
             if(showConfirmDialog==0)
                 {
-                this.setInfoView(false);
+                this.InfoView=false;    
+                this.setInfoView(InfoView);
                 this.CheckBox.setSelected(true);
                 }
 
@@ -861,7 +886,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Nicht gespeicherte Einträge werden zurückgesetzt", "Schreibberechtigung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
             if(showConfirmDialog==0)
             {
-            this.setInfoView(true);
+            this.InfoView=true;
+            this.setInfoView(InfoView);
             this.CheckBox.setSelected(false);
             }
 
@@ -875,11 +901,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }
     
     private void CBSorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBSorteActionPerformed
+        Sorte s=new Sorte(null,0);
+        // Falls letzter eintrag <neue Sorte> ausgewählt:
         if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1){
             // Texfeld und Spinner für das JOptionPane erstellen    
             JTextField sorte = new JTextField();
             JSpinner reifezeit = new JSpinner();
-            reifezeit.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
+            reifezeit.setModel(this.SpinReifSort.getModel());
 
             // Objekte für das JOptionPane
             Object[] message = {"Sortenname:", sorte,"Reifezeit", reifezeit};
@@ -890,28 +918,39 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
 
             try{
-                // falls der eintrag nicht existiert    
+                // falls sortenname nicht existiert    
                 if(((DefaultComboBoxModel)(CBSorte.getModel())).getIndexOf(sorte.getText())==-1){
-                // Eingaben überprüfen:
-                if(sorte.getText().isEmpty() || reifezeit.getValue()==null)
-                    {this.CBSorte.setSelectedIndex(0);}
-                else
-                    {  
-                    Sorte s = new Sorte(sorte.getText(), (int) reifezeit.getValue());
-                    try {
-                        s.saveInDB();
-                        this.CBSorte.insertItemAt(sorte.getText(), this.CBSorte.getItemCount()-1);
-                        this.CBSorte.setSelectedItem(sorte.getText());} 
+                    // Eingaben überprüfen:
+                    if(sorte.getText().isEmpty() || reifezeit.getValue()==null)
+                        {//this.CBSorte.setSelectedIndex(0);}
+                            
+                        }
+                    else
+                        {  
+                        s = new Sorte(sorte.getText(), (int) reifezeit.getValue());
+                        try {
+                            s.saveInDB();
+                            this.CBSorte.insertItemAt(sorte.getText(), this.CBSorte.getItemCount()-1);
+                            this.CBSorte.setSelectedItem(sorte.getText());                        
+                        } 
 
-                    catch (Exception ex) {System.err.println(ex.getMessage());}
-                    }        
+                        catch (Exception ex) {System.err.println(ex.getMessage());}
+                        }        
 
                 }
-            // falls der eintrag existiert    
+            // falls der sortenname existiert    
             else {JOptionPane.showMessageDialog(this, "Sorte bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
             }
         catch(Exception e){System.err.println(e.getMessage());}
         } 
+        
+        // falls ein existierender Eintrag gewählt wurde:
+        else{
+            try {s = new Sorte(String.valueOf(CBSorte.getSelectedItem()));}
+            catch (Exception ex) {System.err.println(ex.getMessage());}       
+        }
+    this.ReifzeitSorte=s.getReifezeit();
+    this.SpinReifSort.setValue(s.getReifezeit());
     setNameUpdate();     
     }//GEN-LAST:event_CBSorteActionPerformed
 
@@ -956,6 +995,30 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         } 
     setNameUpdate();     
     }//GEN-LAST:event_CBArtActionPerformed
+
+    private void CBHerkunftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBHerkunftMouseClicked
+        if(!this.CBHerkunft.isEnabled() && !this.InfoView){
+            int eingabe = JOptionPane.showConfirmDialog(this,
+                        "Möchten Sie das Herkunftsland für die gesamte Art:\""+this.CBArt.getSelectedItem()+"\" ändern?",
+                        "Das Herkunftsland ist artbezogen",
+                        JOptionPane.YES_NO_OPTION);
+
+        if(eingabe==0){this.CBHerkunft.setEnabled(true);}
+        if(eingabe==1){this.CBHerkunft.setEnabled(false);}
+        }
+    }//GEN-LAST:event_CBHerkunftMouseClicked
+
+    private void lblEditReifeSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditReifeSortMouseClicked
+        if(!this.SpinReifSort.isEnabled() && !this.InfoView){
+            int eingabe = JOptionPane.showConfirmDialog(this,
+                        "Möchten Sie das Reifezeit für die gesamte Sorte:\""+this.CBSorte.getSelectedItem()+"\" ändern?",
+                        "Diese Reifezeit ist sortenbezogen",
+                        JOptionPane.YES_NO_OPTION);
+
+        if(eingabe==0){this.SpinReifSort.setEnabled(true);}
+        if(eingabe==1){this.SpinReifSort.setEnabled(false);}
+        }
+    }//GEN-LAST:event_lblEditReifeSortMouseClicked
 
     
     public void setBtnColor(Color color)
@@ -1010,6 +1073,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private javax.swing.JSpinner SpinZeit;
     private javax.swing.JTextField TxtGrad;
     private javax.swing.JTextField TxtName;
+    private javax.swing.JLabel lblEditReifeSort;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

@@ -21,7 +21,7 @@ public class Neu extends javax.swing.JDialog {
      * Creates new form Neu
      */
     public Neu(Chilliliste parent) {
-        setIconImage(getToolkit().getImage("Icon.png"));
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         this.ParentForm=parent;
         initComponents();        
     }

@@ -7,8 +7,6 @@ package GUI;
 import DB.DB;
 import DataStructur.Duenger;
 import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
@@ -25,7 +23,7 @@ public class DüngerNeu extends javax.swing.JDialog {
      */
     public DüngerNeu(Ereignisse parent) {
         this.parentform = parent;
-        setIconImage(getToolkit().getImage("Icon.png"));
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         initComponents();
     }
 

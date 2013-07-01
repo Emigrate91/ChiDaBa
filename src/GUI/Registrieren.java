@@ -23,7 +23,7 @@ public class Registrieren extends javax.swing.JDialog {
      * Creates new form Registrieren
      */
     public Registrieren(Einloggen parent) {
-    setIconImage(getToolkit().getImage("Icon.png"));
+    setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
     initComponents();
     this.parentForm=parent;       
     }

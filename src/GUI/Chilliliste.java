@@ -19,7 +19,7 @@ public class Chilliliste extends javax.swing.JDialog {
      */
     public Chilliliste(Einloggen parent) throws Exception {
         this.parentForm=parent;
-        setIconImage(getToolkit().getImage("Icon.png"));
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         initComponents();
         writeTblToTblChilli();
     }

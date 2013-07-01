@@ -36,7 +36,7 @@ public class Ereignisse extends javax.swing.JDialog {
         this.ParentForm=parent;
         this.EreignissID=EreignissID;
         this.setTitle("Ereignisse für "+ EreignissID);
-        setIconImage(getToolkit().getImage("Icon.png"));
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         initComponents();
         updateCBDuengerList();
         writeAllToTable(EreignissID);

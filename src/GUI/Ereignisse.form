@@ -246,7 +246,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="135" max="32767" attributes="0"/>
+                      <EmptySpace pref="143" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -343,11 +343,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="LblInf">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/mn/Desktop/Chilizucht/Iconinfo.png"/>
-                </Property>
-              </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="LblInfMouseClicked"/>
               </Events>

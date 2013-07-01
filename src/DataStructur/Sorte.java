@@ -14,6 +14,14 @@ public class Sorte {
     private String sorte;
     private int reifezeit;
 
+    public Sorte(String sorte) throws Exception {
+        DB con = new DB();
+        this.sorte = sorte;
+        this.reifezeit=con.getSorteReifezeit(sorte);
+    }
+
+    
+    
     public Sorte(String sorte, int reifezeit) {
         this.sorte = sorte;
         this.reifezeit = reifezeit;

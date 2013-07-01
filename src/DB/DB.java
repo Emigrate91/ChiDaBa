@@ -487,6 +487,7 @@ public class DB {
     
     if(rsltP.next()){
         int erg = rsltP.getInt(1);
+        rsltP.close();
         this.CloseDBConnection();
         return erg;
     }
@@ -497,7 +498,36 @@ public class DB {
     
     }
     }
-        
+
+    public int getSorteReifezeit(String sorte) throws Exception{
+        ResultSet rsltP = null;    
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT s.reifezeit ");
+        sb.append("FROM tbl_sorte s ");
+        sb.append("WHERE sorte = (?)");
+        String sql = sb.toString();    
+        pstmt = con.prepareStatement(sql);
+
+        // set parameter:
+        pstmt.setString(1,sorte);
+
+        // execute:
+        rsltP = pstmt.executeQuery();
+
+        if(rsltP.next()){
+            int erg = rsltP.getInt(1);
+            rsltP.close();
+            this.CloseDBConnection();
+            return erg;
+        }
+        else {return 0;}
+    
+    }
+    
+    
     public boolean UsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();
