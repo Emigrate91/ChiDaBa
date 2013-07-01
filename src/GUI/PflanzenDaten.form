@@ -537,9 +537,8 @@
         <Component class="javax.swing.JComboBox" name="CBHerkunft">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Thailand"/>
-                <StringItem index="1" value="&lt;neues Land&gt;"/>
+              <StringArray count="1">
+                <StringItem index="0" value="&lt;neues Land&gt;"/>
               </StringArray>
             </Property>
           </Properties>
@@ -589,13 +588,8 @@
         <Component class="javax.swing.JComboBox" name="CBTopfgr&#xf6;&#xdf;e">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
-                <StringItem index="0" value="gro&#xdf;"/>
-                <StringItem index="1" value="klein"/>
-                <StringItem index="2" value="mittel"/>
-                <StringItem index="3" value="Beet"/>
-                <StringItem index="4" value="Feld"/>
-                <StringItem index="5" value="&lt;Neue gr&#xf6;&#xdf;e&gt;"/>
+              <StringArray count="1">
+                <StringItem index="0" value="&lt;Neue gr&#xf6;&#xdf;e&gt;"/>
               </StringArray>
             </Property>
           </Properties>

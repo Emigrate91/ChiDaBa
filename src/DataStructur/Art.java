@@ -14,14 +14,20 @@ public class Art {
     private String art;
     private String herkunft;
 
+    
     public Art(String art, String herkunft) {
         this.art = art;
         this.herkunft = herkunft;
     }
     
+    public int getHerkunftID() throws Exception{
+    DB con = new DB();
+    return con.getHerkunftID(herkunft);        
+    }
+    
     public void saveInDB() throws Exception{
         DB con = new DB();
-        con.InsertIntoArt(this);
+        con.InsertIntoArt(this, getHerkunftID());
     }
     
     public String getArt() {

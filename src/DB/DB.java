@@ -410,7 +410,7 @@ public class DB {
         finally{this.CloseDBConnection();}
     }
         
-        public void InsertIntoArt(Art art) throws Exception{
+        public void InsertIntoArt(Art art, int HerkunftID) throws Exception{
       
         try { 
             // Zur Datenbank verbinden
@@ -420,16 +420,48 @@ public class DB {
             //Query erstellen
             pstmt.setString(1, null); 
             pstmt.setString(2, art.getArt());  
-            pstmt.setString(3, String.valueOf(art.getHerkunft())); 
+            pstmt.setString(3, String.valueOf(HerkunftID)); 
             pstmt.executeUpdate();
         }
+        
     
         catch (Exception e) {System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}
     }        
     
+    public int getHerkunftID(String herkunft) throws Exception
+    {
+    ResultSet rsltP = null;    
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT h.ID ");
+    sb.append("FROM tbl_herkunft h ");
+    sb.append("WHERE herkunft = (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
     
+    // set parameter:
+    pstmt.setString(1,herkunft);
+    
+    // execute:
+    rsltP = pstmt.executeQuery();
+    
+    if(rsltP.next()){
+        int erg = rsltP.getInt(1);
+        this.CloseDBConnection();
+        return erg;
+    }
+    
+    else{
+        this.CloseDBConnection(); 
+        return 0;
+    
+    }
+    }
+        
     public boolean UsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();

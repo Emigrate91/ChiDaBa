@@ -50,7 +50,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         this.PlantID=PlantID;
         initComponents();       
         loadCBboxes();
-        setAttributeFields();
+       // setAttributeFields();
         this.setInfoView(true);    
         this.SetDisabledComponentsReadable();        
     }
@@ -385,7 +385,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             }
         });
 
-        CBHerkunft.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Thailand", "<neues Land>" }));
+        CBHerkunft.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<neues Land>" }));
         CBHerkunft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CBHerkunftActionPerformed(evt);
@@ -425,7 +425,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         SpinDatKeimung.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatKeimung, "dd.MM.yyyy"));
         SpinDatKeimung.setToolTipText("");
 
-        CBTopfgröße.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "groß", "klein", "mittel", "Beet", "Feld", "<Neue größe>" }));
+        CBTopfgröße.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<Neue größe>" }));
         CBTopfgröße.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CBTopfgrößeActionPerformed(evt);
