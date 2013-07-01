@@ -526,8 +526,36 @@ public class DB {
         else {return 0;}
     
     }
-    
-    
+
+    public String getArtHerkunft(String art) throws Exception{
+        ResultSet rsltP = null;    
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT h.herkunft ");
+        sb.append("FROM tbl_herkunft h ");
+        sb.append("WHERE h.ID IN (SELECT a.herkunft_fk ");
+        sb.append("FROM tbl_art a WHERE a.art=(?))");
+        
+        String sql = sb.toString();    
+        pstmt = con.prepareStatement(sql);
+
+        // set parameter:
+        pstmt.setString(1,art);
+
+        // execute:
+        rsltP = pstmt.executeQuery();
+
+        if(rsltP.next()){
+            String erg = rsltP.getString(1);
+            rsltP.close();
+            this.CloseDBConnection();
+            return erg;
+        }
+        return null;    
+    }
+        
     public boolean UsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();

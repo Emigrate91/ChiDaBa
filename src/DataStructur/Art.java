@@ -14,6 +14,11 @@ public class Art {
     private String art;
     private String herkunft;
 
+    public Art(String art) throws Exception {
+        DB con = new DB();
+        this.art = art;
+        this.herkunft=con.getArtHerkunft(art);
+    }    
     
     public Art(String art, String herkunft) {
         this.art = art;
