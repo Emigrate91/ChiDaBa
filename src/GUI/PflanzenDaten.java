@@ -6,16 +6,12 @@ package GUI;
 
 import DB.DB;
 import DataStructur.Art;
-import DataStructur.PflanzenDatenObjekt;
 import DataStructur.Sorte;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -119,13 +115,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     public void setTopfgroesseList() throws Exception{    
     DB con= new DB();
-    ArrayList names = con.getList("topf_gr", "tbl_pflanzen_daten");
+    ArrayList names = con.getList("topf_gr", "tbl_topf");
     updateCB(CBTopfgröße, names);
     }
 
     public void setHerkunftList() throws Exception{    
     DB con= new DB();
-    ArrayList names = con.getList("herkunft", "tbl_art");
+    ArrayList names = con.getList("herkunft", "tbl_herkunft");
     updateCB(CBHerkunft, names);
     }  
     
@@ -747,17 +743,37 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinReifErtragStkStateChanged
 
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
-        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1)
-            {
-            String eingabe = JOptionPane.showInputDialog(this, "Bitte geben Sie den Namen eines Landes ein:", "Neues Land",JOptionPane.PLAIN_MESSAGE);
-            if(eingabe!=null)
-                {
-                this.CBHerkunft.insertItemAt(eingabe, this.CBHerkunft.getItemCount()-1);
-                this.CBHerkunft.setSelectedItem(eingabe);
+        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1){    
+            // Texfeld für das JOptionPane erstellen    
+            JTextField herkunft = new JTextField();
+
+
+            // Objekte für das JOptionPane
+            Object[] message = {"Herkunftsland:", herkunft};
+
+            // JOptionPane erstellen 
+            JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+            pane.createDialog(this, "Herkunft").setVisible(true);
+
+            try{
+                // falls der eintrag nicht existiert    
+                if(((DefaultComboBoxModel)(CBHerkunft.getModel())).getIndexOf(herkunft.getText())==-1){
+                    // Eingaben überprüfen:
+                    if(herkunft.getText()!=null){
+                        this.CBHerkunft.insertItemAt(herkunft.getText(), this.CBHerkunft.getItemCount()-1);
+                        this.CBHerkunft.setSelectedItem(herkunft.getText());
+                    } 
+
+                else
+                    {this.CBHerkunft.setSelectedIndex(0);}        
                 }
-            else
-                {this.CBHerkunft.setSelectedIndex(0);}
-            }    
+                // falls der eintrag existiert    
+                else {JOptionPane.showMessageDialog(this, "Topfgröße bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
+            }
+
+            catch(Exception e){System.err.println(e.getMessage());}
+
+        }  
     }//GEN-LAST:event_CBHerkunftActionPerformed
 
     private void SpinZeitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinZeitMouseClicked
@@ -783,41 +799,36 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinDatAussaatStateChanged
 
     private void CBTopfgrößeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBTopfgrößeActionPerformed
+        if(this.CBTopfgröße.getSelectedIndex()==this.CBTopfgröße.getItemCount()-1){    
+            // Texfeld für das JOptionPane erstellen    
+            JTextField groesse = new JTextField();
 
-        if(this.CBTopfgröße.getSelectedIndex()==this.CBTopfgröße.getItemCount()-1){
-        
-        // Texfeld für das JOptionPane erstellen    
-        JTextField groesse = new JTextField();
 
-        
-        // Objekte für das JOptionPane
-        Object[] message = {"Größenbezeichnung:", groesse};
-        
-        // JOptionPane erstellen 
-        JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-        pane.createDialog(this, "Topfgröße").setVisible(true);
-        
-        try{
-        // falls der eintrag nicht existiert    
-        if(((DefaultComboBoxModel)(CBTopfgröße.getModel())).getIndexOf(groesse.getText())==-1){
-        // Eingaben überprüfen:
-        if(groesse.getText()!=null)
-            {
-            DB con = new DB();
-            con.UpdateTopfG(groesse.getText(), PlantID);
-            this.CBTopfgröße.insertItemAt(groesse.getText(), this.CBTopfgröße.getItemCount()-1);
-            this.CBTopfgröße.setSelectedItem(groesse.getText());} 
+            // Objekte für das JOptionPane
+            Object[] message = {"Größenbezeichnung:", groesse};
 
-        else
-            {this.CBTopfgröße.setSelectedIndex(0);}        
-       
-        }
-        // falls der eintrag existiert    
-        else {JOptionPane.showMessageDialog(this, "Topfgröße bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
-        }
-        
-        catch(Exception e){System.err.println(e.getMessage());}
-        
+            // JOptionPane erstellen 
+            JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+            pane.createDialog(this, "Topfgröße").setVisible(true);
+
+            try{
+                // falls der eintrag nicht existiert    
+                if(((DefaultComboBoxModel)(CBTopfgröße.getModel())).getIndexOf(groesse.getText())==-1){
+                    // Eingaben überprüfen:
+                    if(groesse.getText()!=null){
+                        this.CBTopfgröße.insertItemAt(groesse.getText(), this.CBTopfgröße.getItemCount()-1);
+                        this.CBTopfgröße.setSelectedItem(groesse.getText());
+                    } 
+
+                else
+                    {this.CBTopfgröße.setSelectedIndex(0);}        
+                }
+                // falls der eintrag existiert    
+                else {JOptionPane.showMessageDialog(this, "Topfgröße bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
+            }
+
+            catch(Exception e){System.err.println(e.getMessage());}
+
         }    
     }//GEN-LAST:event_CBTopfgrößeActionPerformed
 
@@ -848,92 +859,92 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
             else
             {this.CheckBox.setSelected(true);}
-        }                                        
+        }   
     }//GEN-LAST:event_CheckBoxActionPerformed
 
+    public void setNameUpdate(){
+    this.TxtName.setText(this.CBSorte.getSelectedItem()+"_"+this.CBArt.getSelectedItem());
+    }
+    
     private void CBSorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBSorteActionPerformed
-        if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1)
-        {
-        // Texfeld und Spinner für das JOptionPane erstellen    
-        JTextField sorte = new JTextField();
-        JSpinner reifezeit = new JSpinner();
-        reifezeit.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
-        
-        // Objekte für das JOptionPane
-        Object[] message = {"Sortenname:", sorte,"Reifezeit", reifezeit};
-        
-        // JOptionPane erstellen 
-        JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-        pane.createDialog(this, "Neue Sorte").setVisible(true);
-        
-        
-        try{
-        // falls der eintrag nicht existiert    
-        if(((DefaultComboBoxModel)(CBSorte.getModel())).getIndexOf(sorte.getText())==-1){
-        // Eingaben überprüfen:
-        if(sorte.getText()!=null && reifezeit.getValue()!=null)
-            {  
-            Sorte s = new Sorte(sorte.getText(), (int) reifezeit.getValue());
-            try {
-                s.saveInDB();
-                this.CBSorte.insertItemAt(sorte.getText(), this.CBSorte.getItemCount()-1);
-                this.CBSorte.setSelectedItem(sorte.getText());} 
+        if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1){
+            // Texfeld und Spinner für das JOptionPane erstellen    
+            JTextField sorte = new JTextField();
+            JSpinner reifezeit = new JSpinner();
+            reifezeit.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
 
-            catch (Exception ex) {System.err.println(ex.getMessage());}
+            // Objekte für das JOptionPane
+            Object[] message = {"Sortenname:", sorte,"Reifezeit", reifezeit};
+
+            // JOptionPane erstellen 
+            JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+            pane.createDialog(this, "Neue Sorte").setVisible(true);
+
+
+            try{
+                // falls der eintrag nicht existiert    
+                if(((DefaultComboBoxModel)(CBSorte.getModel())).getIndexOf(sorte.getText())==-1){
+                // Eingaben überprüfen:
+                if(sorte.getText()!=null && reifezeit.getValue()!=null)
+                    {  
+                    Sorte s = new Sorte(sorte.getText(), (int) reifezeit.getValue());
+                    try {
+                        s.saveInDB();
+                        this.CBSorte.insertItemAt(sorte.getText(), this.CBSorte.getItemCount()-1);
+                        this.CBSorte.setSelectedItem(sorte.getText());} 
+
+                    catch (Exception ex) {System.err.println(ex.getMessage());}
+                    }
+                else
+                    {this.CBSorte.setSelectedIndex(0);}        
+
+                }
+            // falls der eintrag existiert    
+            else {JOptionPane.showMessageDialog(this, "Sorte bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
             }
-        else
-            {this.CBSorte.setSelectedIndex(0);}        
-       
-        }
-        // falls der eintrag existiert    
-        else {JOptionPane.showMessageDialog(this, "Sorte bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
-        }
-        
         catch(Exception e){System.err.println(e.getMessage());}
-        
         } 
+    setNameUpdate();     
     }//GEN-LAST:event_CBSorteActionPerformed
 
     private void CBArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBArtActionPerformed
-        if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1){
-        
-        // Texfelder für das JOptionPane erstellen    
-        JTextField art = new JTextField();
-        JComboBox herkunft = new JComboBox();
-        herkunft.setModel(this.CBHerkunft.getModel());
-        
-        // Objekte für das JOptionPane
-        Object[] message = {"Artenname:", art,"Herkunft", herkunft};
-        
-        // JOptionPane erstellen 
-        JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-        pane.createDialog(this, "Art").setVisible(true);
-        
-        try{
-        // falls der eintrag nicht existiert    
-        if(((DefaultComboBoxModel)(CBArt.getModel())).getIndexOf(art.getText())==-1){
-        // Eingaben überprüfen:
-        if(art.getText()!=null && herkunft.getSelectedItem()!=null)
-            {  
-            Art a = new Art(art.getText(), String.valueOf(herkunft.getSelectedItem()));
-            try {
-                a.saveInDB();
-                this.CBArt.insertItemAt(art.getText(), this.CBArt.getItemCount()-1);
-                this.CBArt.setSelectedItem(art.getText());} 
+        if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1){   
+            // Texfelder für das JOptionPane erstellen    
+            JTextField art = new JTextField();
+            JComboBox herkunft = new JComboBox();
+            herkunft.setModel(this.CBHerkunft.getModel());
 
-            catch (Exception ex) {System.err.println(ex.getMessage());}
+            // Objekte für das JOptionPane
+            Object[] message = {"Artenname:", art,"Herkunft", herkunft};
+
+            // JOptionPane erstellen 
+            JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
+            pane.createDialog(this, "Art").setVisible(true);
+
+            try{
+                // falls der eintrag nicht existiert    
+                if(((DefaultComboBoxModel)(CBArt.getModel())).getIndexOf(art.getText())==-1){
+                // Eingaben überprüfen:
+                if(art.getText()!=null && herkunft.getSelectedItem()!=null)
+                    {  
+                    Art a = new Art(art.getText(), String.valueOf(herkunft.getSelectedItem()));
+                    try {
+                        a.saveInDB();
+                        this.CBArt.insertItemAt(art.getText(), this.CBArt.getItemCount()-1);
+                        this.CBArt.setSelectedItem(art.getText());} 
+
+                    catch (Exception ex) {System.err.println(ex.getMessage());}
+                    }
+                else
+                    {this.CBArt.setSelectedIndex(0);}        
+
+                }
+                // falls der eintrag existiert    
+                else {JOptionPane.showMessageDialog(this, "Art bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
             }
-        else
-            {this.CBArt.setSelectedIndex(0);}        
-       
-        }
-        // falls der eintrag existiert    
-        else {JOptionPane.showMessageDialog(this, "Art bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
-        }
-        
-        catch(Exception e){System.err.println(e.getMessage());}
-        
+            catch(Exception e){System.err.println(e.getMessage());}
         } 
+    setNameUpdate();     
     }//GEN-LAST:event_CBArtActionPerformed
 
     

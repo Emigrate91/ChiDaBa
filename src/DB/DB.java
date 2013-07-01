@@ -213,6 +213,7 @@ public class DB {
         return null;
     }
     
+    // wird momentan nicht verwendet!!!
     public void UpdateTopfG(String h, Object PlantID) throws Exception{
         try {
         // Zur Datenbank verbinden
@@ -597,10 +598,11 @@ public class DB {
     
     // erzeuge Statement:
     StringBuilder sb = new StringBuilder();
-    sb.append("SELECT s.sorte, a.art, a.herkunft, e.datum_aussaat  ");
-    sb.append("FROM tbl_pflanzen p, tbl_art a, tbl_sorte s, tbl_ereignisse e ");
+    sb.append("SELECT s.sorte, a.art, h.herkunft, e.datum_aussaat  ");
+    sb.append("FROM tbl_pflanzen p, tbl_art a, tbl_sorte s, tbl_herkunft h, tbl_ereignisse e ");
     sb.append("WHERE a.ID = p.art_fk ");
     sb.append("AND s.ID = p.sorte_fk ");
+    sb.append("AND h.ID = a.herkunft_fk ");
     sb.append("AND e.ID = p.ereignisse_fk ");
     String sql = sb.toString();
     
