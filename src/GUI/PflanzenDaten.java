@@ -747,7 +747,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             // Texfeld für das JOptionPane erstellen    
             JTextField herkunft = new JTextField();
 
-
             // Objekte für das JOptionPane
             Object[] message = {"Herkunftsland:", herkunft};
 
@@ -760,6 +759,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 if(((DefaultComboBoxModel)(CBHerkunft.getModel())).getIndexOf(herkunft.getText())==-1){
                     // Eingaben überprüfen:
                     if(herkunft.getText()!=null){
+                        // neue Herkunft in die db eintragen:
+                        DB con = new DB();
+                        con.InsertIntoHerkunft(herkunft.getText());
+                        
                         this.CBHerkunft.insertItemAt(herkunft.getText(), this.CBHerkunft.getItemCount()-1);
                         this.CBHerkunft.setSelectedItem(herkunft.getText());
                     } 
@@ -816,6 +819,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 if(((DefaultComboBoxModel)(CBTopfgröße.getModel())).getIndexOf(groesse.getText())==-1){
                     // Eingaben überprüfen:
                     if(groesse.getText()!=null){
+                        // neue Größe in die db eintragen:
+                        DB con = new DB();
+                        con.InsertIntoTopfGr(groesse.getText());
+                        
                         this.CBTopfgröße.insertItemAt(groesse.getText(), this.CBTopfgröße.getItemCount()-1);
                         this.CBTopfgröße.setSelectedItem(groesse.getText());
                     } 
@@ -931,7 +938,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                     try {
                         a.saveInDB();
                         this.CBArt.insertItemAt(art.getText(), this.CBArt.getItemCount()-1);
-                        this.CBArt.setSelectedItem(art.getText());} 
+                        this.CBArt.setSelectedItem(art.getText());
+                        this.CBHerkunft.setSelectedItem(herkunft.getSelectedItem());
+                    }
 
                     catch (Exception ex) {System.err.println(ex.getMessage());}
                     }

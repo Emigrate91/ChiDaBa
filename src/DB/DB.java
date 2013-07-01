@@ -430,6 +430,42 @@ public class DB {
         finally{this.CloseDBConnection();}
     }        
     
+        public void InsertIntoHerkunft(String herkunft) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("INSERT INTO tbl_herkunft VALUES(?,?)");
+            //Query erstellen
+            pstmt.setString(1, null); 
+            pstmt.setString(2, herkunft);  
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+    }
+                
+        public void InsertIntoTopfGr(String groesse) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("INSERT INTO tbl_topf VALUES(?,?)");
+            //Query erstellen
+            pstmt.setString(1, null); 
+            pstmt.setString(2, groesse);  
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+    }
+        
     public int getHerkunftID(String herkunft) throws Exception
     {
     ResultSet rsltP = null;    
