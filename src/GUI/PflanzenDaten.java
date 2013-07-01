@@ -758,17 +758,17 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 // falls der eintrag nicht existiert    
                 if(((DefaultComboBoxModel)(CBHerkunft.getModel())).getIndexOf(herkunft.getText())==-1){
                     // Eingaben überprüfen:
-                    if(herkunft.getText()!=null){
+                    if(herkunft.getText().isEmpty()){this.CBHerkunft.setSelectedIndex(0);}
+
+                else
+                    {
                         // neue Herkunft in die db eintragen:
                         DB con = new DB();
                         con.InsertIntoHerkunft(herkunft.getText());
                         
                         this.CBHerkunft.insertItemAt(herkunft.getText(), this.CBHerkunft.getItemCount()-1);
                         this.CBHerkunft.setSelectedItem(herkunft.getText());
-                    } 
-
-                else
-                    {this.CBHerkunft.setSelectedIndex(0);}        
+                    }        
                 }
                 // falls der eintrag existiert    
                 else {JOptionPane.showMessageDialog(this, "Topfgröße bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
@@ -818,17 +818,18 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 // falls der eintrag nicht existiert    
                 if(((DefaultComboBoxModel)(CBTopfgröße.getModel())).getIndexOf(groesse.getText())==-1){
                     // Eingaben überprüfen:
-                    if(groesse.getText()!=null){
+                    if(groesse.getText().isEmpty())
+                        {this.CBTopfgröße.setSelectedIndex(0);}
+
+                else
+                    {
                         // neue Größe in die db eintragen:
                         DB con = new DB();
                         con.InsertIntoTopfGr(groesse.getText());
                         
                         this.CBTopfgröße.insertItemAt(groesse.getText(), this.CBTopfgröße.getItemCount()-1);
                         this.CBTopfgröße.setSelectedItem(groesse.getText());
-                    } 
-
-                else
-                    {this.CBTopfgröße.setSelectedIndex(0);}        
+                    }        
                 }
                 // falls der eintrag existiert    
                 else {JOptionPane.showMessageDialog(this, "Topfgröße bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
@@ -892,7 +893,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 // falls der eintrag nicht existiert    
                 if(((DefaultComboBoxModel)(CBSorte.getModel())).getIndexOf(sorte.getText())==-1){
                 // Eingaben überprüfen:
-                if(sorte.getText()!=null && reifezeit.getValue()!=null)
+                if(sorte.getText().isEmpty() || reifezeit.getValue()==null)
+                    {this.CBSorte.setSelectedIndex(0);}
+                else
                     {  
                     Sorte s = new Sorte(sorte.getText(), (int) reifezeit.getValue());
                     try {
@@ -901,9 +904,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                         this.CBSorte.setSelectedItem(sorte.getText());} 
 
                     catch (Exception ex) {System.err.println(ex.getMessage());}
-                    }
-                else
-                    {this.CBSorte.setSelectedIndex(0);}        
+                    }        
 
                 }
             // falls der eintrag existiert    
@@ -932,7 +933,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 // falls der eintrag nicht existiert    
                 if(((DefaultComboBoxModel)(CBArt.getModel())).getIndexOf(art.getText())==-1){
                 // Eingaben überprüfen:
-                if(art.getText()!=null && herkunft.getSelectedItem()!=null)
+                if(art.getText().isEmpty() || herkunft.getSelectedItem()==null)
+                    {this.CBArt.setSelectedIndex(0);}
+                else
                     {  
                     Art a = new Art(art.getText(), String.valueOf(herkunft.getSelectedItem()));
                     try {
@@ -943,9 +946,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                     }
 
                     catch (Exception ex) {System.err.println(ex.getMessage());}
-                    }
-                else
-                    {this.CBArt.setSelectedIndex(0);}        
+                    }        
 
                 }
                 // falls der eintrag existiert    
