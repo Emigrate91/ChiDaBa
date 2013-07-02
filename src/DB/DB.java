@@ -183,6 +183,32 @@ public class DB {
     else
         {return null;}
     }
+
+    public Object getTopfID(Object topfgr) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT ID ");
+    sb.append("FROM tbl_topf ");
+    sb.append("WHERE topf_gr = (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,String.valueOf(topfgr));
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        return rslt.getObject(1);
+    
+    else
+        return null;
+    }
+    
     
     public Object getEreignissID(Object PlantID) throws Exception
     {
@@ -483,7 +509,71 @@ public int getArtID(Art a, int Herkunft_ID) throws Exception
         }
         finally{this.CloseDBConnection();}
     }
-
+       
+public Object getPflanzenDaten_FK(Object PlantID) throws Exception{                
+    ResultSet rsltP = null;    
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT pflanzen_daten_fk ");
+    sb.append("FROM tbl_pflanzen ");
+    sb.append("WHERE ID = (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,String.valueOf(PlantID));
+    
+    // execute:
+    rsltP = pstmt.executeQuery();
+    
+    if(rsltP.next()){
+        Object erg = rsltP.getObject(1);
+        rsltP.close();
+        this.CloseDBConnection();
+        return erg;
+    }
+    
+    else{
+        this.CloseDBConnection(); 
+        return null;
+    
+    }
+    }
+                
+        public void UpdatePflanzenDaten(ArrayList l) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen            
+            StringBuilder sb = new StringBuilder();
+            sb.append("UPDATE tbl_pflanzen_daten ");
+            
+            sb.append("SET scoville=(?), schaerfegrad=(?), farbe=(?), ");
+            sb.append("topf_fk=(?), reifezeit=(?), gesamtzeit=(?), ");
+            sb.append("ertrag_gewicht=(?), ertrag_stk=(?) ");
+            
+            sb.append("WHERE ID = (?)");
+            
+            String sql = sb.toString();    
+            pstmt = con.prepareStatement(sql);          
+          
+            //Query erstellen
+            for(int i=0;i<9;i++){
+                pstmt.setString(i+1, String.valueOf(l.get(i)));
+            }
+            
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+        } 
+        
+        
         public void UpdateArtHerkunft(int ID, Object value) throws Exception{
       
         try { 
@@ -520,7 +610,7 @@ public int getArtID(Art a, int Herkunft_ID) throws Exception
         catch (Exception e) {System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}
-    }        
+        }           
         
         public void InsertIntoArt(Art art, int HerkunftID) throws Exception{
       
@@ -540,7 +630,7 @@ public int getArtID(Art a, int Herkunft_ID) throws Exception
         catch (Exception e) {System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}
-    }        
+        }        
     
         public void InsertIntoHerkunft(String herkunft) throws Exception{
       

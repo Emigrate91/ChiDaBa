@@ -780,6 +780,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         try {
             UpdateSorteReifezeit();
             UpdateHerkunft();
+            UpdatePflanzenDaten();
             UpdateAttributes();   
         }
         catch (Exception ex) {System.err.println(ex.getMessage());}
@@ -787,31 +788,54 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
     public void UpdateAttributes() throws Exception{            
     }
-          
+    public void UpdatePflanzenDaten() throws Exception{
+        DB con = new DB();
+        
+        // hole Fremdschlüssel:
+        Object topf_fk=con.getTopfID(this.CBTopfgröße.getSelectedItem());
+        Object ID = con.getPflanzenDaten_FK(PlantID);
+        
+        // sammle daten in ArrayList:
+        ArrayList daten = new ArrayList();
+        daten.add(this.SpinScoville.getValue());                                    // Scoville
+        daten.add(this.TxtGrad.getText());                                          // Schärfegrad
+        daten.add(Integer.toString(this.BtnColorChoose.getBackground().getRGB()));  // Color
+        daten.add(topf_fk);                                                         // Topf_fk
+        daten.add(this.SpinReifPfl.getValue());                                     // Reifezeit Pflanze
+        daten.add(this.SpinZeit.getValue());                                        // Gesamtzeit
+        daten.add(this.SpinReifErtragGw.getValue());                                // Ertrag in g
+        daten.add(this.SpinReifErtragStk.getValue());                               // Ertrag in Stück
+        daten.add(ID);                                                              // Pflanzen Daten ID
+        
+        con.UpdatePflanzenDaten(daten);
+    }
+    
     public void UpdateHerkunft() throws Exception{
         // Update Art:
         Art a = new Art(String.valueOf(this.CBArt.getSelectedItem()));
-       
+        int ArtID=a.getArtID();
         if(a.getHerkunft()!=this.CBHerkunft.getSelectedItem()){
-            int ArtID=a.getArtID();
             DB con = new DB();
             int herkunft_FK = con.getHerkunft_FK(ArtID);
             con.UpdateArtHerkunft(herkunft_FK, this.CBHerkunft.getSelectedItem());
-        }    
+        }  
+        // Speicher SortID in tblPflanzen
+        DB con = new DB();
+        con.UpdateFKinPflanzen("art_fk", ArtID, PlantID);        
     }
  
     public void UpdateSorteReifezeit() throws Exception{
         // Update Sorte:
         Sorte s = new Sorte(String.valueOf(this.CBSorte.getSelectedItem()));
+        int SortID= s.getSorteID();
         // Falls Reifezeit verändert wurde:
         if(s.getReifezeit()!=(int)this.SpinReifSort.getValue()){
-            int ID= s.getSorteID();
             DB con = new DB();
-            con.UpdateSorteReifezeit(ID, (int)this.SpinReifSort.getValue());
+            con.UpdateSorteReifezeit(SortID, (int)this.SpinReifSort.getValue());
         }
         // Speicher SortID in tblPflanzen
         DB con = new DB();
-        con.UpdateFKinPflanzen("sorte_fk",s.getSorteID(), PlantID);
+        con.UpdateFKinPflanzen("sorte_fk", SortID, PlantID);
     }   
     
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
@@ -925,7 +949,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void BtnColorChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnColorChooseActionPerformed
       Color newColor = JColorChooser.showDialog(this, "Wähle Sie eine Farbe", this.BtnColorChoose.getBackground());
       this.BtnColorChoose.setBackground(newColor);
-      System.out.println(Integer.toString(newColor.getRGB()));
     }//GEN-LAST:event_BtnColorChooseActionPerformed
 
     private void SpinDatAussaatStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinDatAussaatStateChanged
