@@ -658,7 +658,71 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         
         finally{this.CloseDBConnection();}
         }        
+
+        public Object NeuePflanze() throws Exception{
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // leere Pflanzen_ daten erstellen
+            pstmt = con.prepareStatement("INSERT INTO tbl_pflanzen_daten VALUES( null, null, null, null, null, null, null, null, null )", Statement.RETURN_GENERATED_KEYS);
+           
+            pstmt.executeUpdate();
+            
+            // get Generated Key as pflanzen_daten_ID
+            rslt = pstmt.getGeneratedKeys();
+            if(rslt.next()){
+                int pflanzen_daten_ID = rslt.getInt(1);
+                
+                // Erstelle leeres Ereigniss
+                pstmt = con.prepareStatement("INSERT INTO tbl_ereignisse VALUES(null, null, null )", Statement.RETURN_GENERATED_KEYS);
+                pstmt.executeUpdate();
+                
+                // get Generated Key as pflanzen_daten_ID
+                rslt = pstmt.getGeneratedKeys();
+                if(rslt.next()){
+                    int Ereignis_ID = rslt.getInt(1);                
+                
+                    // Erstelle der eigentlichen Pflanze
+                    // 1,1 weil diese gibt es aufjedenfall, da eine Sorte/Art zuvor erstellt wurde und man Sorten/Arten nicht löschen kann!!!
+                    pstmt = con.prepareStatement("INSERT INTO tbl_pflanzen VALUES(null, 1, 1, ?, ?)", Statement.RETURN_GENERATED_KEYS); 
+                    pstmt.setString(1, String.valueOf(pflanzen_daten_ID));
+                    pstmt.setString(2, String.valueOf(Ereignis_ID));
+                    pstmt.executeUpdate();
+                
+                    // get Generated Key as PlantID
+                    rslt = pstmt.getGeneratedKeys();
+                    if(rslt.next()){
+                    return rslt.getObject(1);
+                    }
+                    
+                    // Fehler beimn erstellen der Pflanze
+                    else{
+                    return null;
+                    }
+                }
+                
+                // Fehler beimn erstellen des Ereignisses
+                else{
+                return null;   
+                }               
+            }
+            
+            // Fehler beimn erstellen der Pflanzen Daten
+            else{
+            return null;    
+            }         
+            
+        }
+        
     
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+        
+        // Fehler anderer art
+        return null;
+        } 
+        
         public void InsertIntoHerkunft(String herkunft) throws Exception{
       
         try { 
