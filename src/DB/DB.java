@@ -117,7 +117,7 @@ public class DB {
             l.add(rslt.getString(2));                       //02 - art
             l.add(rslt.getString(3));                       //03 - topfgröße
             l.add(rslt.getString(4));                       //04 - herkunft
-            l.add(Color.decode(rslt.getString(5)));         //05 - farbe
+            l.add(rslt.getString(5));                       //05 - farbe
             l.add(rslt.getInt(6));                          //06 - scoville
             l.add(rslt.getInt(7));                          //07 - schaefegrad
             l.add(rslt.getInt(8));                          //08 - reifezeit_pfl
@@ -479,8 +479,8 @@ public int getArtID(Art a, int Herkunft_ID) throws Exception
             pstmt.executeUpdate();
         }
     
-        catch (Exception e) {System.err.println(e.getMessage());}
-        
+        catch (Exception e) {//System.err.println(e.getMessage());}
+        }
         finally{this.CloseDBConnection();}
     }
 
@@ -502,6 +502,25 @@ public int getArtID(Art a, int Herkunft_ID) throws Exception
         
         finally{this.CloseDBConnection();}
     }
+        
+        public void UpdateFKinPflanzen(String fk, int newFK, Object PlantID) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("UPDATE tbl_pflanzen SET " + fk + "=(?) WHERE ID=(?)");
+            
+            //Query erstellen
+            pstmt.setString(1, String.valueOf(newFK));
+            pstmt.setString(2, String.valueOf(PlantID));
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+    }        
         
         public void InsertIntoArt(Art art, int HerkunftID) throws Exception{
       

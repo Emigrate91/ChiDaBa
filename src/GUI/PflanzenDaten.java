@@ -12,8 +12,6 @@ import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -85,7 +83,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.CBArt.setSelectedItem(daten.get(2));
     this.CBTopfgröße.setSelectedItem(daten.get(3));
     this.CBHerkunft.setSelectedItem(daten.get(4));
-    this.BtnColorChoose.setBackground((Color) daten.get(5));
+    this.BtnColorChoose.setBackground(new Color(Integer.parseInt(String.valueOf(daten.get(5)))));
     this.SpinScoville.setValue(daten.get(6));
     this.TxtGrad.setText(String.valueOf(daten.get(7)));
     this.SpinReifPfl.setValue(daten.get(8));
@@ -805,12 +803,16 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     public void UpdateSorteReifezeit() throws Exception{
         // Update Sorte:
         Sorte s = new Sorte(String.valueOf(this.CBSorte.getSelectedItem()));
+        // Falls Reifezeit verändert wurde:
         if(s.getReifezeit()!=(int)this.SpinReifSort.getValue()){
             int ID= s.getSorteID();
             DB con = new DB();
             con.UpdateSorteReifezeit(ID, (int)this.SpinReifSort.getValue());
-        }    
-    }    
+        }
+        // Speicher SortID in tblPflanzen
+        DB con = new DB();
+        con.UpdateFKinPflanzen("sorte_fk",s.getSorteID(), PlantID);
+    }   
     
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
     if(this.ParentForm.AskClosing())
@@ -923,6 +925,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void BtnColorChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnColorChooseActionPerformed
       Color newColor = JColorChooser.showDialog(this, "Wähle Sie eine Farbe", this.BtnColorChoose.getBackground());
       this.BtnColorChoose.setBackground(newColor);
+      System.out.println(Integer.toString(newColor.getRGB()));
     }//GEN-LAST:event_BtnColorChooseActionPerformed
 
     private void SpinDatAussaatStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinDatAussaatStateChanged
@@ -1143,15 +1146,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_BtnMouseMovedSetColor
 
     private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
-//    evt.getComponent().setBackground(new Color(238,238,238));
-      evt.getComponent().setBackground(null);
+    evt.getComponent().setBackground(null);
     }//GEN-LAST:event_BtnMouseExitedSetColor
-
-    
-    public void setBtnColor(Color color)
-    {
-    this.BtnColorChoose.setBackground(color);
-    }
     
     /**
      * @param args the command line arguments
