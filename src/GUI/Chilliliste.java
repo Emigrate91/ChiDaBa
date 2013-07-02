@@ -274,7 +274,7 @@ public class Chilliliste extends javax.swing.JDialog {
 
         try {
             Object PlantID =con.getPlantID(sorte, art);
-            Object EreignissID = con.getEreignissID(PlantID);
+            Object EreignissID = con.getEreigniss_fk(PlantID);
             this.EreignisFrame = new Ereignisse(this, EreignissID);
             this.SetEditable(false);
             this.EreignisFrame.setVisible(true);

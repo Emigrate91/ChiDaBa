@@ -210,7 +210,7 @@ public class DB {
     }
     
     
-    public Object getEreignissID(Object PlantID) throws Exception
+    public Object getEreigniss_fk(Object PlantID) throws Exception
     {
     // Zur Datenbank verbinden
     con = ConnectDB();
@@ -542,37 +542,64 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
     }
     }
                 
-        public void UpdatePflanzenDaten(ArrayList l) throws Exception{
-      
-        try { 
-            // Zur Datenbank verbinden
-            con = ConnectDB();
-            // Statement erstellen            
-            StringBuilder sb = new StringBuilder();
-            sb.append("UPDATE tbl_pflanzen_daten ");
-            
-            sb.append("SET scoville=(?), schaerfegrad=(?), farbe=(?), ");
-            sb.append("topf_fk=(?), reifezeit=(?), gesamtzeit=(?), ");
-            sb.append("ertrag_gewicht=(?), ertrag_stk=(?) ");
-            
-            sb.append("WHERE ID = (?)");
-            
-            String sql = sb.toString();    
-            pstmt = con.prepareStatement(sql);          
-          
-            //Query erstellen
-            for(int i=0;i<9;i++){
-                pstmt.setString(i+1, String.valueOf(l.get(i)));
-            }
-            
-            pstmt.executeUpdate();
+    public void UpdatePflanzenDaten(ArrayList l) throws Exception{
+
+    try { 
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen            
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE tbl_pflanzen_daten ");
+
+        sb.append("SET scoville=(?), schaerfegrad=(?), farbe=(?), ");
+        sb.append("topf_fk=(?), reifezeit=(?), gesamtzeit=(?), ");
+        sb.append("ertrag_gewicht=(?), ertrag_stk=(?) ");
+
+        sb.append("WHERE ID = (?)");
+
+        String sql = sb.toString();    
+        pstmt = con.prepareStatement(sql);          
+
+        //Query erstellen
+        for(int i=0;i<9;i++){
+            pstmt.setString(i+1, String.valueOf(l.get(i)));
         }
-    
-        catch (Exception e) {System.err.println(e.getMessage());}
-        
-        finally{this.CloseDBConnection();}
-        } 
-        
+
+        pstmt.executeUpdate();
+    }
+
+    catch (Exception e) {System.err.println(e.getMessage());}
+
+    finally{this.CloseDBConnection();}
+    } 
+ 
+   public void UpdateEreignisse(ArrayList l) throws Exception{
+
+    try { 
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen            
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE tbl_ereignisse ");
+
+        sb.append("SET datum_aussaat=(?), datum_keimung=(?) ");
+
+        sb.append("WHERE ID = (?)");
+
+        String sql = sb.toString();    
+        pstmt = con.prepareStatement(sql);          
+
+        //Query erstellen
+        pstmt.setString(1, dbFormat.format((Date)(l.get(0))));
+        pstmt.setString(2, dbFormat.format((Date)(l.get(1))));
+        pstmt.setString(3, String.valueOf(l.get(2)));
+        pstmt.executeUpdate();
+    }
+
+    catch (Exception e) {System.err.println(e.getMessage());}
+
+    finally{this.CloseDBConnection();}
+    }     
         
         public void UpdateArtHerkunft(int ID, Object value) throws Exception{
       

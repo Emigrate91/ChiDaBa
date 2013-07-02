@@ -808,7 +808,17 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         daten.add(ID);                                                              // Pflanzen Daten ID
         
         con.UpdatePflanzenDaten(daten);
+        
+        // Datum Aussat und Keimung Speichern:
+        ID = con.getEreigniss_fk(PlantID);
+        daten.clear();
+        daten.add(this.SpinDatAussaat.getValue());
+        daten.add(this.SpinDatKeimung.getValue());
+        daten.add(ID); 
+        
+        con.UpdateEreignisse(daten);
     }
+  
     
     public void UpdateHerkunft() throws Exception{
         // Update Art:
