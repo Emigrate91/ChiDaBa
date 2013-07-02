@@ -12,6 +12,8 @@ import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -31,6 +33,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     Object PlantID; // indicates new / info
     private SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy.MM.dd");
     public boolean InfoView=false;
+    public boolean neuView = false;
     
     DefaultListCellRenderer renderer = new DefaultListCellRenderer()
         {
@@ -43,18 +46,18 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         };
     
     /**
-     * Creates new form Neu
+     * Creates new form Zusatzinformationen
      */
     public PflanzenDaten(Chilliliste parent, Object PlantID) throws Exception {
         setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         this.ParentForm=parent;
         this.PlantID=PlantID;
         initComponents();       
-        loadCBboxes();
-       // setAttributeFields();
         this.InfoView=true;
         this.setInfoView(InfoView);    
-        this.SetDisabledComponentsReadable();        
+        this.SetDisabledComponentsReadable();
+        loadCBboxes();
+        setAttributeFields();
     }
     
     // Konstruktor für "neu"
@@ -64,9 +67,16 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         initComponents();          
         this.SetDisabledComponentsReadable();
         loadCBboxes();
-        this.CheckBox.setVisible(false);
-        this.BtnSave.setSize(BtnSave.getSize().width, 57);
+        this.neuView=true;
+        setNeuView();
     }
+    
+    public void setNeuView(){
+        this.CheckBox.setVisible(false);
+        this.BtnReset.setVisible(false);
+        this.BtnDel.setVisible(false);
+    }
+            
     
     public ArrayList getPflanzenDatenObjekt(Object PlantID) throws Exception {
         DB con =new DB();
@@ -83,7 +93,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.CBArt.setSelectedItem(daten.get(2));
     this.CBTopfgröße.setSelectedItem(daten.get(3));
     this.CBHerkunft.setSelectedItem(daten.get(4));
-    this.BtnColorChoose.setBackground((Color) daten.get(5));
+    this.BtnColorChoose.setBackground(new Color(Integer.parseInt(String.valueOf(daten.get(5)))));
     this.SpinScoville.setValue(daten.get(6));
     this.TxtGrad.setText(String.valueOf(daten.get(7)));
     this.SpinReifPfl.setValue(daten.get(8));
@@ -92,7 +102,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.SpinReifErtragGw.setValue(daten.get(11));
     this.SpinReifErtragStk.setValue(daten.get(12));
     this.SpinDatAussaat.setValue(new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(daten.get(13))));
-    this.SpinDatAussaat.setValue(new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(daten.get(14))));
+    this.SpinDatKeimung.setValue(new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(daten.get(14))));
     }
     
     public final void loadCBboxes() throws Exception
@@ -152,10 +162,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         PanNeu = new javax.swing.JPanel();
         LblInfo = new javax.swing.JLabel();
         LblInfo2 = new javax.swing.JLabel();
-        BtnDel = new javax.swing.JButton();
-        BtnAbbr = new javax.swing.JButton();
-        BtnSave = new javax.swing.JButton();
-        CheckBox = new javax.swing.JCheckBox();
         InfoPanel = new javax.swing.JPanel();
         LblName = new javax.swing.JLabel();
         LblSorte = new javax.swing.JLabel();
@@ -193,6 +199,12 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         CBArt = new javax.swing.JComboBox();
         lblEditReifeSort = new javax.swing.JLabel();
         lblEditHerkunft = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        BtnSave = new javax.swing.JButton();
+        CheckBox = new javax.swing.JCheckBox();
+        BtnReset = new javax.swing.JButton();
+        BtnDel = new javax.swing.JButton();
+        BtnAbbr = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Zusatzinformation");
@@ -210,39 +222,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         LblInfo2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         LblInfo2.setText("einsehen, bearbeiten und Löschen!");
 
-        BtnDel.setText("Löschen");
-        BtnDel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnDelActionPerformed(evt);
-            }
-        });
-
-        BtnAbbr.setLabel("Abbrechen");
-        BtnAbbr.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnAbbrMouseClicked(evt);
-            }
-        });
-        BtnAbbr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnAbbrActionPerformed(evt);
-            }
-        });
-
-        BtnSave.setText("Speichern");
-        BtnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnSaveActionPerformed(evt);
-            }
-        });
-
-        CheckBox.setText("Bearbeiten");
-        CheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CheckBoxActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout PanNeuLayout = new javax.swing.GroupLayout(PanNeu);
         PanNeu.setLayout(PanNeuLayout);
         PanNeuLayout.setHorizontalGroup(
@@ -250,36 +229,18 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             .addGroup(PanNeuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
-                .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                    .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(12, 12, 12)
-                .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnDel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnAbbr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(LblInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanNeuLayout.setVerticalGroup(
             PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanNeuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanNeuLayout.createSequentialGroup()
-                        .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(BtnDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BtnAbbr)
-                            .addComponent(CheckBox)))
-                    .addGroup(PanNeuLayout.createSequentialGroup()
-                        .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LblInfo2)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LblInfo2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         InfoPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -460,12 +421,133 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             }
         });
 
+        BtnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/save_24.png"))); // NOI18N
+        BtnSave.setText("Speichern");
+        BtnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BtnSave.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnSave.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        BtnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnSave.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
+            }
+        });
+        BtnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSaveActionPerformed(evt);
+            }
+        });
+
+        CheckBox.setText("Bearbeiten");
+        CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckBoxActionPerformed(evt);
+            }
+        });
+
+        BtnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/arrow_circle_left_24.png"))); // NOI18N
+        BtnReset.setText("Zurücksetzen");
+        BtnReset.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnReset.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        BtnReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnReset.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
+            }
+        });
+        BtnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnResetActionPerformed(evt);
+            }
+        });
+
+        BtnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/trash_24.png"))); // NOI18N
+        BtnDel.setText("Löschen");
+        BtnDel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnDel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        BtnDel.setVerifyInputWhenFocusTarget(false);
+        BtnDel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnDel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
+            }
+        });
+        BtnDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDelActionPerformed(evt);
+            }
+        });
+
+        BtnAbbr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/cancel_24.png"))); // NOI18N
+        BtnAbbr.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnAbbr.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        BtnAbbr.setLabel("Abbrechen");
+        BtnAbbr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+        });
+        BtnAbbr.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BtnMouseMovedSetColor(evt);
+            }
+        });
+        BtnAbbr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAbbrActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(BtnAbbr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CheckBox)
+                .addGap(18, 18, 18)
+                .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnAbbr, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnDel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout InfoPanelLayout = new javax.swing.GroupLayout(InfoPanel);
         InfoPanel.setLayout(InfoPanelLayout);
         InfoPanelLayout.setHorizontalGroup(
             InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InfoPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -478,10 +560,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                             .addComponent(LblFarbe))
                         .addGap(6, 6, 6)
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(SpinScoville)
+                            .addComponent(SpinScoville, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                             .addGroup(InfoPanelLayout.createSequentialGroup()
-                                .addComponent(SliderGrad, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(SliderGrad, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
                                 .addComponent(TxtGrad))
                             .addComponent(TxtName)
                             .addComponent(BtnColorChoose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -520,34 +602,30 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                     .addComponent(lblEditHerkunft))
                 .addGap(6, 6, 6)
                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SpinDatAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SpinDatKeimung, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SpinReifErtragGw, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(InfoPanelLayout.createSequentialGroup()
-                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SpinDatAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SpinDatKeimung, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SpinReifErtragStk, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SpinReifErtragGw, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(SpinReifPfl, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LblReifPflTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(InfoPanelLayout.createSequentialGroup()
-                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(InfoPanelLayout.createSequentialGroup()
-                                .addComponent(SpinReifPfl, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LblReifPflTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(CBHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(InfoPanelLayout.createSequentialGroup()
-                                .addComponent(SpinReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LblReifSortTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(InfoPanelLayout.createSequentialGroup()
-                                .addComponent(SpinZeit, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LblGesZeitTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(SpinReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LblReifSortTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(InfoPanelLayout.createSequentialGroup()
+                        .addComponent(SpinZeit, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LblGesZeitTag, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SpinReifErtragStk, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         InfoPanelLayout.setVerticalGroup(
             InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -571,8 +649,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                         .addGap(12, 12, 12)
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(LblGrad)
-                            .addComponent(SliderGrad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TxtGrad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TxtGrad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SliderGrad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(LblFarbe)
@@ -622,6 +700,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                                     .addComponent(LblDatumKeimung)))
                             .addComponent(lblEditHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20))
+            .addGroup(InfoPanelLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -631,9 +712,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(PanNeu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanNeu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -642,7 +723,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addComponent(PanNeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(42, 42, 42))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -685,6 +766,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     {       
     this.BtnSave.setEnabled(!b);
     this.BtnDel.setEnabled(!b);
+    this.BtnReset.setEnabled(!b);
     this.CBArt.setEnabled(!b);    
     this.CBSorte.setEnabled(!b);
     this.CBHerkunft.setEnabled(false);
@@ -699,7 +781,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.SpinScoville.setEnabled(!b);
     this.SpinZeit.setEnabled(!b);
     this.TxtGrad.setEditable(!b);
-    this.TxtName.setEditable(!b);
+    this.TxtName.setEditable(false);
     this.BtnColorChoose.setEnabled(!b);
     this.lblEditReifeSort.setEnabled(!b);
     this.lblEditHerkunft.setEnabled(!b);
@@ -707,13 +789,88 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }
     
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
-        // TODO add your handling code here:
+        if(this.neuView){
+        DB con = new DB();
+            try {this.PlantID=con.NeuePflanze();} 
+            catch (Exception ex) {System.err.println(ex.getMessage());}
+        }
+        
+        try {
+            UpdateSorteReifezeit();
+            UpdateHerkunft();
+            UpdatePflanzenDaten();
+            UpdateAttributes(); 
+            
+            // Update Chilliliste View:
+            this.ParentForm.writeTblToTblChilli();
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+        
+
     }//GEN-LAST:event_BtnSaveActionPerformed
 
-    private void BtnAbbrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAbbrMouseClicked
-
-    }//GEN-LAST:event_BtnAbbrMouseClicked
-
+    public void UpdateAttributes() throws Exception{            
+    }
+    public void UpdatePflanzenDaten() throws Exception{
+        DB con = new DB();
+        
+        // hole Fremdschlüssel:
+        Object topf_fk=con.getTopfID(this.CBTopfgröße.getSelectedItem());
+        Object ID = con.getPflanzenDaten_FK(PlantID);
+        
+        // sammle daten in ArrayList:
+        ArrayList daten = new ArrayList();
+        daten.add(this.SpinScoville.getValue());                                    // Scoville
+        daten.add(this.TxtGrad.getText());                                          // Schärfegrad
+        daten.add(Integer.toString(this.BtnColorChoose.getBackground().getRGB()));  // Color
+        daten.add(topf_fk);                                                         // Topf_fk
+        daten.add(this.SpinReifPfl.getValue());                                     // Reifezeit Pflanze
+        daten.add(this.SpinZeit.getValue());                                        // Gesamtzeit
+        daten.add(this.SpinReifErtragGw.getValue());                                // Ertrag in g
+        daten.add(this.SpinReifErtragStk.getValue());                               // Ertrag in Stück
+        daten.add(ID);                                                              // Pflanzen Daten ID
+        
+        con.UpdatePflanzenDaten(daten);
+        
+        // Datum Aussat und Keimung Speichern:
+        ID = con.getEreigniss_fk(PlantID);
+        daten.clear();
+        daten.add(this.SpinDatAussaat.getValue());
+        daten.add(this.SpinDatKeimung.getValue());
+        daten.add(ID); 
+        
+        con.UpdateEreignisse(daten);
+    }
+  
+    
+    public void UpdateHerkunft() throws Exception{
+        // Update Art:
+        Art a = new Art(String.valueOf(this.CBArt.getSelectedItem()));
+        int ArtID=a.getArtID();
+        if(a.getHerkunft()!=this.CBHerkunft.getSelectedItem()){
+            DB con = new DB();
+            int herkunft_FK = con.getHerkunft_FK(ArtID);
+            con.UpdateArtHerkunft(herkunft_FK, this.CBHerkunft.getSelectedItem());
+        }  
+        // Speicher SortID in tblPflanzen
+        DB con = new DB();
+        con.UpdateFKinPflanzen("art_fk", ArtID, PlantID);        
+    }
+ 
+    public void UpdateSorteReifezeit() throws Exception{
+        // Update Sorte:
+        Sorte s = new Sorte(String.valueOf(this.CBSorte.getSelectedItem()));
+        int SortID= s.getSorteID();
+        // Falls Reifezeit verändert wurde:
+        if(s.getReifezeit()!=(int)this.SpinReifSort.getValue()){
+            DB con = new DB();
+            con.UpdateSorteReifezeit(SortID, (int)this.SpinReifSort.getValue());
+        }
+        // Speicher SortID in tblPflanzen
+        DB con = new DB();
+        con.UpdateFKinPflanzen("sorte_fk", SortID, PlantID);
+    }   
+    
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
     if(this.ParentForm.AskClosing())
         {this.CleanClose();}
@@ -891,11 +1048,12 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         {
             this.CheckBox.setSelected(true);
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Nicht gespeicherte Einträge werden zurückgesetzt", "Schreibberechtigung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
-            if(showConfirmDialog==0)
-            {
-            this.InfoView=true;
-            this.setInfoView(InfoView);
-            this.CheckBox.setSelected(false);
+            if(showConfirmDialog==0){
+                try {this.setAttributeFields();} 
+                catch (Exception ex) {System.err.println(ex.getMessage());}
+                this.InfoView=true;
+                this.setInfoView(InfoView);
+                this.CheckBox.setSelected(false);
             }
 
             else
@@ -1033,11 +1191,21 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         }
     }//GEN-LAST:event_lblEditHerkunftMouseClicked
 
+    private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
+    if(this.ParentForm.AskClosing()){
+        try {this.setAttributeFields();} 
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+        }
+    }//GEN-LAST:event_BtnResetActionPerformed
+
+    private void BtnMouseMovedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseMovedSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
     
-    public void setBtnColor(Color color)
-    {
-    this.BtnColorChoose.setBackground(color);
-    }
+    }//GEN-LAST:event_BtnMouseMovedSetColor
+
+    private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
+    evt.getComponent().setBackground(null);
+    }//GEN-LAST:event_BtnMouseExitedSetColor
     
     /**
      * @param args the command line arguments
@@ -1047,6 +1215,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private javax.swing.JButton BtnAbbr;
     private javax.swing.JButton BtnColorChoose;
     private javax.swing.JButton BtnDel;
+    private javax.swing.JButton BtnReset;
     private javax.swing.JButton BtnSave;
     private javax.swing.JComboBox CBArt;
     private javax.swing.JComboBox CBHerkunft;
@@ -1086,6 +1255,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private javax.swing.JSpinner SpinZeit;
     private javax.swing.JTextField TxtGrad;
     private javax.swing.JTextField TxtName;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblEditHerkunft;
     private javax.swing.JLabel lblEditReifeSort;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

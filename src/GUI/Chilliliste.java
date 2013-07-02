@@ -5,6 +5,8 @@
 package GUI;
 
 import DB.DB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -260,10 +262,14 @@ public class Chilliliste extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnInfoActionPerformed
 
     private void BtnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNewActionPerformed
-    this.NeuFrame = new Neu(this);
-    this.SetEditable(false);
-    this.NeuFrame.setVisible(true);
-    
+        try {
+            this.ZusatzFrame = new PflanzenDaten(this);
+            this.SetEditable(false);
+            this.ZusatzFrame.setVisible(true);             
+        } 
+        
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+
     }//GEN-LAST:event_BtnNewActionPerformed
 
     private void BtnErignisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnErignisseActionPerformed
@@ -274,7 +280,7 @@ public class Chilliliste extends javax.swing.JDialog {
 
         try {
             Object PlantID =con.getPlantID(sorte, art);
-            Object EreignissID = con.getEreignissID(PlantID);
+            Object EreignissID = con.getEreigniss_fk(PlantID);
             this.EreignisFrame = new Ereignisse(this, EreignissID);
             this.SetEditable(false);
             this.EreignisFrame.setVisible(true);

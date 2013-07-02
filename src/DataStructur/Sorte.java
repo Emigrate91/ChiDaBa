@@ -18,19 +18,36 @@ public class Sorte {
         DB con = new DB();
         this.sorte = sorte;
         this.reifezeit=con.getSorteReifezeit(sorte);
-    }
-
-    
+    }  
     
     public Sorte(String sorte, int reifezeit) {
         this.sorte = sorte;
         this.reifezeit = reifezeit;
     }
     
-    public void saveInDB() throws Exception{
+    public int getSorteID() throws Exception{
         DB con = new DB();
-        con.InsertIntoSorte(this);
+        if(con.getList("sorte", "tbl_sorte").contains(this.getSorte())){
+        return con.getSorteID(this);
+        }
+        else {
+            System.err.println("Sorte nicht vorhanden");
+            return -1;
+        }     
     }
+    
+    public void saveInDB() throws Exception{
+         DB con = new DB();
+         if(!con.getList("sorte", "tbl_sorte").contains(this.getSorte())){
+             con.InsertIntoSorte(this);
+         }    
+         
+         else {
+             System.err.println("Sortenname bereits vergeben");
+         }    
+         
+    }
+  
     
     public String getSorte() {
         return sorte;

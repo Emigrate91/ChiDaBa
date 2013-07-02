@@ -8,10 +8,8 @@ import DataStructur.Art;
 import DataStructur.Bewaesserung;
 import DataStructur.Duengung;
 import DataStructur.Duenger;
-import DataStructur.PflanzenDatenObjekt;
 import DataStructur.PflanzenHoehe;
 import DataStructur.Sorte;
-import GUI.PflanzenDaten;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,13 +20,8 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author Jung-Ho Choi
- */
+
 public class DB {
         
     private Connection con = null;
@@ -92,16 +85,19 @@ public class DB {
     con = ConnectDB();
     // Statement erstellen                   
     StringBuilder sb = new StringBuilder();
-    sb.append("SELECT s.sorte, a.art, pd.topf_gr, a.herkunft, pd.farbe, ");
+    sb.append("SELECT s.sorte, a.art, t.topf_gr, h.herkunft, pd.farbe, ");
     sb.append("pd.scoville, pd. schaerfegrad, pd.reifezeit, s.reifezeit, ");
     sb.append("pd.gesamtzeit, pd.ertrag_gewicht, pd.ertrag_stk, ");
     sb.append("e.datum_aussaat, e.datum_keimung ");
     
     sb.append("FROM tbl_pflanzen p, tbl_sorte s, tbl_art a, ");
-    sb.append("tbl_pflanzen_daten pd, tbl_ereignisse e ");
-            
+    sb.append("tbl_pflanzen_daten pd, tbl_ereignisse e, ");
+    sb.append("tbl_topf t, tbl_herkunft h ");
+    
     sb.append("WHERE p.ID = (?) ");
     sb.append("AND a.ID = p.art_fk ");
+    sb.append("AND t.ID = pd.topf_fk ");
+    sb.append("AND h.ID = a.herkunft_fk ");
     sb.append("AND s.ID = p.sorte_fk ");    
     sb.append("AND pd.ID = p.pflanzen_daten_fk ");
     sb.append("AND e.ID = p.ereignisse_fk ");
@@ -121,7 +117,7 @@ public class DB {
             l.add(rslt.getString(2));                       //02 - art
             l.add(rslt.getString(3));                       //03 - topfgröße
             l.add(rslt.getString(4));                       //04 - herkunft
-            l.add(Color.decode(rslt.getString(5)));         //05 - farbe
+            l.add(rslt.getString(5));                       //05 - farbe
             l.add(rslt.getInt(6));                          //06 - scoville
             l.add(rslt.getInt(7));                          //07 - schaefegrad
             l.add(rslt.getInt(8));                          //08 - reifezeit_pfl
@@ -187,8 +183,34 @@ public class DB {
     else
         {return null;}
     }
+
+    public Object getTopfID(Object topfgr) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT ID ");
+    sb.append("FROM tbl_topf ");
+    sb.append("WHERE topf_gr = (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
     
-    public Object getEreignissID(Object PlantID) throws Exception
+    // set parameter:
+    pstmt.setString(1,String.valueOf(topfgr));
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        return rslt.getObject(1);
+    
+    else
+        return null;
+    }
+    
+    
+    public Object getEreigniss_fk(Object PlantID) throws Exception
     {
     // Zur Datenbank verbinden
     con = ConnectDB();
@@ -241,6 +263,7 @@ public class DB {
         catch (Exception ex) {System.err.println(ex.getMessage());}
     
     }
+    
     
     public void InsertIntoPflanzen_hohe(PflanzenHoehe h) throws Exception{   
         try { 
@@ -410,6 +433,212 @@ public class DB {
         finally{this.CloseDBConnection();}
     }
         
+        
+        
+public int getSorteID(Sorte s) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT s.ID ");
+    sb.append("FROM tbl_sorte s ");
+    sb.append("WHERE s.sorte = (?) ");
+    sb.append("AND s.reifezeit = (?)");
+    
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,s.getSorte());
+    pstmt.setString(2,String.valueOf(s.getReifezeit()));
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        return rslt.getInt(1);
+    
+    else
+        return -1;
+    }  
+
+public int getArtID(Art a, int Herkunft_ID) throws Exception
+    {
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT a.ID ");
+    sb.append("FROM tbl_art a ");
+    sb.append("WHERE a.art = (?) ");
+    sb.append("AND a.herkunft_fk = (?)");
+    
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,a.getArt());
+    pstmt.setString(2,String.valueOf(Herkunft_ID));
+    
+    // execute:
+    rslt = pstmt.executeQuery();
+    
+    if(rslt.next()) 
+        return rslt.getInt(1);
+    
+    else
+        return -1;
+    }  
+                
+        public void UpdateSorteReifezeit(int ID, int value) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("UPDATE tbl_sorte s SET s.reifezeit=(?) WHERE s.ID=(?)");
+            
+            //Query erstellen
+            pstmt.setString(1, String.valueOf(value));  
+            pstmt.setString(2, String.valueOf(ID)); 
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {//System.err.println(e.getMessage());}
+        }
+        finally{this.CloseDBConnection();}
+    }
+       
+public Object getPflanzenDaten_FK(Object PlantID) throws Exception{                
+    ResultSet rsltP = null;    
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT pflanzen_daten_fk ");
+    sb.append("FROM tbl_pflanzen ");
+    sb.append("WHERE ID = (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,String.valueOf(PlantID));
+    
+    // execute:
+    rsltP = pstmt.executeQuery();
+    
+    if(rsltP.next()){
+        Object erg = rsltP.getObject(1);
+        rsltP.close();
+        this.CloseDBConnection();
+        return erg;
+    }
+    
+    else{
+        this.CloseDBConnection(); 
+        return null;
+    
+    }
+    }
+                
+    public void UpdatePflanzenDaten(ArrayList l) throws Exception{
+
+    try { 
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen            
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE tbl_pflanzen_daten ");
+
+        sb.append("SET scoville=(?), schaerfegrad=(?), farbe=(?), ");
+        sb.append("topf_fk=(?), reifezeit=(?), gesamtzeit=(?), ");
+        sb.append("ertrag_gewicht=(?), ertrag_stk=(?) ");
+
+        sb.append("WHERE ID = (?)");
+
+        String sql = sb.toString();    
+        pstmt = con.prepareStatement(sql);          
+
+        //Query erstellen
+        for(int i=0;i<9;i++){
+            pstmt.setString(i+1, String.valueOf(l.get(i)));
+        }
+
+        pstmt.executeUpdate();
+    }
+
+    catch (Exception e) {System.err.println(e.getMessage());}
+
+    finally{this.CloseDBConnection();}
+    } 
+ 
+   public void UpdateEreignisse(ArrayList l) throws Exception{
+
+    try { 
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen            
+        StringBuilder sb = new StringBuilder();
+        sb.append("UPDATE tbl_ereignisse ");
+
+        sb.append("SET datum_aussaat=(?), datum_keimung=(?) ");
+
+        sb.append("WHERE ID = (?)");
+
+        String sql = sb.toString();    
+        pstmt = con.prepareStatement(sql);          
+
+        //Query erstellen
+        pstmt.setString(1, dbFormat.format((Date)(l.get(0))));
+        pstmt.setString(2, dbFormat.format((Date)(l.get(1))));
+        pstmt.setString(3, String.valueOf(l.get(2)));
+        pstmt.executeUpdate();
+    }
+
+    catch (Exception e) {System.err.println(e.getMessage());}
+
+    finally{this.CloseDBConnection();}
+    }     
+        
+        public void UpdateArtHerkunft(int ID, Object value) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("UPDATE tbl_herkunft h SET h.herkunft=(?) WHERE h.ID=(?)");
+            
+            //Query erstellen
+            pstmt.setString(1, String.valueOf(value));  
+            pstmt.setString(2, String.valueOf(ID)); 
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+    }
+        
+        public void UpdateFKinPflanzen(String fk, int newFK, Object PlantID) throws Exception{
+      
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // Statement erstellen
+            pstmt = con.prepareStatement("UPDATE tbl_pflanzen SET " + fk + "=(?) WHERE ID=(?)");
+            
+            //Query erstellen
+            pstmt.setString(1, String.valueOf(newFK));
+            pstmt.setString(2, String.valueOf(PlantID));
+            pstmt.executeUpdate();
+        }
+    
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+        }           
+        
         public void InsertIntoArt(Art art, int HerkunftID) throws Exception{
       
         try { 
@@ -428,8 +657,72 @@ public class DB {
         catch (Exception e) {System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}
-    }        
+        }        
+
+        public Object NeuePflanze() throws Exception{
+        try { 
+            // Zur Datenbank verbinden
+            con = ConnectDB();
+            // leere Pflanzen_ daten erstellen
+            pstmt = con.prepareStatement("INSERT INTO tbl_pflanzen_daten VALUES( null, null, null, null, null, null, null, null, null )", Statement.RETURN_GENERATED_KEYS);
+           
+            pstmt.executeUpdate();
+            
+            // get Generated Key as pflanzen_daten_ID
+            rslt = pstmt.getGeneratedKeys();
+            if(rslt.next()){
+                int pflanzen_daten_ID = rslt.getInt(1);
+                
+                // Erstelle leeres Ereigniss
+                pstmt = con.prepareStatement("INSERT INTO tbl_ereignisse VALUES(null, null, null )", Statement.RETURN_GENERATED_KEYS);
+                pstmt.executeUpdate();
+                
+                // get Generated Key as pflanzen_daten_ID
+                rslt = pstmt.getGeneratedKeys();
+                if(rslt.next()){
+                    int Ereignis_ID = rslt.getInt(1);                
+                
+                    // Erstelle der eigentlichen Pflanze
+                    // 1,1 weil diese gibt es aufjedenfall, da eine Sorte/Art zuvor erstellt wurde und man Sorten/Arten nicht löschen kann!!!
+                    pstmt = con.prepareStatement("INSERT INTO tbl_pflanzen VALUES(null, 1, 1, ?, ?)", Statement.RETURN_GENERATED_KEYS); 
+                    pstmt.setString(1, String.valueOf(pflanzen_daten_ID));
+                    pstmt.setString(2, String.valueOf(Ereignis_ID));
+                    pstmt.executeUpdate();
+                
+                    // get Generated Key as PlantID
+                    rslt = pstmt.getGeneratedKeys();
+                    if(rslt.next()){
+                    return rslt.getObject(1);
+                    }
+                    
+                    // Fehler beimn erstellen der Pflanze
+                    else{
+                    return null;
+                    }
+                }
+                
+                // Fehler beimn erstellen des Ereignisses
+                else{
+                return null;   
+                }               
+            }
+            
+            // Fehler beimn erstellen der Pflanzen Daten
+            else{
+            return null;    
+            }         
+            
+        }
+        
     
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
+        finally{this.CloseDBConnection();}
+        
+        // Fehler anderer art
+        return null;
+        } 
+        
         public void InsertIntoHerkunft(String herkunft) throws Exception{
       
         try { 
@@ -465,22 +758,23 @@ public class DB {
         
         finally{this.CloseDBConnection();}
     }
+
         
-    public int getHerkunftID(String herkunft) throws Exception
+    public int getHerkunft_FK(int ArtID) throws Exception
     {
     ResultSet rsltP = null;    
     // Zur Datenbank verbinden
     con = ConnectDB();
     // Statement erstellen                   
     StringBuilder sb = new StringBuilder();
-    sb.append("SELECT h.ID ");
-    sb.append("FROM tbl_herkunft h ");
-    sb.append("WHERE herkunft = (?)");
+    sb.append("SELECT a.herkunft_fk ");
+    sb.append("FROM tbl_art a ");
+    sb.append("WHERE a.ID = (?)");
     String sql = sb.toString();    
     pstmt = con.prepareStatement(sql);
     
     // set parameter:
-    pstmt.setString(1,herkunft);
+    pstmt.setString(1,String.valueOf(ArtID));
     
     // execute:
     rsltP = pstmt.executeQuery();
@@ -499,6 +793,39 @@ public class DB {
     }
     }
 
+public int getHerkunftID(String herkunft) throws Exception
+    {
+    ResultSet rsltP = null;    
+    // Zur Datenbank verbinden
+    con = ConnectDB();
+    // Statement erstellen                   
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT h.ID ");
+    sb.append("FROM tbl_herkunft h ");
+    sb.append("WHERE h.herkunft like (?)");
+    String sql = sb.toString();    
+    pstmt = con.prepareStatement(sql);
+    
+    // set parameter:
+    pstmt.setString(1,String.valueOf(herkunft));
+    
+    // execute:
+    rsltP = pstmt.executeQuery();
+    
+    if(rsltP.next()){
+        int erg = rsltP.getInt(1);
+        rsltP.close();
+        this.CloseDBConnection();
+        return erg;
+    }
+    
+    else{
+        this.CloseDBConnection(); 
+        return 0;
+    
+    }
+    }    
+    
     public int getSorteReifezeit(String sorte) throws Exception{
         ResultSet rsltP = null;    
         // Zur Datenbank verbinden
@@ -609,7 +936,7 @@ public class DB {
         sb.append(listVariable);
         sb.append(" FROM ");
         sb.append(tble);
-        sb.append(" ORDER BY ");
+        sb.append(" GROUP BY ");
         sb.append(listVariable);
         String sql = sb.toString();   
         
