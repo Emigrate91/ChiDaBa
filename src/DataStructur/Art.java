@@ -29,10 +29,33 @@ public class Art {
     DB con = new DB();
     return con.getHerkunftID(herkunft);        
     }
-    
+   
+    public int getHerkunft_FK() throws Exception{
+    DB con = new DB();
+    return con.getHerkunft_FK(this.getArtID());        
+    }    
+        
     public void saveInDB() throws Exception{
+         DB con = new DB();
+         if(!con.getList("art", "tbl_art").contains(this.getArt())){
+             con.InsertIntoArt(this, getHerkunftID());
+         }    
+         
+         else {
+             System.err.println("Sortenname bereits vergeben");
+         }    
+         
+    }
+    
+    public int getArtID() throws Exception{
         DB con = new DB();
-        con.InsertIntoArt(this, getHerkunftID());
+        if(con.getList("art", "tbl_art").contains(this.getArt())){
+        return con.getArtID(this,this.getHerkunftID());
+        }
+        else {
+            System.err.println("Sorte nicht vorhanden");
+            return -1;
+        }     
     }
     
     public String getArt() {

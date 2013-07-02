@@ -756,6 +756,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     {       
     this.BtnSave.setEnabled(!b);
     this.BtnDel.setEnabled(!b);
+    this.BtnReset.setEnabled(!b);
     this.CBArt.setEnabled(!b);    
     this.CBSorte.setEnabled(!b);
     this.CBHerkunft.setEnabled(false);
@@ -770,7 +771,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.SpinScoville.setEnabled(!b);
     this.SpinZeit.setEnabled(!b);
     this.TxtGrad.setEditable(!b);
-    this.TxtName.setEditable(!b);
+    this.TxtName.setEditable(false);
     this.BtnColorChoose.setEnabled(!b);
     this.lblEditReifeSort.setEnabled(!b);
     this.lblEditHerkunft.setEnabled(!b);
@@ -778,9 +779,39 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }
     
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
-        // TODO add your handling code here:
+        try {
+            UpdateSorteReifezeit();
+            UpdateHerkunft();
+            UpdateAttributes();   
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
     }//GEN-LAST:event_BtnSaveActionPerformed
 
+    public void UpdateAttributes() throws Exception{            
+    }
+          
+    public void UpdateHerkunft() throws Exception{
+        // Update Art:
+        Art a = new Art(String.valueOf(this.CBArt.getSelectedItem()));
+       
+        if(a.getHerkunft()!=this.CBHerkunft.getSelectedItem()){
+            int ArtID=a.getArtID();
+            DB con = new DB();
+            int herkunft_FK = con.getHerkunft_FK(ArtID);
+            con.UpdateArtHerkunft(herkunft_FK, this.CBHerkunft.getSelectedItem());
+        }    
+    }
+ 
+    public void UpdateSorteReifezeit() throws Exception{
+        // Update Sorte:
+        Sorte s = new Sorte(String.valueOf(this.CBSorte.getSelectedItem()));
+        if(s.getReifezeit()!=(int)this.SpinReifSort.getValue()){
+            int ID= s.getSorteID();
+            DB con = new DB();
+            con.UpdateSorteReifezeit(ID, (int)this.SpinReifSort.getValue());
+        }    
+    }    
+    
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
     if(this.ParentForm.AskClosing())
         {this.CleanClose();}
@@ -958,11 +989,12 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         {
             this.CheckBox.setSelected(true);
             int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Nicht gespeicherte Einträge werden zurückgesetzt", "Schreibberechtigung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
-            if(showConfirmDialog==0)
-            {
-            this.InfoView=true;
-            this.setInfoView(InfoView);
-            this.CheckBox.setSelected(false);
+            if(showConfirmDialog==0){
+                try {this.setAttributeFields();} 
+                catch (Exception ex) {System.err.println(ex.getMessage());}
+                this.InfoView=true;
+                this.setInfoView(InfoView);
+                this.CheckBox.setSelected(false);
             }
 
             else
