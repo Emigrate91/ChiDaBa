@@ -258,7 +258,7 @@ public class Registrieren extends javax.swing.JDialog {
             
             DB neuerUser = new DB();
             boolean userschonVorhanden = false;
-                try {userschonVorhanden=neuerUser.UsernameExists(user);} 
+                try {userschonVorhanden=neuerUser.CheckUsernameExists(user);} 
                 catch (Exception ex) {Logger.getLogger(Registrieren.class.getName()).log(Level.SEVERE, null, ex);}
                             
             if (!userschonVorhanden) {

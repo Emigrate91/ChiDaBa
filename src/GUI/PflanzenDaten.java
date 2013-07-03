@@ -524,7 +524,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         InfoPanelLayout.setHorizontalGroup(
             InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InfoPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -683,10 +683,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanNeu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(8, 8, 8))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(8, 8, 8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PanNeu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -697,8 +700,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(8, 8, 8))
         );
-
-        getAccessibleContext().setAccessibleName("");
 
         bindingGroup.bind();
 
@@ -787,40 +788,62 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }
     
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
-        if (CbErrorCheck()) {
-            if (this.neuView) {
-                DB con = new DB();
-                try {
+        Object sorte = this.CBSorte.getSelectedItem();
+        Object art = this.CBArt.getSelectedItem();
+        boolean cbError = CbErrorCheck();
+        
+        DB con = new DB(); 
+        try {
+            // Wenn alle Eingaben korrekt sind:
+            if (cbError && con.CheckPlantExist(sorte, art)){
+                // Wenn es sich um eine neue Chili handelt:
+                if (this.neuView) {
                     UpdateHerkunft();
                     int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
-                    this.PlantID = con.NeuePflanze((int) ArtID, SorteID);
-                    
-                } catch (Exception ex) {
-                    System.err.println(ex.getMessage());
+                    // erstelle neue Chili:
+                    this.PlantID = con.NeuePflanze((int) ArtID, SorteID);                            
                 }
-            }
             
-            
-            try {
+                // ändere bzw setze Daten:
                 UpdateSorteReifezeit();
                 UpdatePflanzenDaten();
                 UpdateAttributes();
 
                 // Update Chilliliste View:
                 this.ParentForm.writeTblToTblChilli();
-            } catch (Exception ex) {
-                System.err.println(ex.getMessage());
-            }
             
-            if (this.neuView) {
-                this.CleanClose();
-            } else {
-                this.CheckBox.setSelected(false);
-                this.setInfoView(true);
-            }
-        } 
-        else {
-            JOptionPane.showMessageDialog(this,"Ungültige(r) Wert(e)","Eine Nachricht", JOptionPane.ERROR_MESSAGE);   
+                // Falls eine neue Chili erstellt wurde:
+                if (this.neuView) {
+                    this.CleanClose();
+                } 
+        
+                // Falls eine Chili bearbeitet wurde:
+                else {
+                    this.CheckBox.setSelected(false);
+                    this.setInfoView(true);
+                }
+            } 
+            // Falls ein Fehler auftrat:
+            else {
+                // Falls falscher Wert in Combobox:
+                if(!cbError){
+                JOptionPane.showMessageDialog(this,"Ungültige(r) Wert(e)","Eingabe Fehler", JOptionPane.ERROR_MESSAGE);   
+                }
+                // Falls diese Pflanze bereits existiert:
+                else{
+                JOptionPane.showMessageDialog(
+                        this,"Die Kombination: \"" + String.valueOf(sorte) 
+                        + "\" und \"" + String.valueOf(art) + "\" existiert bereits"
+                        ,"Eingabe Fehler", JOptionPane.ERROR_MESSAGE);    
+                
+                // Highlight values 
+                this.CBArt.setBackground(Color.red);
+                this.CBSorte.setBackground(Color.red);
+                }
+            }     
+        }          
+        catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
     }//GEN-LAST:event_BtnSaveActionPerformed
 

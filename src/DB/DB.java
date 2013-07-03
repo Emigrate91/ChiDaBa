@@ -1095,7 +1095,7 @@ public int getHerkunftID(String herkunft) throws Exception
         return null;    
     }
         
-    public boolean UsernameExists (String username) throws Exception {
+    public boolean CheckUsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();
             pstmt = con.prepareStatement("SELECT * FROM tbl_benutzer WHERE username = (?);",ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -1336,13 +1336,6 @@ public int getHerkunftID(String herkunft) throws Exception
             // if Table size is >=1 -> username with this password 
             if(rslt.next()){userValidity = true;}
             
-            /* //
-            while (rslt.next()) {
-                System.out.println(rslt.getString(1));
-                if (rslt.getString(1).equals(name) && rslt.getString(2).equals("test")) {
-                userValidity = true;
-                }
-            }*/
         }
         catch (Exception e) {System.out.println(e.getMessage());
             
@@ -1351,4 +1344,36 @@ public int getHerkunftID(String herkunft) throws Exception
             this.CloseDBConnection();
         }
     }
+    
+       public boolean CheckPlantExist(Object sorte, Object art ) throws Exception{
+        con = ConnectDB();
+    
+        // erzeuge Statement:
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT p.ID ");
+        sb.append("FROM tbl_pflanzen p ");
+        sb.append("WHERE p.art_fk IN( ");
+        sb.append("SELECT a.ID FROM tbl_art a WHERE a.art=(?)) ");
+        
+        sb.append("AND p.sorte_fk IN( ");
+        sb.append("SELECT s.ID FROM tbl_sorte s WHERE s.sorte=(?)) ");
+        String sql = sb.toString();
+
+        // prepare Statement:
+        pstmt = con.prepareStatement(sql);   
+        pstmt.setString(1, String.valueOf(art));
+        pstmt.setString(2, String.valueOf(sorte));
+
+        rslt = pstmt.executeQuery();
+        
+        if(rslt.next()){
+            return true;
+        }
+        else {
+        return false;
+        }
+    
+    }
+    
 }
+
