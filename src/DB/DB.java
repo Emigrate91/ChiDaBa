@@ -470,10 +470,10 @@ public int getArtID(Art art) throws Exception
     // Statement erstellen                   
     StringBuilder sb = new StringBuilder();
     sb.append("SELECT a.ID ");
-    sb.append("FROM tbl_art a, tbl_herkunft h ");
+    sb.append("FROM tbl_art a ");
     sb.append("WHERE a.art = (?) ");
     sb.append("AND a.herkunft_fk IN( ");
-    sb.append("SELECT h.ID FROM h WHERE h.herkunft= (?) )");
+    sb.append("SELECT h.ID FROM tbl_herkunft h WHERE h.herkunft= (?) )");
     
     
     String sql = sb.toString();    
@@ -986,6 +986,33 @@ public int getHerkunftID(String herkunft) throws Exception
         
         pstmt = con.prepareStatement(sql);
         
+        // Ausführen 
+        rslt = pstmt.executeQuery();
+        
+        // in Liste speichern
+        ArrayList Liste= new ArrayList();
+            while (rslt.next()) 
+                {Liste.add(rslt.getString(1));}
+    
+        this.CloseDBConnection();
+        return Liste;
+        }
+    
+        public ArrayList getArtList(String art, int fk) throws Exception
+        {
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT a.ID ");
+        sb.append(" FROM tbl_art a ");
+        sb.append(" WHERE a.art = (?) ");
+        sb.append(" AND a.herkunft_fk = (?) ");
+        String sql = sb.toString();   
+        pstmt = con.prepareStatement(sql);
+        
+        pstmt.setString(1,art);
+        pstmt.setString(2,String.valueOf(fk));
         // Ausführen 
         rslt = pstmt.executeQuery();
         

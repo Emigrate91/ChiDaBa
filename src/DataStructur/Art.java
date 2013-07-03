@@ -30,7 +30,16 @@ public class Art {
         this.herkunft= tmp.get(1);
     }
     
-
+    public int getExistArtID() throws Exception{
+        DB con = new DB();
+        int fk= con.getHerkunftID(this.getHerkunft());
+        if(!con.getArtList(this.art, fk).isEmpty()){
+        return con.getArtID(this);
+        }
+        else {
+            return -1;
+        }     
+    }
     
     public int getHerkunftID() throws Exception{
     DB con = new DB();
@@ -50,7 +59,7 @@ public class Art {
                   
          
          else {
-             System.err.println("Sortenname bereits vergeben");
+             System.err.println("Artenname bereits vergeben");
          }    
          
     }
