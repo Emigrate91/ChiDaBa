@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * This class handels the object PflanzenDatenObject
+ * this class handels the object PflanzenDatenObject
  * @author Team ChiDaBa
  */
 public class PflanzenDatenObjekt {

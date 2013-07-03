@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import DB.DB;
@@ -277,9 +273,7 @@ public class DüngerNeu extends javax.swing.JDialog {
         if(this.InfoViewState || this.parentform.AskClosingforChild())
         {this.CleanClose();}
     }//GEN-LAST:event_formWindowClosing
-    /**
-     * @param args the command line arguments
-     */
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAbbr;
     private javax.swing.JButton BtnOk;

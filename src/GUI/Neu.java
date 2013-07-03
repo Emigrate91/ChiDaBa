@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import java.awt.Color;
@@ -656,9 +652,6 @@ public class Neu extends javax.swing.JDialog {
     this.BtnColorChoose.setBackground(color);
     }
     
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAbbr;
