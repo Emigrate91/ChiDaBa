@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Caution! this claass contains everything Database related
+ * Caution! this class contains everything Database related
  * @author Team ChiDaBa
  */
 public class DB {
@@ -57,7 +57,11 @@ public class DB {
         return con;
         
     }
-    
+    /**
+     * establishes connection to the database, creates the statment and updates for the elimination
+     * @param PlantID primary key of the table Plant
+     * @exception returns an error message in case of an error
+     */
     public void deletePflanze(Object PlantID){
     try {
         // Zur Datenbank verbinden
@@ -82,7 +86,11 @@ public class DB {
         catch (Exception ex) {System.err.println(ex.getMessage());}
     
     }
-    
+    /**
+     * connects to the Database , deletes the questions and creates a query, followed by an updates
+     * @param EreignisID primary key of the Table Ereignis
+     * @exception error message in case of an error
+     */
         public void deleteEreignis(Object EreignisID){
     try {
         // Zur Datenbank verbinden
@@ -112,7 +120,11 @@ public class DB {
         catch (Exception ex) {System.err.println(ex.getMessage());}
     
     }
-
+/**
+ * after the established DB-connection will the Duengevorgaenge be deleted
+ * @param EreignisID primary key of the table Ereignis
+ * @exception error message in case of an error
+ */
     private void deleteDuengvorgaenge(Object EreignisID){
     try {
         // Zur Datenbank verbinden
@@ -137,7 +149,11 @@ public class DB {
         catch (Exception ex) {System.err.println(ex.getMessage());}
     
     }         
-        
+ /**
+  * process of the deletion of Hoehenmessungen
+  * @param EreignisID primary key of the table Ereignis
+  * @exception error message in case of an error
+  */       
     private void deleteHoehenmessungen(Object EreignisID){
     try {
         // Zur Datenbank verbinden
@@ -162,7 +178,11 @@ public class DB {
         catch (Exception ex) {System.err.println(ex.getMessage());}
     
     }          
-        
+    /**
+     * process of deletion of Bewaesserung
+     * @param EreignisID primary key of the table Ereignis
+     * @exception error message in case of an error
+     */    
     private void deleteBewaesserung(Object EreignisID){
     try {
         // Zur Datenbank verbinden
@@ -187,7 +207,11 @@ public class DB {
         catch (Exception ex) {System.err.println(ex.getMessage());}
     
     }    
-        
+    /**
+     * process of deletion of Pflanzendaten
+     * @param PflanzenDatenID primary key of PflanzenDaten
+     * @exception error message in case of an error
+     */    
     public void deletePflanzenDaten(Object PflanzenDatenID){
     try {
         // Zur Datenbank verbinden
@@ -212,7 +236,9 @@ public class DB {
         catch (Exception ex) {System.err.println(ex.getMessage());}
     
     }    
-    
+    /**
+     * closes the Database-Connection 
+     */
     private void CloseDBConnection() throws SQLException {
         if (rslt != null) {
             rslt.close();
@@ -432,7 +458,11 @@ public class DB {
     
     }
     
-    
+    /**
+     * enters the Hoehe into the Database
+     * @param h Hoehe of the plant in the database
+     * @throws Exception error message in case of an error
+     */
     public void InsertIntoPflanzen_hohe(PflanzenHoehe h) throws Exception{   
         try { 
             // Zur Datenbank verbinden
@@ -452,11 +482,15 @@ public class DB {
             pstmt.setString(4, String.valueOf(h.getHoehe()));
             pstmt.executeUpdate();
             }
-        catch (Exception e) {}
+        catch (Exception e) {System.err.println(e.getMessage()); }
         
         finally{this.CloseDBConnection();}    
     }
- 
+ /**
+  * inserts Bewaesserung into the Database
+  * @param bw object of bewasserung 
+  * @throws Exception error message in case of an error
+  */
     public void InsertIntoBewaesserung(Bewaesserung bw) throws Exception{   
         try { 
             // Zur Datenbank verbinden
@@ -481,7 +515,11 @@ public class DB {
         
         finally{this.CloseDBConnection();}    
     }    
-    
+    /**
+     * enters the objekt Duengung into the database
+     * @param dv object of Duengung
+     * @throws Exception error message in case of an erorr
+     */
     public void InsertIntoDuengvorgaenge(Duengung dv) throws Exception{   
         try { 
             // Zur Datenbank verbinden
@@ -509,7 +547,9 @@ public class DB {
         
         finally{this.CloseDBConnection();}    
     }    
-    
+    /**
+     * get method of DuengerID
+     */
     public Object getDuengerID(String d) throws Exception
     {
     // Zur Datenbank verbinden
@@ -534,7 +574,9 @@ public class DB {
     else
         return null;
     }
-    
+    /**
+     * get method of DuengerName
+     */
     public Object getDuengerName(Object ID) throws Exception
     {
     // Zur Datenbank verbinden
@@ -559,7 +601,11 @@ public class DB {
     else
         return null;
     }    
-    
+    /**
+     * enters duenger into the Database
+     * @param duenger object of duenger
+     * @throws Exception error message in case of an error
+     */
     public void InsertIntoDuenger(Duenger duenger) throws Exception{
       
         try { 
@@ -581,7 +627,11 @@ public class DB {
         
         finally{this.CloseDBConnection();}
     }
-    
+    /**
+     * enters sorte into the database
+     * @param sorte object of sorte
+     * @throws Exception error message in case of an error
+     */
         public void InsertIntoSorte(Sorte sorte) throws Exception{
       
         try { 
@@ -602,7 +652,9 @@ public class DB {
     }
         
         
-        
+/**
+ * get method of SorteID
+ */        
 public int getSorteID(Sorte s) throws Exception
     {
     // Zur Datenbank verbinden
@@ -630,7 +682,9 @@ public int getSorteID(Sorte s) throws Exception
     else
         return -1;
     }  
-
+/**
+ * get method of ArtID
+ */
 public int getArtID(Art art) throws Exception
     {
     // Zur Datenbank verbinden
@@ -660,7 +714,10 @@ public int getArtID(Art art) throws Exception
     else
         return -1;
     }  
-                
+        /**
+         * Updates the entry of SorteReifezeit in the database
+         * @throws Exception error message in case of an error
+         */        
         public void UpdateSorteReifezeit(int ID, int value) throws Exception{
       
         try { 
@@ -675,11 +732,13 @@ public int getArtID(Art art) throws Exception
             pstmt.executeUpdate();
         }
     
-        catch (Exception e) {//System.err.println(e.getMessage());}
-        }
+        catch (Exception e) {System.err.println(e.getMessage());}
+        
         finally{this.CloseDBConnection();}
     }
-       
+/**
+ * get method of PflanzenDaten_FK
+ */       
 public Object getPflanzenDaten_FK(Object PlantID) throws Exception{                
     ResultSet rsltP = null;    
     // Zur Datenbank verbinden
@@ -711,7 +770,10 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
     
     }
     }
-                
+    /**
+     * Update the entry of PflanzenDaten in the database
+     * @throws Exception error message in case of an error
+     */            
     public void UpdatePflanzenDaten(ArrayList l) throws Exception{
 
     try { 
@@ -742,7 +804,10 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
 
     finally{this.CloseDBConnection();}
     } 
- 
+   /**
+    * Updates the entry of Ereigniss in the database
+    * @throws Exception error message in case of an error
+    */
    public void UpdateEreignisse(ArrayList l) throws Exception{
 
     try { 
@@ -770,7 +835,10 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
 
     finally{this.CloseDBConnection();}
     }     
-        
+        /**
+         * Update the entry of ArtHerkunft in the Database
+         * @throws Exception error message in case of an error
+         */
         public void UpdateArtHerkunft(Object ID, int value) throws Exception{
       
         try { 
@@ -789,7 +857,10 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         
         finally{this.CloseDBConnection();}
     }
-        
+        /**
+         * Update the entry of FKinPflanzen in the Database
+         * @throws Exception error message in case of an error
+         */
         public void UpdateFKinPflanzen(String fk, int newFK, Object PlantID) throws Exception{
       
         try { 
@@ -808,7 +879,10 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         
         finally{this.CloseDBConnection();}
         }           
-        
+        /**
+         * enters Art into the database
+         * @exception error mesage in case of an error
+         */
         public Object InsertIntoArt(Art art, int HerkunftID) throws Exception{
         try { 
             // Zur Datenbank verbinden
@@ -837,7 +911,10 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         finally{this.CloseDBConnection();}
         return null;
         }        
-
+        /**
+         * enters the new values into NeuePflanze
+         * @throws Exception error message in case of an error
+         */
         public Object NeuePflanze(int ArtID, int SorteID) throws Exception{
         try { 
             // Zur Datenbank verbinden
