@@ -9,6 +9,7 @@ import DataStructur.Bewaesserung;
 import DataStructur.Duengung;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -118,6 +119,14 @@ public class Ereignisse extends javax.swing.JDialog {
         LblCm.setText("mm");
 
         btnAddM.setText("Messung hinzufügen");
+        btnAddM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         btnAddM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddMActionPerformed(evt);
@@ -178,6 +187,14 @@ public class Ereignisse extends javax.swing.JDialog {
         SpinM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 1));
 
         btnAddD.setText("Düngvorgang hinzufügen");
+        btnAddD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         btnAddD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddDActionPerformed(evt);
@@ -191,7 +208,6 @@ public class Ereignisse extends javax.swing.JDialog {
             }
         });
 
-        LblInf.setIcon(new javax.swing.ImageIcon("/home/mn/Desktop/Chilizucht/Iconinfo.png")); // NOI18N
         LblInf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LblInfMouseClicked(evt);
@@ -222,7 +238,7 @@ public class Ereignisse extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(LblInf))
                             .addComponent(SpinDatDuen, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         PanelDüngerLayout.setVerticalGroup(
             PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,6 +280,14 @@ public class Ereignisse extends javax.swing.JDialog {
         SpinDatB.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, "dd.MM.yyyy"));
 
         btnAddW.setText("Bewässerung hinzufügen");
+        btnAddW.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         btnAddW.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddWActionPerformed(evt);
@@ -538,6 +562,14 @@ public class Ereignisse extends javax.swing.JDialog {
         DefaultTableModel deft=(DefaultTableModel)this.TblEreignisse.getModel();
         deft.addRow(new Object[] {myformatter.format((Date)this.SpinDatB.getValue()),"Bewässerung","/", SpinMB.getValue(), "/" });  
     }//GEN-LAST:event_btnAddWActionPerformed
+
+    private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    }//GEN-LAST:event_BtnMouseEnteredSetColor
+
+    private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
+    evt.getComponent().setBackground(null);
+    }//GEN-LAST:event_BtnMouseExitedSetColor
 /**
  * sets the name of Duenger
  * @param name the name of the used Duenger 

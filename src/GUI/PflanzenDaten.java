@@ -421,10 +421,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnSave.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -448,10 +446,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnReset.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -469,10 +465,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnDel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnDel.addActionListener(new java.awt.event.ActionListener() {
@@ -489,10 +483,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnAbbr.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnAbbr.addActionListener(new java.awt.event.ActionListener() {
@@ -910,9 +902,15 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             // Delete Ereignisse:    
             con.deleteEreignis(EreignisID);
             
+            // ereignis update:
+            this.ParentForm.writeTblToTblChilli();
+            
+            // Form schließen
+            this.CleanClose();
         } 
         
         catch (Exception ex) {System.err.println(ex.getMessage());}       
+        
         
         }
     
@@ -1198,14 +1196,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         }
     }//GEN-LAST:event_BtnResetActionPerformed
 
-    private void BtnMouseMovedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseMovedSetColor
-    evt.getComponent().setBackground(new Color(177,47,46));
-    
-    }//GEN-LAST:event_BtnMouseMovedSetColor
-
     private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
     evt.getComponent().setBackground(null);
     }//GEN-LAST:event_BtnMouseExitedSetColor
+
+    private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    }//GEN-LAST:event_BtnMouseEnteredSetColor
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
