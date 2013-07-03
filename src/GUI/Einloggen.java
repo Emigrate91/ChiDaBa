@@ -72,7 +72,6 @@ public class Einloggen extends javax.swing.JFrame {
     if(this.SetJDialogVisibleIfExist(this.ChilliFrame, false))
         {
         this.SetJDialogVisibleIfExist(this.ChilliFrame.ZusatzFrame, false);
-        this.SetJDialogVisibleIfExist(this.ChilliFrame.NeuFrame, false);
         if(this.SetJDialogVisibleIfExist(this.ChilliFrame.EreignisFrame, false))
             {
             if(this.SetJDialogVisibleIfExist(this.ChilliFrame.EreignisFrame.DüngerForm, false))
@@ -89,7 +88,6 @@ public class Einloggen extends javax.swing.JFrame {
     if(this.SetJDialogVisibleIfExist(this.ChilliFrame, true))
         {
         this.SetJDialogVisibleIfExist(this.ChilliFrame.ZusatzFrame, true);
-        this.SetJDialogVisibleIfExist(this.ChilliFrame.NeuFrame, true);
         if(this.SetJDialogVisibleIfExist(this.ChilliFrame.EreignisFrame, true))
             {
             if(this.SetJDialogVisibleIfExist(this.ChilliFrame.EreignisFrame.DüngerForm, true))
