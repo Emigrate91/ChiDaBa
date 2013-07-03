@@ -29,6 +29,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     public Chilliliste ParentForm;
     Object PlantID; // indicates new / info
+    Object ArtID=null;
     private SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy.MM.dd");
     public boolean InfoView=false;
     public boolean neuView = false;
@@ -197,7 +198,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         CBSorte = new javax.swing.JComboBox();
         CBArt = new javax.swing.JComboBox();
         lblEditReifeSort = new javax.swing.JLabel();
-        lblEditHerkunft = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         BtnSave = new javax.swing.JButton();
         CheckBox = new javax.swing.JCheckBox();
@@ -346,7 +346,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         });
 
         CBHerkunft.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<neues Land>" }));
-        CBHerkunft.setEnabled(false);
         CBHerkunft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CBHerkunftActionPerformed(evt);
@@ -411,13 +410,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         lblEditReifeSort.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblEditReifeSortMouseClicked(evt);
-            }
-        });
-
-        lblEditHerkunft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/edit.png"))); // NOI18N
-        lblEditHerkunft.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEditHerkunftMouseClicked(evt);
             }
         });
 
@@ -597,9 +589,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                                 .addComponent(LblDatumAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(LblDatumKeimung, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblEditReifeSort)
-                    .addComponent(lblEditHerkunft))
+                .addComponent(lblEditReifeSort)
                 .addGap(6, 6, 6)
                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SpinDatAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -685,20 +675,17 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                             .addComponent(SpinReifErtragStk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LblErtragStk))
                         .addGap(12, 12, 12)
-                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(InfoPanelLayout.createSequentialGroup()
-                                .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(CBHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LblHerkunft))
-                                .addGap(9, 9, 9)
-                                .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(LblDatumAussaat)
-                                    .addComponent(SpinDatAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(15, 15, 15)
-                                .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(SpinDatKeimung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(LblDatumKeimung)))
-                            .addComponent(lblEditHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CBHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblHerkunft))
+                        .addGap(9, 9, 9)
+                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LblDatumAussaat)
+                            .addComponent(SpinDatAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(SpinDatKeimung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblDatumKeimung))))
                 .addGap(20, 20, 20))
             .addGroup(InfoPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -784,17 +771,15 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.TxtName.setEditable(false);
     this.BtnColorChoose.setEnabled(!b);
     this.lblEditReifeSort.setEnabled(!b);
-    this.lblEditHerkunft.setEnabled(!b);
-
     }
     
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         if(this.neuView){
         DB con = new DB();
             try {
-                int ArtID = con.getArtID(String.valueOf(this.CBArt.getSelectedItem()));
+                Art a = new Art(String.valueOf(this.CBArt.getSelectedItem()),String.valueOf(this.CBHerkunft.getSelectedItem()));
                 int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
-                this.PlantID=con.NeuePflanze(ArtID, SorteID);
+                this.PlantID=con.NeuePflanze((int)ArtID, SorteID);
             } 
             catch (Exception ex) {System.err.println(ex.getMessage());}
         }
@@ -850,16 +835,15 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     public void UpdateHerkunft() throws Exception{
         // Update Art:
-        Art a = new Art(String.valueOf(this.CBArt.getSelectedItem()));
-        int ArtID=a.getArtID();
+        Art a = new Art(this.ArtID);
         if(a.getHerkunft()!=this.CBHerkunft.getSelectedItem()){
             DB con = new DB();
-            int herkunft_FK = con.getHerkunft_FK(ArtID);
+            int herkunft_FK = con.getHerkunft_FK(a.getArtID());
             con.UpdateArtHerkunft(herkunft_FK, this.CBHerkunft.getSelectedItem());
         }  
         // Speicher SortID in tblPflanzen
         DB con = new DB();
-        con.UpdateFKinPflanzen("art_fk", ArtID, PlantID);        
+        con.UpdateFKinPflanzen("art_fk", a.getArtID(), PlantID);        
     }
  
     public void UpdateSorteReifezeit() throws Exception{
@@ -936,7 +920,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
         // Aufruf der statischen Methode showConfirmDialog()
-        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1 ){    
+        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1 && this.loaded){    
+            
             // Texfeld für das JOptionPane erstellen    
             JTextField herkunft = new JTextField();
 
@@ -958,16 +943,18 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                         // neue Herkunft in die db eintragen:
                         DB con = new DB();
                         con.InsertIntoHerkunft(herkunft.getText());
-                        
                         this.CBHerkunft.insertItemAt(herkunft.getText(), this.CBHerkunft.getItemCount()-1);
                         this.CBHerkunft.setSelectedItem(herkunft.getText());
                     }        
                 }
                 // falls der eintrag existiert    
-                else {JOptionPane.showMessageDialog(this, "Topfgröße bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
+                else {JOptionPane.showMessageDialog(this, "Herkunft bereits vorhanden", "Error", JOptionPane.ERROR_MESSAGE);}
             }
 
             catch(Exception e){System.err.println(e.getMessage());}
+        }  
+        else {
+        
         }    
     }//GEN-LAST:event_CBHerkunftActionPerformed
        
@@ -1123,16 +1110,15 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_CBSorteActionPerformed
 
     private void CBArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBArtActionPerformed
+     if(!this.loaded){return;}
         Art a = new Art(null,null);
         // Falls letzter eintrag <neue Art> ausgewählt:
         if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1){   
             // Texfelder für das JOptionPane erstellen    
             JTextField art = new JTextField();
-            JComboBox herkunft = new JComboBox();
-            herkunft.setModel(this.CBHerkunft.getModel());
 
             // Objekte für das JOptionPane
-            Object[] message = {"Artenname:", art,"Herkunft", herkunft};
+            Object[] message = {"Artenname:", art};
 
             // JOptionPane erstellen 
             JOptionPane pane = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
@@ -1142,16 +1128,16 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 // falls der eintrag nicht existiert    
                 if(((DefaultComboBoxModel)(CBArt.getModel())).getIndexOf(art.getText())==-1){
                 // Eingaben überprüfen:
-                if(art.getText().isEmpty() || herkunft.getSelectedItem()==null)
+                if(art.getText().isEmpty())
                     {this.CBArt.setSelectedIndex(0);}
                 else
                     {  
-                    a = new Art(art.getText(), String.valueOf(herkunft.getSelectedItem()));
+                    a = new Art(art.getText(), null);
                     try {
                         a.saveInDB();
+                        ArtID=a.getArtID();
                         this.CBArt.insertItemAt(art.getText(), this.CBArt.getItemCount()-1);
                         this.CBArt.setSelectedItem(art.getText());
-                        this.CBHerkunft.setSelectedItem(herkunft.getSelectedItem());
                     }
 
                     catch (Exception ex) {System.err.println(ex.getMessage());}
@@ -1164,8 +1150,14 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             catch(Exception e){System.err.println(e.getMessage());}
         } 
         else {
-            try {a = new Art(String.valueOf(CBArt.getSelectedItem()));}
-            catch (Exception ex) {System.err.println(ex.getMessage());}        
+            if(PlantID!=null){
+                try {
+                    a = new Art(String.valueOf(CBArt.getSelectedItem()),String.valueOf(CBHerkunft.getSelectedItem()));
+                    ArtID=a.getArtID();
+                }
+                catch (Exception ex) {System.err.println(ex.getMessage());}                  
+            }
+      
         }
     this.CBHerkunft.setSelectedItem(a.getHerkunft());
     setNameUpdate();     
@@ -1182,18 +1174,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         if(eingabe==1){this.SpinReifSort.setEnabled(false);}
         }
     }//GEN-LAST:event_lblEditReifeSortMouseClicked
-
-    private void lblEditHerkunftMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditHerkunftMouseClicked
-        if(!this.CBHerkunft.isEnabled() && !this.InfoView){
-            int eingabe = JOptionPane.showConfirmDialog(this,
-                        "Möchten Sie das Herkunftsland für die gesamte Art: \""+this.CBArt.getSelectedItem()+"\" ändern?",
-                        "Das Herkunftsland ist artbezogen",
-                        JOptionPane.YES_NO_OPTION);
-
-        if(eingabe==0){this.CBHerkunft.setEnabled(true);}
-        if(eingabe==1){this.CBHerkunft.setEnabled(false);}
-        }
-    }//GEN-LAST:event_lblEditHerkunftMouseClicked
 
     private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
     if(this.ParentForm.AskClosing()){
@@ -1260,7 +1240,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private javax.swing.JTextField TxtGrad;
     private javax.swing.JTextField TxtName;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblEditHerkunft;
     private javax.swing.JLabel lblEditReifeSort;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

@@ -463,21 +463,25 @@ public int getSorteID(Sorte s) throws Exception
         return -1;
     }  
 
-public int getArtID(String art) throws Exception
+public int getArtID(Art art) throws Exception
     {
     // Zur Datenbank verbinden
     con = ConnectDB();
     // Statement erstellen                   
     StringBuilder sb = new StringBuilder();
     sb.append("SELECT a.ID ");
-    sb.append("FROM tbl_art a ");
+    sb.append("FROM tbl_art a, tbl_herkunft h ");
     sb.append("WHERE a.art = (?) ");
+    sb.append("AND a.herkunft_fk IN( ");
+    sb.append("SELECT h.ID FROM h WHERE h.herkunft= (?) )");
+    
     
     String sql = sb.toString();    
     pstmt = con.prepareStatement(sql);
     
     // set parameter:
-    pstmt.setString(1, art);
+    pstmt.setString(1, art.getArt());
+    pstmt.setString(2, art.getHerkunft());
     
     // execute:
     rslt = pstmt.executeQuery();
@@ -637,24 +641,33 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         finally{this.CloseDBConnection();}
         }           
         
-        public void InsertIntoArt(Art art, int HerkunftID) throws Exception{
-      
+        public Object InsertIntoArt(Art art, int HerkunftID) throws Exception{
         try { 
             // Zur Datenbank verbinden
             con = ConnectDB();
             // Statement erstellen
-            pstmt = con.prepareStatement("INSERT INTO tbl_art VALUES(?,?,?)");
+            pstmt = con.prepareStatement("INSERT INTO tbl_art VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
             //Query erstellen
             pstmt.setString(1, null); 
             pstmt.setString(2, art.getArt());  
-            pstmt.setString(3, String.valueOf(HerkunftID)); 
+            
+            if(HerkunftID == 0)
+                pstmt.setString(3, null); 
+            
+            else pstmt.setString(3, String.valueOf(HerkunftID));
+            
             pstmt.executeUpdate();
+            rslt = pstmt.getGeneratedKeys();
+            if(rslt.next()){
+                return rslt.getObject(1);
+            }
         }
         
     
-        catch (Exception e) {System.err.println(e.getMessage());}
+        catch (Exception e) { System.err.println(e.getMessage());}
         
         finally{this.CloseDBConnection();}
+        return null;
         }        
 
         public Object NeuePflanze(int ArtID, int SorteID) throws Exception{
@@ -826,7 +839,37 @@ public int getHerkunftID(String herkunft) throws Exception
     
     }
     }    
-    
+ 
+    public ArrayList<String> getArtInfo(Object ID) throws Exception{
+        ResultSet rsltP = null;    
+        // Zur Datenbank verbinden
+        con = ConnectDB();
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT a.art, h.herkunft ");
+        sb.append("FROM tbl_art a, tbl_herkunft h ");
+        sb.append("WHERE a.ID= (?) ");
+        sb.append("AND h.ID = a.herkunft_fk");
+        
+        String sql = sb.toString();    
+        pstmt = con.prepareStatement(sql);
+
+        // set parameter:
+        pstmt.setString(1,String.valueOf(ID));
+
+        // execute:
+        rsltP = pstmt.executeQuery();
+        
+        ArrayList l =new ArrayList();
+        l.add(rsltP.getString(1));
+        l.add(rsltP.getString(2));
+        
+        rsltP.close();
+        this.CloseDBConnection(); 
+        
+        return l;
+    }
+
     public int getSorteReifezeit(String sorte) throws Exception{
         ResultSet rsltP = null;    
         // Zur Datenbank verbinden
