@@ -463,7 +463,7 @@ public int getSorteID(Sorte s) throws Exception
         return -1;
     }  
 
-public int getArtID(Art a, int Herkunft_ID) throws Exception
+public int getArtID(String art) throws Exception
     {
     // Zur Datenbank verbinden
     con = ConnectDB();
@@ -472,14 +472,12 @@ public int getArtID(Art a, int Herkunft_ID) throws Exception
     sb.append("SELECT a.ID ");
     sb.append("FROM tbl_art a ");
     sb.append("WHERE a.art = (?) ");
-    sb.append("AND a.herkunft_fk = (?)");
     
     String sql = sb.toString();    
     pstmt = con.prepareStatement(sql);
     
     // set parameter:
-    pstmt.setString(1,a.getArt());
-    pstmt.setString(2,String.valueOf(Herkunft_ID));
+    pstmt.setString(1, art);
     
     // execute:
     rslt = pstmt.executeQuery();
@@ -659,7 +657,7 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         finally{this.CloseDBConnection();}
         }        
 
-        public Object NeuePflanze() throws Exception{
+        public Object NeuePflanze(int ArtID, int SorteID) throws Exception{
         try { 
             // Zur Datenbank verbinden
             con = ConnectDB();
@@ -681,12 +679,15 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
                 rslt = pstmt.getGeneratedKeys();
                 if(rslt.next()){
                     int Ereignis_ID = rslt.getInt(1);                
-                
+                    
+                  
                     // Erstelle der eigentlichen Pflanze
                     // 1,1 weil diese gibt es aufjedenfall, da eine Sorte/Art zuvor erstellt wurde und man Sorten/Arten nicht löschen kann!!!
-                    pstmt = con.prepareStatement("INSERT INTO tbl_pflanzen VALUES(null, 1, 1, ?, ?)", Statement.RETURN_GENERATED_KEYS); 
-                    pstmt.setString(1, String.valueOf(pflanzen_daten_ID));
-                    pstmt.setString(2, String.valueOf(Ereignis_ID));
+                    pstmt = con.prepareStatement("INSERT INTO tbl_pflanzen VALUES(null, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS); 
+                    pstmt.setString(1, String.valueOf(ArtID));
+                    pstmt.setString(2, String.valueOf(SorteID));
+                    pstmt.setString(3, String.valueOf(pflanzen_daten_ID));
+                    pstmt.setString(4, String.valueOf(Ereignis_ID));                    
                     pstmt.executeUpdate();
                 
                     // get Generated Key as PlantID

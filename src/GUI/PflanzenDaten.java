@@ -12,8 +12,6 @@ import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -34,6 +32,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy.MM.dd");
     public boolean InfoView=false;
     public boolean neuView = false;
+    public boolean loaded = false;
     
     DefaultListCellRenderer renderer = new DefaultListCellRenderer()
         {
@@ -75,7 +74,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         this.CheckBox.setVisible(false);
         this.BtnReset.setVisible(false);
         this.BtnDel.setVisible(false);
-    }
+   }
             
     
     public ArrayList getPflanzenDatenObjekt(Object PlantID) throws Exception {
@@ -313,6 +312,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
         SpinReifSort.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
         SpinReifSort.setToolTipText("");
+        SpinReifSort.setEnabled(false);
         SpinReifSort.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 SpinReifSortStateChanged(evt);
@@ -791,9 +791,14 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         if(this.neuView){
         DB con = new DB();
-            try {this.PlantID=con.NeuePflanze();} 
+            try {
+                int ArtID = con.getArtID(String.valueOf(this.CBArt.getSelectedItem()));
+                int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
+                this.PlantID=con.NeuePflanze(ArtID, SorteID);
+            } 
             catch (Exception ex) {System.err.println(ex.getMessage());}
         }
+        
         
         try {
             UpdateSorteReifezeit();
@@ -930,8 +935,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinReifErtragStkStateChanged
 
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
-        // Aufruf der statischen Methode showConfirmDialog()              
-        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1){    
+        // Aufruf der statischen Methode showConfirmDialog()
+        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1 ){    
             // Texfeld für das JOptionPane erstellen    
             JTextField herkunft = new JTextField();
 
@@ -963,10 +968,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             }
 
             catch(Exception e){System.err.println(e.getMessage());}
-
-        }  
+        }    
     }//GEN-LAST:event_CBHerkunftActionPerformed
-
+       
     private void SpinZeitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinZeitMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_SpinZeitMouseClicked

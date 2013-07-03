@@ -50,7 +50,7 @@ public class Art {
     public int getArtID() throws Exception{
         DB con = new DB();
         if(con.getList("art", "tbl_art").contains(this.getArt())){
-        return con.getArtID(this,this.getHerkunftID());
+        return con.getArtID(this.getArt());
         }
         else {
             System.err.println("Sorte nicht vorhanden");
