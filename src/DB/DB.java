@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package DB;
 
 import DataStructur.Art;
@@ -20,7 +16,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/**
+ * Caution! this claass contains everything Database related
+ * @author Team ChiDaBa
+ */
 public class DB {
         
     private Connection con = null;
@@ -30,7 +29,9 @@ public class DB {
     private boolean userValidity = false;
     
     private SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy.MM.dd");
-    
+    /**
+     * collects and packs the information for the Database connection 
+     */
     private Connection ConnectDB () throws Exception {
         
         // Informationen zusammensuchen
@@ -229,11 +230,15 @@ public class DB {
             pstmt.close();
         }
     }
-
+    /**
+     * get method of UserValidity
+     */
     public boolean getuserValidity() {
         return userValidity;
     }
-    
+    /**
+     * establishes an connection and creates the statments for the Database
+     */
     public ArrayList getPlantAttributes(Object PlantID) throws Exception{
         // Zur Datenbank verbinden
     con = ConnectDB();
@@ -289,7 +294,12 @@ public class DB {
         return null;
     }
 }
-    
+    /**
+     * establischen an DB-connection, collects the login data and closes the
+     * @param benutzername is used to identify the user
+     * @param passwort is used to validate the username
+     * @throws Exception dispays an error message 
+     */
     public void InsertIntoBenutzer (String benutzername, String passwort) throws Exception{
         
         try {
@@ -303,14 +313,14 @@ public class DB {
             pstmt.setString(3, passwort);
             pstmt.executeUpdate();
         }
-        catch (Exception e) {
-            
-        }
+        catch (Exception e) {System.err.println(e.getMessage());  }
         finally {
             this.CloseDBConnection();
         }
     }
-    
+    /**
+     * get method for the PlantID
+     */
     public Object getPlantID(Object sort, Object art) throws Exception
     {
     // Zur Datenbank verbinden
@@ -337,7 +347,9 @@ public class DB {
     else
         {return null;}
     }
-
+/**
+ * get method for TopfID
+ */
     public Object getTopfID(Object topfgr) throws Exception
     {
     // Zur Datenbank verbinden
@@ -363,7 +375,9 @@ public class DB {
         return null;
     }
     
-    
+    /**
+     * get method for Ereigniss_fk
+     */
     public Object getEreigniss_fk(Object PlantID) throws Exception
     {
     // Zur Datenbank verbinden
