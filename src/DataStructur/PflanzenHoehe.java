@@ -4,7 +4,7 @@ import DB.DB;
 import java.util.Date;
 
 /**
- * This class handels the traffic of the object Pflanzenhoehe
+ * This class handels the object Pflanzenhoehe
  * @author Team ChiDaBa
  */
 public class PflanzenHoehe {
