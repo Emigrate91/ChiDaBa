@@ -11,8 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 /**
- *
- * @author mn
+ * This Class creates the childForm NeuerDünger
+ * @author Team ChiDaBa
  */
 public class DüngerNeu extends javax.swing.JDialog {
     
@@ -26,7 +26,10 @@ public class DüngerNeu extends javax.swing.JDialog {
         setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         initComponents();
     }
-
+/**
+ * Enables or disables the components of DuengerNeu
+ * @param state dictates if the informations about the new Duenger can be inserted
+ */
     
     public void SetInfoView(boolean state) 
     {
@@ -47,10 +50,15 @@ public class DüngerNeu extends javax.swing.JDialog {
     this.SetSpinnerDisablesTextColor(this.SpinStick, Color.BLACK);
     }
     
-    // change DefaultEditor to ge a better view
+    /**
+     * change DefaultEditor to get a better view
+     */
     private void SetSpinnerDisablesTextColor(JSpinner spinner, Color color)
         {((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setDisabledTextColor(color);}
-    
+    /**
+     * sets the Name and the other Values of Duenger
+     * @param duenger the datatype where the information of Duenger is stored
+     */
     public void SetDuengerData(Duenger duenger)
     {
     this.TxtName.setText(duenger.getName());
@@ -209,14 +217,19 @@ public class DüngerNeu extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+        /**
+         * opens the ParentForm if the Childform is closed
+         */
         public void CleanClose()
         {
         this.dispose();
         this.parentform.DüngerForm=null; // because dispose
         this.parentform.SetEditable(true);   
         } 
-    
+    /**
+     * checks if duenger has a name and inserts Duenger into the Database
+     * @exception If the Name is allredy used or if there is no name at all there shall be an Error message
+     */
     private void BtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOkActionPerformed
         if (!this.TxtName.getText().isEmpty()) 
             {
@@ -244,7 +257,9 @@ public class DüngerNeu extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus", "Error", JOptionPane.ERROR_MESSAGE);
             }   
     }//GEN-LAST:event_BtnOkActionPerformed
-
+/**
+ * clean closes the form if the button BtnAbbr is used 
+ */
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
     if(this.InfoViewState)
         {this.CleanClose();}
@@ -254,7 +269,9 @@ public class DüngerNeu extends javax.swing.JDialog {
             {this.CleanClose();}
         }
     }//GEN-LAST:event_BtnAbbrActionPerformed
-
+/**
+ * Clean closes if the parrentFrom is closed 
+ */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     
         if(this.InfoViewState || this.parentform.AskClosingforChild())
