@@ -269,9 +269,6 @@ public class Registrieren extends javax.swing.JDialog {
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){this.BtnReg.doClick();}
     }//GEN-LAST:event_TxtPwSecKeyPressed
 
-    /**
-     * @param args the command line arguments
-     */
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAbbr;
