@@ -429,34 +429,6 @@ public class DB {
         return null;
     }
     
-    // wird momentan nicht verwendet!!!
-    public void UpdateTopfG(String h, Object PlantID) throws Exception{
-        try {
-        // Zur Datenbank verbinden
-        con = ConnectDB();         
-
-        // Statement erstellen                   
-        StringBuilder sb = new StringBuilder();
-        sb.append("UPDATE tbl_pflanzen_daten pd ");
-        sb.append("SET pd.topf_gr=(?) ");
-        sb.append("WHERE pd.ID IN( ");
-        sb.append("SELECT p.pflanzen_daten_fk FROM tbl_pflanzen p WHERE p.ID = (?)) ");
-        
-        String sql = sb.toString();            
-
-        pstmt = con.prepareStatement(sql);
-        
-        //Query erstellen
-        pstmt.setString(1, h);
-        pstmt.setString(2, String.valueOf(PlantID));
-        
-        // Update durchführen
-        pstmt.executeUpdate();
-          
-        }
-        catch (Exception ex) {System.err.println(ex.getMessage());}
-    
-    }
     
     /**
      * enters the Hoehe into the Database
@@ -1422,7 +1394,7 @@ public int getHerkunftID(String herkunft) throws Exception
         }
     }
     
-       public boolean CheckPlantExist(Object sorte, Object art ) throws Exception{
+       public int CheckPlantExist(Object sorte, Object art ) throws Exception{
         con = ConnectDB();
     
         // erzeuge Statement:
@@ -1443,11 +1415,12 @@ public int getHerkunftID(String herkunft) throws Exception
 
         rslt = pstmt.executeQuery();
         
+        // Falls es einen Eintrag gibt
         if(rslt.next()){
-            return true;
+            return rslt.getInt(1); // gebe ID zurück
         }
         else {
-        return false;
+        return -1;
         }
     
     }

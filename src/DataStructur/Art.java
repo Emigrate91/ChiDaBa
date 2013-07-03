@@ -61,15 +61,7 @@ public class Art {
      */       
     public void saveInDB() throws Exception{
          DB con = new DB();
-         if(!con.getList("art", "tbl_art").contains(this.getArt())){
-             this.setID(con.InsertIntoArt(this, getHerkunftID()));
-         } 
-                  
-         
-         else {
-             System.err.println("Artenname bereits vergeben");
-         }    
-         
+             this.setID(con.InsertIntoArt(this, getHerkunftID()));     
     }
     /**
      * set method for ID

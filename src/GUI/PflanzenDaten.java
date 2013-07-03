@@ -790,12 +790,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         Object sorte = this.CBSorte.getSelectedItem();
         Object art = this.CBArt.getSelectedItem();
-        boolean cbError = CbErrorCheck();
-        
+        boolean cbError = CbErrorCheck();  
         DB con = new DB(); 
+        
         try {
+            int existID =con.CheckPlantExist(sorte, art);
             // Wenn alle Eingaben korrekt sind:
-            if (cbError && con.CheckPlantExist(sorte, art)){
+            if (cbError && (existID==-1 || existID==this.PlantID)){
                 // Wenn es sich um eine neue Chili handelt:
                 if (this.neuView) {
                     UpdateHerkunft();
