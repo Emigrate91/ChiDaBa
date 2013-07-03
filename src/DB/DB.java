@@ -10,7 +10,6 @@ import DataStructur.Duengung;
 import DataStructur.Duenger;
 import DataStructur.PflanzenHoehe;
 import DataStructur.Sorte;
-import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -57,6 +56,161 @@ public class DB {
         return con;
         
     }
+    
+    public void deletePflanze(Object PlantID){
+    try {
+        // Zur Datenbank verbinden
+        con = ConnectDB();         
+
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM tbl_pflanzen ");
+        sb.append("WHERE ID = (?)");
+        
+        String sql = sb.toString();            
+
+        pstmt = con.prepareStatement(sql);
+        
+        //Query erstellen
+        pstmt.setString(1, String.valueOf(PlantID));
+        
+        // Update durchführen
+        pstmt.executeUpdate();
+          
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+    
+    }
+    
+        public void deleteEreignis(Object EreignisID){
+    try {
+        // Zur Datenbank verbinden
+        con = ConnectDB();         
+
+        // delete fk einträge
+        this.deleteBewaesserung(EreignisID);
+        this.deleteDuengvorgaenge(EreignisID);
+        this.deleteHoehenmessungen(EreignisID);
+        
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM tbl_ereignisse ");
+        sb.append("WHERE ID = (?)");
+        
+        String sql = sb.toString();            
+
+        pstmt = con.prepareStatement(sql);
+        
+        //Query erstellen
+        pstmt.setString(1, String.valueOf(EreignisID));
+        
+        // Update durchführen
+        pstmt.executeUpdate();
+          
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+    
+    }
+
+    private void deleteDuengvorgaenge(Object EreignisID){
+    try {
+        // Zur Datenbank verbinden
+        con = ConnectDB();         
+
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM tbl_duengvorgaenge ");
+        sb.append("WHERE tbl_ereignisse_fk = (?)");
+        
+        String sql = sb.toString();            
+
+        pstmt = con.prepareStatement(sql);
+        
+        //Query erstellen
+        pstmt.setString(1, String.valueOf(EreignisID));
+        
+        // Update durchführen
+        pstmt.executeUpdate();
+          
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+    
+    }         
+        
+    private void deleteHoehenmessungen(Object EreignisID){
+    try {
+        // Zur Datenbank verbinden
+        con = ConnectDB();         
+
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM tbl_hoehenmessungen ");
+        sb.append("WHERE tbl_ereignisse_fk = (?)");
+        
+        String sql = sb.toString();            
+
+        pstmt = con.prepareStatement(sql);
+        
+        //Query erstellen
+        pstmt.setString(1, String.valueOf(EreignisID));
+        
+        // Update durchführen
+        pstmt.executeUpdate();
+          
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+    
+    }          
+        
+    private void deleteBewaesserung(Object EreignisID){
+    try {
+        // Zur Datenbank verbinden
+        con = ConnectDB();         
+
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM tbl_bewaesserung ");
+        sb.append("WHERE tbl_ereignisse_fk = (?)");
+        
+        String sql = sb.toString();            
+
+        pstmt = con.prepareStatement(sql);
+        
+        //Query erstellen
+        pstmt.setString(1, String.valueOf(EreignisID));
+        
+        // Update durchführen
+        pstmt.executeUpdate();
+          
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+    
+    }    
+        
+    public void deletePflanzenDaten(Object PflanzenDatenID){
+    try {
+        // Zur Datenbank verbinden
+        con = ConnectDB();         
+
+        // Statement erstellen                   
+        StringBuilder sb = new StringBuilder();
+        sb.append("DELETE FROM tbl_pflanzen_daten ");
+        sb.append("WHERE ID = (?)");
+        
+        String sql = sb.toString();            
+
+        pstmt = con.prepareStatement(sql);
+        
+        //Query erstellen
+        pstmt.setString(1, String.valueOf(PflanzenDatenID));
+        
+        // Update durchführen
+        pstmt.executeUpdate();
+          
+        }
+        catch (Exception ex) {System.err.println(ex.getMessage());}
+    
+    }    
     
     private void CloseDBConnection() throws SQLException {
         if (rslt != null) {
