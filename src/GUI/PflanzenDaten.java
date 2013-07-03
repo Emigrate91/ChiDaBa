@@ -104,9 +104,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     public final void loadCBboxes() throws Exception
     {
     setSorteList();
+    setHerkunftList();
     setArtList();
-    setTopfgroesseList();
-    setHerkunftList();    
+    setTopfgroesseList();   
     }
     
     public void setSorteList() throws Exception{    
@@ -773,9 +773,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         if(this.neuView){
         DB con = new DB();
             try {
-                Art a = new Art(String.valueOf(this.CBArt.getSelectedItem()),String.valueOf(this.CBHerkunft.getSelectedItem()));
+                UpdateHerkunft();
                 int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
                 this.PlantID=con.NeuePflanze((int)ArtID, SorteID);
+                
             } 
             catch (Exception ex) {System.err.println(ex.getMessage());}
         }
@@ -783,7 +784,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         
         try {
             UpdateSorteReifezeit();
-            UpdateHerkunft();
             UpdatePflanzenDaten();
             UpdateAttributes(); 
             
@@ -831,15 +831,20 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     public void UpdateHerkunft() throws Exception{
         // Update Art:
-        Art a = new Art(this.ArtID);
-        if(a.getHerkunft()!=this.CBHerkunft.getSelectedItem()){
-            DB con = new DB();
-            int herkunft_FK = con.getHerkunft_FK(a.getArtID());
-            con.UpdateArtHerkunft(herkunft_FK, this.CBHerkunft.getSelectedItem());
-        }  
-        // Speicher SortID in tblPflanzen
+        String art = String.valueOf(this.CBArt.getSelectedItem());
+        String herkunft = String.valueOf(this.CBHerkunft.getSelectedItem());
+        
+        Art a = new Art(art, herkunft);
+        // falls bereits vergeben:
         DB con = new DB();
-        con.UpdateFKinPflanzen("art_fk", a.getArtID(), PlantID);        
+        
+        this.ArtID = a.getExistArtID();
+        if(ArtID==-1){
+        a.saveInDB();
+        ArtID = a.getArtID();
+        }
+        // Speicher ID in tblPflanzen
+        con.UpdateFKinPflanzen("art_fk", (int) ArtID, PlantID);        
     }
  
     public void UpdateSorteReifezeit() throws Exception{
@@ -916,7 +921,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
         // Aufruf der statischen Methode showConfirmDialog()
-        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1 && this.loaded){    
+        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1){    
             
             // Texfeld für das JOptionPane erstellen    
             JTextField herkunft = new JTextField();
@@ -949,9 +954,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
             catch(Exception e){System.err.println(e.getMessage());}
         }  
-        else {
-        
-        }    
     }//GEN-LAST:event_CBHerkunftActionPerformed
        
     private void SpinZeitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinZeitMouseClicked
@@ -1106,8 +1108,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_CBSorteActionPerformed
 
     private void CBArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBArtActionPerformed
-     if(!this.loaded){return;}
-        Art a = new Art(null,null);
         // Falls letzter eintrag <neue Art> ausgewählt:
         if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1){   
             // Texfelder für das JOptionPane erstellen    
@@ -1123,21 +1123,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             try{
                 // falls der eintrag nicht existiert    
                 if(((DefaultComboBoxModel)(CBArt.getModel())).getIndexOf(art.getText())==-1){
-                // Eingaben überprüfen:
-                if(art.getText().isEmpty())
-                    {this.CBArt.setSelectedIndex(0);}
-                else
-                    {  
-                    a = new Art(art.getText(), null);
-                    try {
-                        a.saveInDB();
-                        ArtID=a.getArtID();
-                        this.CBArt.insertItemAt(art.getText(), this.CBArt.getItemCount()-1);
-                        this.CBArt.setSelectedItem(art.getText());
-                    }
-
-                    catch (Exception ex) {System.err.println(ex.getMessage());}
-                    }        
+                    // Eingaben überprüfen:
+                    if(art.getText().isEmpty())
+                        {this.CBArt.setSelectedIndex(0);}
+                else{  
+                    this.CBArt.insertItemAt(art.getText(), this.CBArt.getItemCount()-1);
+                    this.CBArt.setSelectedItem(art.getText());
+                    }     
 
                 }
                 // falls der eintrag existiert    
@@ -1146,17 +1138,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             catch(Exception e){System.err.println(e.getMessage());}
         } 
         else {
-            if(PlantID!=null){
-                try {
-                    a = new Art(String.valueOf(CBArt.getSelectedItem()),String.valueOf(CBHerkunft.getSelectedItem()));
-                    ArtID=a.getArtID();
-                }
-                catch (Exception ex) {System.err.println(ex.getMessage());}                  
-            }
-      
-        }
-    this.CBHerkunft.setSelectedItem(a.getHerkunft());
-    setNameUpdate();     
+        } 
     }//GEN-LAST:event_CBArtActionPerformed
 
     private void lblEditReifeSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditReifeSortMouseClicked

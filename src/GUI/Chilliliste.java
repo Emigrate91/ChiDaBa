@@ -1,8 +1,6 @@
 package GUI;
 
 import DB.DB;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -14,7 +12,6 @@ public class Chilliliste extends javax.swing.JDialog {
     private Einloggen parentForm;
     PflanzenDaten ZusatzFrame;
     Ereignisse EreignisFrame;
-    Neu NeuFrame;
      /**
      * Creates new form Chilliliste
      */
@@ -325,12 +322,6 @@ public class Chilliliste extends javax.swing.JDialog {
         else {return;}
         }
         
-    if(this.NeuFrame!=null) // if NeuFrame is open  
-        {
-        if(this.showConfirmDialog("Neu"))
-           {this.NeuFrame.CleanClose();}
-        else {return;}
-        }
     
     if(this.EreignisFrame!=null) // if ErignisFrame is open
         {
