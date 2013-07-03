@@ -125,6 +125,14 @@ public class DüngerNeu extends javax.swing.JDialog {
         LblMagE.setText("mg");
 
         BtnOk.setText("OK");
+        BtnOk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnOkActionPerformed(evt);
@@ -132,6 +140,14 @@ public class DüngerNeu extends javax.swing.JDialog {
         });
 
         BtnAbbr.setText("Abbrechen");
+        BtnAbbr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnAbbr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAbbrActionPerformed(evt);
@@ -273,6 +289,14 @@ public class DüngerNeu extends javax.swing.JDialog {
         if(this.InfoViewState || this.parentform.AskClosingforChild())
         {this.CleanClose();}
     }//GEN-LAST:event_formWindowClosing
+
+    private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    }//GEN-LAST:event_BtnMouseEnteredSetColor
+
+    private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
+    evt.getComponent().setBackground(null);
+    }//GEN-LAST:event_BtnMouseExitedSetColor
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAbbr;

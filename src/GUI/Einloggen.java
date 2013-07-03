@@ -153,6 +153,12 @@ public class Einloggen extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnAnmeldenMouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
         });
         BtnAnmelden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +174,12 @@ public class Einloggen extends javax.swing.JFrame {
         BtnReg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnRegMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnReg.addActionListener(new java.awt.event.ActionListener() {
@@ -351,6 +363,14 @@ public class Einloggen extends javax.swing.JFrame {
     if(this.PwField.getText().equals("PASSWORT"))
         {PwField.setText("");}
     }//GEN-LAST:event_PwFieldMouseClicked
+
+    private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    }//GEN-LAST:event_BtnMouseEnteredSetColor
+
+    private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
+    evt.getComponent().setBackground(null);
+    }//GEN-LAST:event_BtnMouseExitedSetColor
     /**
      * encrypts the password
      */

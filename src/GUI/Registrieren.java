@@ -114,6 +114,14 @@ public class Registrieren extends javax.swing.JDialog {
         );
 
         BtnReg.setText("Registrieren");
+        BtnReg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnReg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnRegActionPerformed(evt);
@@ -121,6 +129,14 @@ public class Registrieren extends javax.swing.JDialog {
         });
 
         BtnAbbr.setText("Abbrechen");
+        BtnAbbr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnAbbr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnAbbrActionPerformed(evt);
@@ -273,6 +289,14 @@ public class Registrieren extends javax.swing.JDialog {
     private void TxtPwSecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtPwSecKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){this.BtnReg.doClick();}
     }//GEN-LAST:event_TxtPwSecKeyPressed
+
+    private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    }//GEN-LAST:event_BtnMouseEnteredSetColor
+
+    private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
+    evt.getComponent().setBackground(null);
+    }//GEN-LAST:event_BtnMouseExitedSetColor
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

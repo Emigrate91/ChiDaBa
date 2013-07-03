@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -200,6 +202,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         BtnReset = new javax.swing.JButton();
         BtnDel = new javax.swing.JButton();
         BtnAbbr = new javax.swing.JButton();
+        lblViewStateIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Zusatzinformation");
@@ -226,7 +229,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LblInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         PanNeuLayout.setVerticalGroup(
             PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,10 +421,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnSave.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -445,10 +446,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnReset.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -466,10 +465,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnDel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnDel.addActionListener(new java.awt.event.ActionListener() {
@@ -486,10 +483,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
             }
-        });
-        BtnAbbr.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                BtnMouseMovedSetColor(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
             }
         });
         BtnAbbr.addActionListener(new java.awt.event.ActionListener() {
@@ -497,6 +492,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 BtnAbbrActionPerformed(evt);
             }
         });
+
+        lblViewStateIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/app_48.png"))); // NOI18N
+        lblViewStateIcon.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/app_lock_48.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -507,20 +505,25 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblViewStateIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(BtnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(BtnDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnAbbr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(CheckBox)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, 0)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblViewStateIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BtnAbbr, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -611,7 +614,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         InfoPanelLayout.setVerticalGroup(
             InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(InfoPanelLayout.createSequentialGroup()
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -697,14 +700,14 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanNeu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanNeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -767,11 +770,12 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.TxtName.setEditable(false);
     this.BtnColorChoose.setEnabled(!b);
     this.lblEditReifeSort.setEnabled(!b);
+    this.lblViewStateIcon.setEnabled(!b);
     }
     
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         if(this.neuView){
-        DB con = new DB();
+            DB con = new DB();
             try {
                 UpdateHerkunft();
                 int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
@@ -792,7 +796,14 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         }
         catch (Exception ex) {System.err.println(ex.getMessage());}
         
-
+        if(this.neuView){
+            this.CleanClose();
+        }
+        
+        else {
+        this.CheckBox.setSelected(false);
+        this.setInfoView(true);
+        }
     }//GEN-LAST:event_BtnSaveActionPerformed
 
     public void UpdateAttributes() throws Exception{            
@@ -872,10 +883,35 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_formWindowClosing
 
     private void BtnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDelActionPerformed
-    int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Alle nicht gespeicherten Einträge gehen verloren", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+    int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Möchten Sie wirklich den vollständigen Datensatz löschen?", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
     if(showConfirmDialog==0)
         {
-
+        DB con = new DB();
+        
+        try {
+            // Speichere Werte Zwischen 
+            Object EreignisID = con.getEreigniss_fk(PlantID);
+            Object PflanzenDatenID = con.getPflanzenDaten_FK(PlantID);
+       
+            // Delete Pflanze:
+            con.deletePflanze(PlantID);
+        
+            // Delete Pflanzen Daten:
+            con.deletePflanzenDaten(PflanzenDatenID); 
+            
+            // Delete Ereignisse:    
+            con.deleteEreignis(EreignisID);
+            
+            // ereignis update:
+            this.ParentForm.writeTblToTblChilli();
+            
+            // Form schließen
+            this.CleanClose();
+        } 
+        
+        catch (Exception ex) {System.err.println(ex.getMessage());}       
+        
+        
         }
     
     else {}
@@ -1160,14 +1196,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         }
     }//GEN-LAST:event_BtnResetActionPerformed
 
-    private void BtnMouseMovedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseMovedSetColor
-    evt.getComponent().setBackground(new Color(177,47,46));
-    
-    }//GEN-LAST:event_BtnMouseMovedSetColor
-
     private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
     evt.getComponent().setBackground(null);
     }//GEN-LAST:event_BtnMouseExitedSetColor
+
+    private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    }//GEN-LAST:event_BtnMouseEnteredSetColor
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1216,6 +1251,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private javax.swing.JTextField TxtName;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblEditReifeSort;
+    private javax.swing.JLabel lblViewStateIcon;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 package GUI;
 
 import DB.DB;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -99,8 +100,24 @@ public class Chilliliste extends javax.swing.JDialog {
         TxtSuche.setText("Suche...");
 
         BtnSuche.setText("Suche");
+        BtnSuche.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
 
         BtnInfo.setText("Zusatzinformation");
+        BtnInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnInfoActionPerformed(evt);
@@ -108,6 +125,14 @@ public class Chilliliste extends javax.swing.JDialog {
         });
 
         BtnNew.setText("Neuer Eintrag anlegen");
+        BtnNew.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnNewActionPerformed(evt);
@@ -115,6 +140,14 @@ public class Chilliliste extends javax.swing.JDialog {
         });
 
         BtnLogout.setText("Ausloggen");
+        BtnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnLogoutActionPerformed(evt);
@@ -155,6 +188,14 @@ public class Chilliliste extends javax.swing.JDialog {
         );
 
         BtnErignisse.setText("Ereignisse");
+        BtnErignisse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnMouseEnteredSetColor(evt);
+            }
+        });
         BtnErignisse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnErignisseActionPerformed(evt);
@@ -345,6 +386,14 @@ public class Chilliliste extends javax.swing.JDialog {
     // Close this Window
     this.CleanClose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
+    evt.getComponent().setBackground(null);
+    }//GEN-LAST:event_BtnMouseExitedSetColor
+
+    private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
+    evt.getComponent().setBackground(new Color(177,47,46));
+    }//GEN-LAST:event_BtnMouseEnteredSetColor
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -11,6 +11,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
     <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
@@ -166,12 +167,18 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Suche"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseExitedSetColor"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseEnteredSetColor"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BtnInfo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Zusatzinformation"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseExitedSetColor"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseEnteredSetColor"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnInfoActionPerformed"/>
           </Events>
         </Component>
@@ -180,6 +187,8 @@
             <Property name="text" type="java.lang.String" value="Neuer Eintrag anlegen"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseExitedSetColor"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseEnteredSetColor"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnNewActionPerformed"/>
           </Events>
         </Component>
@@ -188,6 +197,8 @@
             <Property name="text" type="java.lang.String" value="Ausloggen"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseExitedSetColor"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseEnteredSetColor"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnLogoutActionPerformed"/>
           </Events>
         </Component>
@@ -198,6 +209,8 @@
         <Property name="text" type="java.lang.String" value="Ereignisse"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseExitedSetColor"/>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseEnteredSetColor"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnErignisseActionPerformed"/>
       </Events>
     </Component>
