@@ -3,7 +3,10 @@ package GUI;
 import DB.DB;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+/**
+ * this class assembles the childForm Chilliliste of the parrentForm Einloggen
+ * @author Team ChiDaBa
+ */
 public class Chilliliste extends javax.swing.JDialog {
 
     private Einloggen parentForm;
@@ -185,7 +188,10 @@ public class Chilliliste extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * loads the informations into the table from the Database
+ * @throws Exception DB-Exception if there is an error wit the database
+ */
     public final void writeTblToTblChilli() throws Exception{
     DB loadTable = new DB();
     DefaultTableModel model = (DefaultTableModel) TblChilli.getModel();
@@ -198,7 +204,10 @@ public class Chilliliste extends javax.swing.JDialog {
     model.setDataVector(loadTable.getTblPflanzenFromDB(), columnIdentifiers);
     }
     
-    
+    /**
+     * if the User wants to close a form, a warning opens to ask him if thats whats he relly wants
+     * @return the answer of the user wether he wants to close the current form or not
+     */
     public boolean AskClosing()
     {
     int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Alle nicht gespeicherten Änderungen gehen verloren", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
@@ -206,14 +215,20 @@ public class Chilliliste extends javax.swing.JDialog {
     else {return false;}
     }
     
-    
+    /**
+     * this method closes the Frame clean
+     */
     private void CleanClose()
     {
     this.dispose();
     this.parentForm.ChilliFrame=null; // because dispose
     this.parentForm.Callback();
     }
-    
+    /**
+     * query if the User wants to close all open minimized frames alongside with this Frame
+     * @param framename the name of the still open Frame
+     * @return the answer wether the user wants to close the frames or not
+     */
     public boolean showConfirmDialog(String framename)
     {
     int showConfirmDialogZusatz = JOptionPane.showConfirmDialog(this, "Das Fenster \""+framename+"\" ist noch geöffnet\nAlle nicht gespeicherten Änderungen gehen verloren", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
@@ -221,7 +236,10 @@ public class Chilliliste extends javax.swing.JDialog {
     else {return false;}
         
     }
-    
+    /**
+     * SetEnabled is State and because of that either true or false 
+     * @param state enables or disables every input component
+     */
     public void SetEditable(boolean state)
     {
     this.BtnErignisse.setEnabled(state);
@@ -232,11 +250,15 @@ public class Chilliliste extends javax.swing.JDialog {
     this.TblChilli.setEnabled(state);
     this.TxtSuche.setEnabled(state);
     }
-    
+    /**
+     * when the button Logout is clicked the method CleanClose shall be called
+     */
     private void BtnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLogoutActionPerformed
     this.CleanClose();
     }//GEN-LAST:event_BtnLogoutActionPerformed
-
+/**
+ * ckecks wich row is selectet and opens the next frame 
+ */
     private void BtnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInfoActionPerformed
     if(this.TblChilli.getSelectedRow()!=-1) {    
         
@@ -254,7 +276,10 @@ public class Chilliliste extends javax.swing.JDialog {
         catch (Exception ex) {System.err.println(ex.getMessage());}
         }
     }//GEN-LAST:event_BtnInfoActionPerformed
-
+/**
+ * opens the Frame Neu and disables the current Frame
+ * @exception opens an error message if the new frame cannot be openend
+ */
     private void BtnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNewActionPerformed
         try {
             this.ZusatzFrame = new PflanzenDaten(this);
@@ -266,7 +291,10 @@ public class Chilliliste extends javax.swing.JDialog {
         catch (Exception ex) {System.err.println(ex.getMessage());}
 
     }//GEN-LAST:event_BtnNewActionPerformed
-
+/**
+ * opens the Frame Ereignisse for an selected row and loads the related information
+ * @exception opens an error mesage if the informations cannot be pulled from the Database
+ */
     private void BtnErignisseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnErignisseActionPerformed
     if(this.TblChilli.getSelectedRow()!=-1) {
         DB con = new DB();
@@ -283,7 +311,9 @@ public class Chilliliste extends javax.swing.JDialog {
         catch (Exception ex) { System.err.println(ex.getMessage());}
         }
     }//GEN-LAST:event_BtnErignisseActionPerformed
-
+/**
+ * checks wich windows are open and closes them if Chililiste is closed
+ */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     if(this.ZusatzFrame!=null) // if Zusatzrame is open
         {
