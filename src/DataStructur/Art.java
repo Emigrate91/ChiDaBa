@@ -66,7 +66,7 @@ public class Art {
         return con.getArtID(this);
         }
         else {
-            System.err.println("Sorte nicht vorhanden");
+            System.err.println("art nicht vorhanden");
             return -1;
         }     
     }

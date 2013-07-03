@@ -603,13 +603,13 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
     finally{this.CloseDBConnection();}
     }     
         
-        public void UpdateArtHerkunft(int ID, Object value) throws Exception{
+        public void UpdateArtHerkunft(Object ID, int value) throws Exception{
       
         try { 
             // Zur Datenbank verbinden
             con = ConnectDB();
             // Statement erstellen
-            pstmt = con.prepareStatement("UPDATE tbl_herkunft h SET h.herkunft=(?) WHERE h.ID=(?)");
+            pstmt = con.prepareStatement("UPDATE tbl_art a SET a.herkunft_fk=(?) WHERE a.ID=(?)");
             
             //Query erstellen
             pstmt.setString(1, String.valueOf(value));  

@@ -108,9 +108,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     public final void loadCBboxes() throws Exception
     {
     setSorteList();
+    setHerkunftList();
     setArtList();
-    setTopfgroesseList();
-    setHerkunftList();    
+    setTopfgroesseList();   
     }
     
     public void setSorteList() throws Exception{    
@@ -777,9 +777,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         if(this.neuView){
         DB con = new DB();
             try {
-                Art a = new Art(String.valueOf(this.CBArt.getSelectedItem()),String.valueOf(this.CBHerkunft.getSelectedItem()));
                 int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
                 this.PlantID=con.NeuePflanze((int)ArtID, SorteID);
+                
             } 
             catch (Exception ex) {System.err.println(ex.getMessage());}
         }
@@ -838,10 +838,11 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         Art a = new Art(this.ArtID);
         if(a.getHerkunft()!=this.CBHerkunft.getSelectedItem()){
             DB con = new DB();
-            int herkunft_FK = con.getHerkunft_FK(a.getArtID());
-            con.UpdateArtHerkunft(herkunft_FK, this.CBHerkunft.getSelectedItem());
+            int herkunft_ID = con.getHerkunft_FK(a.getArtID());
+            int fk = con.getHerkunftID(String.valueOf(this.CBHerkunft.getSelectedItem()));
+            con.UpdateArtHerkunft((Object) herkunft_ID, fk);
         }  
-        // Speicher SortID in tblPflanzen
+        // Speicher ID in tblPflanzen
         DB con = new DB();
         con.UpdateFKinPflanzen("art_fk", a.getArtID(), PlantID);        
     }
@@ -920,7 +921,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
         // Aufruf der statischen Methode showConfirmDialog()
-        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1 && this.loaded){    
+        if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1){    
             
             // Texfeld für das JOptionPane erstellen    
             JTextField herkunft = new JTextField();
@@ -953,9 +954,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
             catch(Exception e){System.err.println(e.getMessage());}
         }  
-        else {
-        
-        }    
+        else {}
+        DB con = new DB(); 
+        try {
+            int fk = con.getHerkunftID(String.valueOf(this.CBHerkunft.getSelectedItem()));
+            con.UpdateArtHerkunft(ArtID, fk);
+        } 
+        catch (Exception ex) {System.err.println(ex.getMessage());}
     }//GEN-LAST:event_CBHerkunftActionPerformed
        
     private void SpinZeitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinZeitMouseClicked
@@ -1110,7 +1115,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_CBSorteActionPerformed
 
     private void CBArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBArtActionPerformed
-     if(!this.loaded){return;}
+       
         Art a = new Art(null,null);
         // Falls letzter eintrag <neue Art> ausgewählt:
         if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1){   
@@ -1127,9 +1132,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             try{
                 // falls der eintrag nicht existiert    
                 if(((DefaultComboBoxModel)(CBArt.getModel())).getIndexOf(art.getText())==-1){
-                // Eingaben überprüfen:
-                if(art.getText().isEmpty())
-                    {this.CBArt.setSelectedIndex(0);}
+                    // Eingaben überprüfen:
+                    if(art.getText().isEmpty())
+                        {this.CBArt.setSelectedIndex(0);}
                 else
                     {  
                     a = new Art(art.getText(), null);
@@ -1150,13 +1155,12 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             catch(Exception e){System.err.println(e.getMessage());}
         } 
         else {
-            if(PlantID!=null){
-                try {
-                    a = new Art(String.valueOf(CBArt.getSelectedItem()),String.valueOf(CBHerkunft.getSelectedItem()));
-                    ArtID=a.getArtID();
-                }
-                catch (Exception ex) {System.err.println(ex.getMessage());}                  
+            try {
+                a = new Art(String.valueOf(CBArt.getSelectedItem()),String.valueOf(CBHerkunft.getSelectedItem()));
+                ArtID=a.getArtID();
             }
+            catch (Exception ex) {System.err.println(ex.getMessage());}                    
+
       
         }
     this.CBHerkunft.setSelectedItem(a.getHerkunft());
