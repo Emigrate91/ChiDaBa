@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 /**
- * This Class creates the childForm NeuerDünger
+ * This Class creates the childForm NeuerDünger of the ParrentForm Ereignisse
  * @author Team ChiDaBa
  */
 public class DüngerNeu extends javax.swing.JDialog {
