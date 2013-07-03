@@ -124,7 +124,7 @@ public class Chilliliste extends javax.swing.JDialog {
             }
         });
 
-        BtnNew.setText("Neuer Eintrag anlegen");
+        BtnNew.setText("Neuer Eintrag");
         BtnNew.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
@@ -168,7 +168,7 @@ public class Chilliliste extends javax.swing.JDialog {
                     .addComponent(BtnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                .addComponent(BtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                 .addContainerGap())
         );
         PanListeLayout.setVerticalGroup(
@@ -325,6 +325,7 @@ public class Chilliliste extends javax.swing.JDialog {
         try {
             this.ZusatzFrame = new PflanzenDaten(this);
             this.SetEditable(false);
+            this.ZusatzFrame.setTitle("Neuer Eintrag");
             this.ZusatzFrame.setVisible(true); 
             this.ZusatzFrame.loaded=true;
         } 

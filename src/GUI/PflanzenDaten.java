@@ -8,8 +8,6 @@ import java.awt.Graphics;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JColorChooser;
@@ -50,7 +48,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         this.ParentForm=parent;
         this.PlantID=PlantID;
-        initComponents();       
+        initComponents();
         this.InfoView=true;
         this.setInfoView(InfoView);    
         this.SetDisabledComponentsReadable();
@@ -73,6 +71,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         this.CheckBox.setVisible(false);
         this.BtnReset.setVisible(false);
         this.BtnDel.setVisible(false);
+        this.lblViewStateIcon.setVisible(false);
    }
             
     
@@ -159,7 +158,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
         PanNeu = new javax.swing.JPanel();
         LblInfo = new javax.swing.JLabel();
-        LblInfo2 = new javax.swing.JLabel();
         InfoPanel = new javax.swing.JPanel();
         LblName = new javax.swing.JLabel();
         LblSorte = new javax.swing.JLabel();
@@ -205,20 +203,17 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         lblViewStateIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Zusatzinformation");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        PanNeu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PanNeu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         LblInfo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        LblInfo.setText("Bitte tragen sie alle Informationen");
-
-        LblInfo2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        LblInfo2.setText("einsehen, bearbeiten und Löschen!");
+        LblInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/Icon.png"))); // NOI18N
+        LblInfo.setText("Bitte tragen Sie hier Ihre Informationen ein:");
 
         javax.swing.GroupLayout PanNeuLayout = new javax.swing.GroupLayout(PanNeu);
         PanNeu.setLayout(PanNeuLayout);
@@ -226,19 +221,12 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanNeuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LblInfo2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanNeuLayout.setVerticalGroup(
             PanNeuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanNeuLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(LblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LblInfo2)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(LblInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         InfoPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -503,26 +491,24 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblViewStateIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(BtnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtnDel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblViewStateIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BtnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnDel, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(BtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnAbbr, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblViewStateIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                    .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblViewStateIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -696,21 +682,23 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanNeu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(8, 8, 8)
                 .addComponent(PanNeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(8, 8, 8)
                 .addComponent(InfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(8, 8, 8))
         );
+
+        getAccessibleContext().setAccessibleName("");
 
         bindingGroup.bind();
 
@@ -773,36 +761,66 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.lblViewStateIcon.setEnabled(!b);
     }
     
+    private boolean CbErrorCheck(){
+    boolean state = true;
+    if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1) {
+        CBSorte.setBackground(Color.red);
+        state = false;
+    }
+    
+    if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1) {
+        CBArt.setBackground(Color.red);
+        state = false;
+    }
+    
+    if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1) {
+        CBHerkunft.setBackground(Color.red);
+        state = false;
+    }
+    
+    if(this.CBTopfgröße.getSelectedIndex()==this.CBTopfgröße.getItemCount()-1) {
+        CBTopfgröße.setBackground(Color.red);
+        state = false;
+    }
+    
+    return state;
+    }
+    
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
-        if(this.neuView){
-            DB con = new DB();
-            try {
-                UpdateHerkunft();
-                int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
-                this.PlantID=con.NeuePflanze((int)ArtID, SorteID);
-                
-            } 
-            catch (Exception ex) {System.err.println(ex.getMessage());}
-        }
-        
-        
-        try {
-            UpdateSorteReifezeit();
-            UpdatePflanzenDaten();
-            UpdateAttributes(); 
+        if (CbErrorCheck()) {
+            if (this.neuView) {
+                DB con = new DB();
+                try {
+                    UpdateHerkunft();
+                    int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
+                    this.PlantID = con.NeuePflanze((int) ArtID, SorteID);
+                    
+                } catch (Exception ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
             
-            // Update Chilliliste View:
-            this.ParentForm.writeTblToTblChilli();
-        }
-        catch (Exception ex) {System.err.println(ex.getMessage());}
-        
-        if(this.neuView){
-            this.CleanClose();
-        }
-        
+            
+            try {
+                UpdateSorteReifezeit();
+                UpdatePflanzenDaten();
+                UpdateAttributes();
+
+                // Update Chilliliste View:
+                this.ParentForm.writeTblToTblChilli();
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+            
+            if (this.neuView) {
+                this.CleanClose();
+            } else {
+                this.CheckBox.setSelected(false);
+                this.setInfoView(true);
+            }
+        } 
         else {
-        this.CheckBox.setSelected(false);
-        this.setInfoView(true);
+            JOptionPane.showMessageDialog(this,"Ungültige(r) Wert(e)","Eine Nachricht", JOptionPane.ERROR_MESSAGE);   
         }
     }//GEN-LAST:event_BtnSaveActionPerformed
 
@@ -883,7 +901,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_formWindowClosing
 
     private void BtnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDelActionPerformed
-    int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Möchten Sie wirklich den vollständigen Datensatz löschen?", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+    int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Möchten Sie diesen Datensatz wirklich vollständig löschen?", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
     if(showConfirmDialog==0)
         {
         DB con = new DB();
@@ -956,6 +974,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinReifErtragStkStateChanged
 
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
+        // set default Background color
+        this.CBHerkunft.setBackground(null);
+        
         // Aufruf der statischen Methode showConfirmDialog()
         if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1){    
             
@@ -1015,6 +1036,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinDatAussaatStateChanged
 
     private void CBTopfgrößeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBTopfgrößeActionPerformed
+        // set default Background color
+        this.CBTopfgröße.setBackground(null);
+        
         if(this.CBTopfgröße.getSelectedIndex()==this.CBTopfgröße.getItemCount()-1){    
             // Texfeld für das JOptionPane erstellen    
             JTextField groesse = new JTextField();
@@ -1091,6 +1115,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }
     
     private void CBSorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBSorteActionPerformed
+        // set default Background color
+        this.CBSorte.setBackground(null);
+        
         Sorte s=new Sorte(null,0);
         // Falls letzter eintrag <neue Sorte> ausgewählt:
         if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1){
@@ -1113,7 +1140,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                     // Eingaben überprüfen:
                     if(sorte.getText().isEmpty() || reifezeit.getValue()==null)
                         {//this.CBSorte.setSelectedIndex(0);}
-                            
+                        {this.CBSorte.setSelectedIndex(0);}    
                         }
                     else
                         {  
@@ -1144,6 +1171,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_CBSorteActionPerformed
 
     private void CBArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBArtActionPerformed
+        // set default Background color
+        this.CBArt.setBackground(null);
         // Falls letzter eintrag <neue Art> ausgewählt:
         if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1){   
             // Texfelder für das JOptionPane erstellen    
@@ -1175,6 +1204,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         } 
         else {
         } 
+    setNameUpdate();      
     }//GEN-LAST:event_CBArtActionPerformed
 
     private void lblEditReifeSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditReifeSortMouseClicked
@@ -1228,7 +1258,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private javax.swing.JLabel LblGrad;
     private javax.swing.JLabel LblHerkunft;
     private javax.swing.JLabel LblInfo;
-    private javax.swing.JLabel LblInfo2;
     private javax.swing.JLabel LblName;
     private javax.swing.JLabel LblReifPfl;
     private javax.swing.JLabel LblReifPflTag;
