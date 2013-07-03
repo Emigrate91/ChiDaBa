@@ -773,36 +773,50 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.lblViewStateIcon.setEnabled(!b);
     }
     
+    private boolean CBFilled(){
+    if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1) { return false;}
+    if(this.CBArt.getSelectedIndex()==this.CBArt.getItemCount()-1) { return false;}
+    if(this.CBHerkunft.getSelectedIndex()==this.CBHerkunft.getItemCount()-1) { return false;}
+    if(this.CBTopfgröße.getSelectedIndex()==this.CBTopfgröße.getItemCount()-1) { return false;}
+    
+    return true;
+    }
+    
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
-        if(this.neuView){
-            DB con = new DB();
-            try {
-                UpdateHerkunft();
-                int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
-                this.PlantID=con.NeuePflanze((int)ArtID, SorteID);
-                
-            } 
-            catch (Exception ex) {System.err.println(ex.getMessage());}
-        }
-        
-        
-        try {
-            UpdateSorteReifezeit();
-            UpdatePflanzenDaten();
-            UpdateAttributes(); 
+        if (CBFilled()) {
+            if (this.neuView) {
+                DB con = new DB();
+                try {
+                    UpdateHerkunft();
+                    int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
+                    this.PlantID = con.NeuePflanze((int) ArtID, SorteID);
+                    
+                } catch (Exception ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
             
-            // Update Chilliliste View:
-            this.ParentForm.writeTblToTblChilli();
-        }
-        catch (Exception ex) {System.err.println(ex.getMessage());}
-        
-        if(this.neuView){
-            this.CleanClose();
-        }
-        
+            
+            try {
+                UpdateSorteReifezeit();
+                UpdatePflanzenDaten();
+                UpdateAttributes();
+
+                // Update Chilliliste View:
+                this.ParentForm.writeTblToTblChilli();
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+            
+            if (this.neuView) {
+                this.CleanClose();
+            } else {
+                this.CheckBox.setSelected(false);
+                this.setInfoView(true);
+            }
+        } 
         else {
-        this.CheckBox.setSelected(false);
-        this.setInfoView(true);
+        int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Ungültiger Wert", "Warnung",JOptionPane.OK_OPTION,JOptionPane.ERROR_MESSAGE);    
         }
     }//GEN-LAST:event_BtnSaveActionPerformed
 
@@ -1175,6 +1189,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         } 
         else {
         } 
+    setNameUpdate();      
     }//GEN-LAST:event_CBArtActionPerformed
 
     private void lblEditReifeSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditReifeSortMouseClicked
