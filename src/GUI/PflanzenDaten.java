@@ -44,16 +44,24 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     /**
      * Creates new form Zusatzinformationen
      */
-    public PflanzenDaten(Chilliliste parent, Object PlantID) throws Exception {
-        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
+    public PflanzenDaten(Chilliliste parent, Object PlantID) throws Exception { 
         this.ParentForm=parent;
         this.PlantID=PlantID;
         initComponents();
+        
+        // "Look and feel":
+        setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         this.InfoView=true;
         this.setInfoView(InfoView);    
         this.SetDisabledComponentsReadable();
+
+        // load content;
         loadCBboxes();
         setAttributeFields();
+
+        // set frame titel:
+        String name = this.CBSorte.getSelectedItem()+"_"+this.CBArt.getSelectedItem();
+        this.setTitle("Informationen von \"" + name + "\n:");
     }
     
     // Konstruktor für "neu"
@@ -757,7 +765,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.SpinZeit.setEnabled(!b);
     this.TxtGrad.setEditable(!b);
     this.TxtName.setEditable(false);
-    this.BtnColorChoose.setEnabled(!b);
+    this.BtnColorChoose.setFocusable(!b);
     this.lblEditReifeSort.setEnabled(!b);
     this.lblViewStateIcon.setEnabled(!b);
     }
@@ -915,8 +923,14 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }   
     
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
-    if(this.ParentForm.AskClosing())
-        {this.CleanClose();}
+        if (!this.InfoView) {
+            if (this.ParentForm.AskClosing()) {
+                this.CleanClose();
+            }
+        } 
+        else {
+            this.CleanClose();
+        }
     }//GEN-LAST:event_BtnAbbrActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -1050,8 +1064,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_SpinZeitStateChanged
 
     private void BtnColorChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnColorChooseActionPerformed
-      Color newColor = JColorChooser.showDialog(this, "Wähle Sie eine Farbe", this.BtnColorChoose.getBackground());
-      this.BtnColorChoose.setBackground(newColor);
+        if (!this.InfoView) {
+            Color newColor = JColorChooser.showDialog(this, "Wähle Sie eine Farbe", this.BtnColorChoose.getBackground());
+            this.BtnColorChoose.setBackground(newColor);
+        }
     }//GEN-LAST:event_BtnColorChooseActionPerformed
 
     private void SpinDatAussaatStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinDatAussaatStateChanged
@@ -1135,7 +1151,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     }//GEN-LAST:event_CheckBoxActionPerformed
 
     public void setNameUpdate(){
-    this.TxtName.setText(this.CBSorte.getSelectedItem()+"_"+this.CBArt.getSelectedItem());
+    String name = this.CBSorte.getSelectedItem()+"_"+this.CBArt.getSelectedItem();
+    this.TxtName.setText(name);
+    this.setTitle("Informationen von \"" + name + "\n:");
     }
     
     private void CBSorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBSorteActionPerformed
