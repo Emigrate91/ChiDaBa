@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import DB.DB;
@@ -13,8 +9,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Wraith
+ * This class assembles the ChildForm Registrieren of the parrentForm Einloggen
+ * @author Team ChiDaBa
  */
 public class Registrieren extends javax.swing.JDialog {
    
@@ -193,13 +189,18 @@ public class Registrieren extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * closes the form Registrieren without creating a new User
+ */
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
     this.dispose();
     this.parentForm.ChilliFrame=null; // Parentform has no child
     this.parentForm.Callback();
     }//GEN-LAST:event_BtnAbbrActionPerformed
-
+    /**
+     * checks if there is a valid Username and an matching Password before it registers the new User with an hashed password
+     * @exception returns an error message if the Username alredy exists or if the passwords does not match 
+     */
     private void BtnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegActionPerformed
         boolean empty=false;
         this.LblName.setForeground(Color.black);
@@ -258,13 +259,17 @@ public class Registrieren extends javax.swing.JDialog {
         }
     
     }//GEN-LAST:event_BtnRegActionPerformed
-
+    /**
+     * ??????????????????????????????????????????????????????????????????????????????????????????????????????????????
+     */
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
     this.parentForm.clear();
     this.parentForm.ChilliFrame=null; // Parentform has no child
     this.parentForm.Callback();
     }//GEN-LAST:event_formWindowClosed
-
+    /**
+     * actives the Register button when Enter is pressed
+     */
     private void TxtPwSecKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtPwSecKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){this.BtnReg.doClick();}
     }//GEN-LAST:event_TxtPwSecKeyPressed

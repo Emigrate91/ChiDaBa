@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import DB.DB;
@@ -23,7 +19,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Wraith
+ * @author Team ChiDaBa
  */
 public final class PflanzenDaten extends javax.swing.JDialog  {
     
@@ -1195,9 +1191,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     evt.getComponent().setBackground(null);
     }//GEN-LAST:event_BtnMouseExitedSetColor
     
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAbbr;
