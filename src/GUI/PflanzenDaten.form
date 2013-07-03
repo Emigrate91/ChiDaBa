@@ -183,10 +183,7 @@
                       <Component id="LblDatumKeimung" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblEditReifeSort" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblEditHerkunft" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lblEditReifeSort" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="SpinDatAussaat" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
@@ -295,24 +292,19 @@
                               <Component id="LblErtragStk" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="CBHerkunft" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="LblHerkunft" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="LblDatumAussaat" min="-2" max="-2" attributes="0"/>
-                                      <Component id="SpinDatAussaat" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="SpinDatKeimung" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="LblDatumKeimung" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="lblEditHerkunft" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="CBHerkunft" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="LblHerkunft" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="LblDatumAussaat" min="-2" max="-2" attributes="0"/>
+                              <Component id="SpinDatAussaat" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="SpinDatKeimung" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="LblDatumKeimung" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -510,7 +502,6 @@
                 <StringItem index="0" value="&lt;neues Land&gt;"/>
               </StringArray>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CBHerkunftActionPerformed"/>
@@ -599,16 +590,6 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblEditReifeSortMouseClicked"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblEditHerkunft">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ICONS/edit.png"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblEditHerkunftMouseClicked"/>
           </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel1">

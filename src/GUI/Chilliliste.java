@@ -255,6 +255,7 @@ public class Chilliliste extends javax.swing.JDialog {
             this.ZusatzFrame = new PflanzenDaten(this, PlantID);
             this.SetEditable(false);
             this.ZusatzFrame.setVisible(true); 
+            this.ZusatzFrame.loaded=true;
             } 
         
         catch (Exception ex) {System.err.println(ex.getMessage());}
@@ -265,7 +266,8 @@ public class Chilliliste extends javax.swing.JDialog {
         try {
             this.ZusatzFrame = new PflanzenDaten(this);
             this.SetEditable(false);
-            this.ZusatzFrame.setVisible(true);             
+            this.ZusatzFrame.setVisible(true); 
+            this.ZusatzFrame.loaded=true;
         } 
         
         catch (Exception ex) {System.err.println(ex.getMessage());}

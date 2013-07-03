@@ -5,6 +5,7 @@
 package DataStructur;
 
 import DB.DB;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,17 +14,23 @@ import DB.DB;
 public class Art {
     private String art;
     private String herkunft;
-
-    public Art(String art) throws Exception {
-        DB con = new DB();
-        this.art = art;
-        this.herkunft=con.getArtHerkunft(art);
-    }    
+    private Object ID;
     
     public Art(String art, String herkunft) {
         this.art = art;
         this.herkunft = herkunft;
+        this.ID=null;
     }
+
+    public Art(Object ID) throws Exception {
+        this.ID = ID;
+        DB con = new DB();
+        ArrayList<String> tmp = con.getArtInfo(ID);
+        this.art= tmp.get(0);
+        this.herkunft= tmp.get(1);
+    }
+    
+
     
     public int getHerkunftID() throws Exception{
     DB con = new DB();
@@ -38,19 +45,25 @@ public class Art {
     public void saveInDB() throws Exception{
          DB con = new DB();
          if(!con.getList("art", "tbl_art").contains(this.getArt())){
-             con.InsertIntoArt(this, getHerkunftID());
-         }    
+             this.setID(con.InsertIntoArt(this, getHerkunftID()));
+         } 
+                  
          
          else {
              System.err.println("Sortenname bereits vergeben");
          }    
          
     }
+
+    public void setID(Object ID) {
+        this.ID = ID;
+    }
+    
     
     public int getArtID() throws Exception{
         DB con = new DB();
         if(con.getList("art", "tbl_art").contains(this.getArt())){
-        return con.getArtID(this.getArt());
+        return con.getArtID(this);
         }
         else {
             System.err.println("Sorte nicht vorhanden");
@@ -60,6 +73,10 @@ public class Art {
     
     public String getArt() {
         return art;
+    }
+
+    public Object getID() {
+        return ID;
     }
 
     public void setArt(String art) {
