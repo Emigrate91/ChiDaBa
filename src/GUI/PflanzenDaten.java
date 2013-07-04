@@ -18,7 +18,7 @@ import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JTextField;
 
 /**
- *
+ * this class creates the childForm PflanzenDaten of the parrentForm chilliliste
  * @author Team ChiDaBa
  */
 public final class PflanzenDaten extends javax.swing.JDialog  {
@@ -64,7 +64,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         this.setTitle("Informationen von \"" + name + "\n:");
     }
     
-    // Konstruktor für "neu"
+    /**
+     * Konstruktor für "neu"
+     */ 
     public PflanzenDaten(Chilliliste parent) throws Exception {
         setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         this.ParentForm=parent;
@@ -74,7 +76,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         this.neuView=true;
         setNeuView();
     }
-    
+    /**
+     * turns components in Neu invisible
+     */
     public void setNeuView(){
         this.CheckBox.setVisible(false);
         this.BtnReset.setVisible(false);
@@ -82,7 +86,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         this.lblViewStateIcon.setVisible(false);
    }
             
-    
+    /**
+     * get method for PflanzenDatenObject
+     * @param PlantID primary key of Plant
+     */
     public ArrayList getPflanzenDatenObjekt(Object PlantID) throws Exception {
         DB con =new DB();
         return con.getPlantAttributes(PlantID);
@@ -109,7 +116,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.SpinDatAussaat.setValue(new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(daten.get(13))));
     this.SpinDatKeimung.setValue(new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(daten.get(14))));
     }
-    
+    /**
+     * loads informatin into the Comboboxes
+     */
     public final void loadCBboxes() throws Exception
     {
     setSorteList();
@@ -117,31 +126,41 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     setArtList();
     setTopfgroesseList();   
     }
-    
+    /**
+     * set method of SorteList
+     */
     public void setSorteList() throws Exception{    
     DB con= new DB();
     ArrayList names = con.getList("sorte", "tbl_sorte");
     updateCB(CBSorte, names);
     }
-    
+    /**
+     * set method of ArtList
+     */
     public void setArtList() throws Exception{    
     DB con= new DB();
     ArrayList names = con.getList("art", "tbl_art");
     updateCB(CBArt, names);
     }
-    
+    /**
+     * set method of TopfgroesseList
+     */
     public void setTopfgroesseList() throws Exception{    
     DB con= new DB();
     ArrayList names = con.getList("topf_gr", "tbl_topf");
     updateCB(CBTopfgröße, names);
     }
-
+    /**
+     * set method of HerkunftList
+     */
     public void setHerkunftList() throws Exception{    
     DB con= new DB();
     ArrayList names = con.getList("herkunft", "tbl_herkunft");
     updateCB(CBHerkunft, names);
     }  
-    
+    /**
+     * Updates the Comboboxes
+     */
     public void updateCB(JComboBox t, ArrayList upToDate)
         {
         DefaultComboBoxModel model = (DefaultComboBoxModel) t.getModel();
@@ -713,7 +732,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * sets the disabled components of this form Readable
+     */
     private void SetDisabledComponentsReadable()
     {
     // ComboBoxes with own renderer: 
@@ -734,17 +755,22 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
 
     }
-    
+    /**
+     * disables the Text color of the spinners
+     */
     private void SetSpinnerDisablesTextColor(JSpinner spinner, Color color)
     {((DefaultEditor)spinner.getEditor()).getTextField().setDisabledTextColor(color);}
     
-    public void CleanClose() // not the best way :-(
+    public void CleanClose() 
     {
     this.dispose();
     this.ParentForm.ZusatzFrame=null; // because dispose
     this.ParentForm.SetEditable(true);   
     }    
-    
+    /**
+     * activates or deactivates the components
+     * @param b dictates if everything is enabled or not
+     */
     private void setInfoView(boolean b)
     {       
     this.BtnSave.setEnabled(!b);
@@ -769,7 +795,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.lblEditReifeSort.setEnabled(!b);
     this.lblViewStateIcon.setEnabled(!b);
     }
-    
+    /**
+     * checks if everything is right in the checkboxes
+     */
     private boolean CbErrorCheck(){
     boolean state = true;
     if(this.CBSorte.getSelectedIndex()==this.CBSorte.getItemCount()-1) {
@@ -794,7 +822,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     return state;
     }
-    
+    /**
+     * Save button followed by an Database error
+     * @exception error message in case of an error
+     */
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         Object sorte = this.CBSorte.getSelectedItem();
         Object art = this.CBArt.getSelectedItem();
@@ -856,8 +887,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         }
     }//GEN-LAST:event_BtnSaveActionPerformed
 
-    public void UpdateAttributes() throws Exception{            
-    }
+    /**
+     * updates the PflanzenDaten into the database
+     * @throws Exception error message in case of an error
+     */
     public void UpdatePflanzenDaten() throws Exception{
         DB con = new DB();
         
@@ -889,7 +922,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         con.UpdateEreignisse(daten);
     }
   
-    
+    /**
+     * updates the Herkunft in the Database
+     * @throws Exception 
+     */
     public void UpdateHerkunft() throws Exception{
         // Update Art:
         String art = String.valueOf(this.CBArt.getSelectedItem());
@@ -907,7 +943,10 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         // Speicher ID in tblPflanzen
         con.UpdateFKinPflanzen("art_fk", (int) ArtID, PlantID);        
     }
- 
+    /**
+     * Updates the SorteReifezeit into the database
+     * @throws Exception error message in case of an error
+     */
     public void UpdateSorteReifezeit() throws Exception{
         // Update Sorte:
         Sorte s = new Sorte(String.valueOf(this.CBSorte.getSelectedItem()));
