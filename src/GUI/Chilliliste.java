@@ -398,12 +398,9 @@ public class Chilliliste extends javax.swing.JDialog {
 
      /**
      * Creates a TableCellRenderer
-     *
-     * colors row=0 and column=0 as "column/row" header
      * 
-     * highlight the column with click on "column header"/ first row
-     * highlight the row with click on "row header"/ first column
-     * 
+     * highlight the row on click on and enables the buttons, which need a
+     * selected value
      * 
      */ 
      public class MyCustomRenderer extends DefaultTableCellRenderer{

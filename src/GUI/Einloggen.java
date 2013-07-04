@@ -148,6 +148,7 @@ public class Einloggen extends javax.swing.JFrame {
 
         LblLogin.setText("Bitte loggen sie sich mit ihrem Benutzernamen und Password ein!");
 
+        BtnAnmelden.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/key_24.png"))); // NOI18N
         BtnAnmelden.setText("Anmelden");
         BtnAnmelden.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -170,6 +171,7 @@ public class Einloggen extends javax.swing.JFrame {
 
         LblPw.setText("Passwort :");
 
+        BtnReg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/man_24.png"))); // NOI18N
         BtnReg.setText("Registrieren");
         BtnReg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -202,11 +204,11 @@ public class Einloggen extends javax.swing.JFrame {
                         .addGap(31, 31, 31)
                         .addGroup(PanLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(PanLogLayout.createSequentialGroup()
-                                .addComponent(BtnAnmelden, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(BtnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(TxtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PwField, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(BtnAnmelden, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BtnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(PwField)
+                            .addComponent(TxtUsername)))
                     .addComponent(LblLogin))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -248,7 +250,7 @@ public class Einloggen extends javax.swing.JFrame {
                 .addComponent(LblWelcome)
                 .addGap(18, 18, 18)
                 .addComponent(PanLog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
