@@ -2,7 +2,11 @@ package GUI;
 
 import DB.DB;
 import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 /**
  * this class assembles the childForm Chilliliste of the parrentForm Einloggen
@@ -13,6 +17,7 @@ public class Chilliliste extends javax.swing.JDialog {
     private Einloggen parentForm;
     PflanzenDaten ZusatzFrame;
     Ereignisse EreignisFrame;
+    MyCustomRenderer renderer = new MyCustomRenderer();
      /**
      * Creates new form Chilliliste
      */
@@ -21,6 +26,7 @@ public class Chilliliste extends javax.swing.JDialog {
         setIconImage(getToolkit().getImage("src/ICONS/Icon.png"));
         initComponents();
         writeTblToTblChilli();
+        TblChilli.setDefaultRenderer(Object.class, renderer );
     }
 
     /**
@@ -110,6 +116,7 @@ public class Chilliliste extends javax.swing.JDialog {
         });
 
         BtnInfo.setText("Zusatzinformation");
+        BtnInfo.setEnabled(false);
         BtnInfo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
@@ -188,6 +195,7 @@ public class Chilliliste extends javax.swing.JDialog {
         );
 
         BtnErignisse.setText("Ereignisse");
+        BtnErignisse.setEnabled(false);
         BtnErignisse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnMouseExitedSetColor(evt);
@@ -388,6 +396,45 @@ public class Chilliliste extends javax.swing.JDialog {
     this.CleanClose();
     }//GEN-LAST:event_formWindowClosing
 
+     /**
+     * Creates a TableCellRenderer
+     *
+     * colors row=0 and column=0 as "column/row" header
+     * 
+     * highlight the column with click on "column header"/ first row
+     * highlight the row with click on "row header"/ first column
+     * 
+     * 
+     */ 
+     public class MyCustomRenderer extends DefaultTableCellRenderer{
+    
+     public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
+        super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+        
+       // BtnInfo.setEnabled(false);
+     //   BtnErignisse.setEnabled(false)
+        
+        if(table.isRowSelected(row)){
+            setBackground(new Color(177,47,46));
+            if(table.getSelectedRowCount()==1){
+                BtnInfo.setEnabled(true);
+                BtnErignisse.setEnabled(true);
+            }
+            else{
+            BtnInfo.setEnabled(false);
+            BtnErignisse.setEnabled(false);               
+            }
+        }
+        
+        else{
+        setBackground(null); 
+        }
+  
+        return this;
+        }
+     }    
+    
+    
     private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
     evt.getComponent().setBackground(null);
     }//GEN-LAST:event_BtnMouseExitedSetColor

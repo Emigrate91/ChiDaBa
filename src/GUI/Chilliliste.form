@@ -175,6 +175,7 @@
         <Component class="javax.swing.JButton" name="BtnInfo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Zusatzinformation"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseExitedSetColor"/>
@@ -207,6 +208,7 @@
     <Component class="javax.swing.JButton" name="BtnErignisse">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ereignisse"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnMouseExitedSetColor"/>
