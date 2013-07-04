@@ -847,7 +847,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                 // ändere bzw setze Daten:
                 UpdateSorteReifezeit();
                 UpdatePflanzenDaten();
-                UpdateAttributes();
+
 
                 // Update Chilliliste View:
                 this.ParentForm.writeTblToTblChilli();
@@ -965,7 +965,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         DB con = new DB();
         con.UpdateFKinPflanzen("sorte_fk", SortID, PlantID);
     }   
-    
+    /**
+     * the clean close button where no changes in the database are made
+     */
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
         if (!this.InfoView) {
             if (this.ParentForm.AskClosing()) {
@@ -976,12 +978,17 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             this.CleanClose();
         }
     }//GEN-LAST:event_BtnAbbrActionPerformed
-
+    /**
+     * if the parrent closes this form will close too
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     if(this.ParentForm.AskClosing())
         {this.CleanClose();}
     }//GEN-LAST:event_formWindowClosing
-
+    /**
+     * deletes the whole dataset
+     * @exception error message in case of an error
+     */
     private void BtnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDelActionPerformed
     int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Möchten Sie diesen Datensatz wirklich vollständig löschen?", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
     if(showConfirmDialog==0)
@@ -1018,11 +1025,13 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     
     }//GEN-LAST:event_BtnDelActionPerformed
-
+    
     private void TxtGradActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtGradActionPerformed
 
     }//GEN-LAST:event_TxtGradActionPerformed
-
+    /**
+     * the label for the spinner changes between one day and manny days
+     */
     private void SpinReifPflStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinReifPflStateChanged
     if(this.SpinReifPfl.getValue()==1)
         this.LblReifPflTag.setText("Tag");
@@ -1030,7 +1039,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     else
        this.LblReifPflTag.setText("Tage"); 
     }//GEN-LAST:event_SpinReifPflStateChanged
-
+    /**
+     * the label for the spinner changes between one day and manny days
+     */
     private void SpinReifSortStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinReifSortStateChanged
     if(this.SpinReifSort.getValue()==1)
         this.LblReifSortTag.setText("Tag");
@@ -1054,7 +1065,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void SpinReifErtragStkStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinReifErtragStkStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_SpinReifErtragStkStateChanged
-
+    /**
+     * to crate a new entry for the checkbox Herkunft
+     */
     private void CBHerkunftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBHerkunftActionPerformed
         // set default Background color
         this.CBHerkunft.setBackground(null);
@@ -1098,7 +1111,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     private void SpinZeitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinZeitMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_SpinZeitMouseClicked
-
+    /**
+     * the label for the spinner changes between one day and manny days
+     */
     private void SpinZeitStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinZeitStateChanged
     if(this.SpinZeit.getValue()==1)
         this.LblGesZeitTag.setText("Tag");
@@ -1106,19 +1121,25 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     else
        this.LblGesZeitTag.setText("Tage"); 
     }//GEN-LAST:event_SpinZeitStateChanged
-
+    /**
+     * lets the User choose an color
+     */
     private void BtnColorChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnColorChooseActionPerformed
         if (!this.InfoView) {
             Color newColor = JColorChooser.showDialog(this, "Wähle Sie eine Farbe", this.BtnColorChoose.getBackground());
             this.BtnColorChoose.setBackground(newColor);
         }
     }//GEN-LAST:event_BtnColorChooseActionPerformed
-
+    /**
+     * assurance that the user cant harverst the chili befor it was sown
+     */
     private void SpinDatAussaatStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinDatAussaatStateChanged
         this.SpinDatKeimung.setValue(this.SpinDatAussaat.getNextValue());
         this.SpinDatKeimung.setModel(new javax.swing.SpinnerDateModel((Date) this.SpinDatAussaat.getNextValue(), (Comparable) this.SpinDatAussaat.getValue(), null, java.util.Calendar.DAY_OF_MONTH));
     }//GEN-LAST:event_SpinDatAussaatStateChanged
-
+    /**
+     * chooses the TopfGroesse and creates an new entry if necessary
+     */
     private void CBTopfgrößeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBTopfgrößeActionPerformed
         // set default Background color
         this.CBTopfgröße.setBackground(null);
@@ -1160,7 +1181,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
         }    
     }//GEN-LAST:event_CBTopfgrößeActionPerformed
-
+    /**
+     * enables/disables the editability
+     */
     private void CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBoxActionPerformed
         if(CheckBox.isSelected())
         {
@@ -1193,13 +1216,17 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             {this.CheckBox.setSelected(true);}
         }   
     }//GEN-LAST:event_CheckBoxActionPerformed
-
+    /**
+     * set method for NameUpdate
+     */
     public void setNameUpdate(){
     String name = this.CBSorte.getSelectedItem()+"_"+this.CBArt.getSelectedItem();
     this.TxtName.setText(name);
     this.setTitle("Informationen von \"" + name + "\n:");
     }
-    
+    /**
+     * enters the new entry of Sorte into the database
+     */
     private void CBSorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBSorteActionPerformed
         // set default Background color
         this.CBSorte.setBackground(null);
@@ -1255,7 +1282,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     this.SpinReifSort.setValue(s.getReifezeit());
     setNameUpdate();     
     }//GEN-LAST:event_CBSorteActionPerformed
-
+    /**
+     * enters a new entry of Art into the databasy
+     */
     private void CBArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBArtActionPerformed
         // set default Background color
         this.CBArt.setBackground(null);
@@ -1292,7 +1321,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         } 
     setNameUpdate();      
     }//GEN-LAST:event_CBArtActionPerformed
-
+    /**
+     * clickable label for the change of reifezeit 
+     */
     private void lblEditReifeSortMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditReifeSortMouseClicked
         if(!this.SpinReifSort.isEnabled() && !this.InfoView){
             int eingabe = JOptionPane.showConfirmDialog(this,
@@ -1304,18 +1335,24 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         if(eingabe==1){this.SpinReifSort.setEnabled(false);}
         }
     }//GEN-LAST:event_lblEditReifeSortMouseClicked
-
+    /**
+     * if the parrentform closes this form will too
+     */
     private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
     if(this.ParentForm.AskClosing()){
         try {this.setAttributeFields();} 
         catch (Exception ex) {System.err.println(ex.getMessage());}
         }
     }//GEN-LAST:event_BtnResetActionPerformed
-
+    /**
+     * when there is no mouse upon thee button it shall regain its usual color
+     */
     private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
     evt.getComponent().setBackground(null);
     }//GEN-LAST:event_BtnMouseExitedSetColor
-
+    /**
+     * changes the color of the button if the mouse scrolls over it
+     */
     private void BtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseEnteredSetColor
     evt.getComponent().setBackground(new Color(177,47,46));
     }//GEN-LAST:event_BtnMouseEnteredSetColor
