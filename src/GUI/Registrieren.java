@@ -210,7 +210,7 @@ public class Registrieren extends javax.swing.JDialog {
  */
     private void BtnAbbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAbbrActionPerformed
     this.dispose();
-    this.parentForm.ChilliFrame=null; // Parentform has no child
+    this.parentForm.RegFrame=null; // Parentform has no child
     this.parentForm.Callback();
     }//GEN-LAST:event_BtnAbbrActionPerformed
     /**
@@ -280,7 +280,7 @@ public class Registrieren extends javax.swing.JDialog {
      */
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
     this.parentForm.clear();
-    this.parentForm.ChilliFrame=null; // Parentform has no child
+    this.parentForm.RegFrame=null; // Parentform has no child
     this.parentForm.Callback();
     }//GEN-LAST:event_formWindowClosed
     /**

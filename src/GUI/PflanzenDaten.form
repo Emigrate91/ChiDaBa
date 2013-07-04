@@ -132,42 +132,17 @@
                               <Component id="CBSorte" max="32767" attributes="0"/>
                               <Component id="CBArt" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace pref="31" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace pref="31" max="32767" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="LblReifPfl" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                                                      <Component id="LblGesZeit" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="LblReifSort" min="-2" pref="125" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="LblErtragGw" min="-2" pref="125" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="LblErtragStk" min="-2" pref="125" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="LblHerkunft" min="-2" pref="125" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="LblReifPfl" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                                  <Component id="LblGesZeit" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="LblDatumAussaat" min="-2" pref="125" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="LblReifSort" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
+                              <Component id="LblErtragGw" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
+                              <Component id="LblErtragStk" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
+                              <Component id="LblHerkunft" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
+                              <Component id="LblDatumAussaat" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="LblDatumKeimung" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>

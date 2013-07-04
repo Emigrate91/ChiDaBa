@@ -47,7 +47,8 @@ public class Chilliliste extends javax.swing.JDialog {
         BtnInfo = new javax.swing.JButton();
         BtnNew = new javax.swing.JButton();
         BtnLogout = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblSearchFilter = new javax.swing.JLabel();
+        BtnDelete = new javax.swing.JButton();
         BtnErignisse = new javax.swing.JButton();
 
         rowSorterToStringConverter.setTable(TblChilli);
@@ -107,7 +108,7 @@ public class Chilliliste extends javax.swing.JDialog {
 
         PanListe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, TblChilli, org.jdesktop.beansbinding.ELProperty.create("${rowSorter}"), TxtSuche, org.jdesktop.beansbinding.BeanProperty.create("text"), "null");
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, TblChilli, org.jdesktop.beansbinding.ELProperty.create("${rowSorter}"), TxtSuche, org.jdesktop.beansbinding.BeanProperty.create("text"), "");
         binding.setConverter(rowSorterToStringConverter);
         bindingGroup.addBinding(binding);
 
@@ -157,8 +158,24 @@ public class Chilliliste extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/magnifier_24.png"))); // NOI18N
-        jLabel1.setText("Search Filter:");
+        lblSearchFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/magnifier_24.png"))); // NOI18N
+        lblSearchFilter.setText("Search Filter:");
+
+        BtnDelete.setText("Eintrag Löschen");
+        BtnDelete.setEnabled(false);
+        BtnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnDeleteBtnMouseExitedSetColor(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnDeleteBtnMouseEnteredSetColor(evt);
+            }
+        });
+        BtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanListeLayout = new javax.swing.GroupLayout(PanListe);
         PanListe.setLayout(PanListeLayout);
@@ -168,29 +185,33 @@ public class Chilliliste extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TxtSuche, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(lblSearchFilter))
                 .addGap(18, 18, 18)
                 .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BtnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BtnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                    .addComponent(BtnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(PanListeLayout.createSequentialGroup()
+                        .addComponent(BtnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         PanListeLayout.setVerticalGroup(
             PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanListeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(PanListeLayout.createSequentialGroup()
-                        .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BtnInfo)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BtnNew)
-                            .addComponent(TxtSuche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BtnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblSearchFilter))
+                    .addComponent(BtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnNew)
+                    .addComponent(TxtSuche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnDelete))
                 .addContainerGap())
         );
 
@@ -232,7 +253,7 @@ public class Chilliliste extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnErignisse)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -337,10 +358,10 @@ public class Chilliliste extends javax.swing.JDialog {
             this.ZusatzFrame.setTitle("Neuer Eintrag");
             this.ZusatzFrame.setVisible(true); 
             this.ZusatzFrame.loaded=true;
+            
         } 
         
         catch (Exception ex) {System.err.println(ex.getMessage());}
-
     }//GEN-LAST:event_BtnNewActionPerformed
 /**
  * opens the Frame Ereignisse for an selected row and loads the related information
@@ -409,28 +430,29 @@ public class Chilliliste extends javax.swing.JDialog {
      public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus,int row,int column) {
         super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
         
-       // BtnInfo.setEnabled(false);
-     //   BtnErignisse.setEnabled(false)
-        
         if(table.isRowSelected(row)){
             setBackground(new Color(177,47,46));
             if(table.getSelectedRowCount()==1){
-                BtnInfo.setEnabled(true);
-                BtnErignisse.setEnabled(true);
+                setButtons(true);
             }
             else{
-            BtnInfo.setEnabled(false);
-            BtnErignisse.setEnabled(false);               
+                setButtons(false);
             }
         }
         
-        else{
+        else{   
         setBackground(null); 
         }
   
         return this;
         }
-     }    
+     }
+     
+    public void setButtons(boolean b){
+        BtnInfo.setEnabled(b);
+        BtnErignisse.setEnabled(b);
+        BtnDelete.setEnabled(b);
+    } 
     
     private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
     evt.getComponent().setBackground(null);
@@ -440,8 +462,54 @@ public class Chilliliste extends javax.swing.JDialog {
     evt.getComponent().setBackground(new Color(177,47,46));
     }//GEN-LAST:event_BtnMouseEnteredSetColor
 
+    private void BtnDeleteBtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnDeleteBtnMouseExitedSetColor
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnDeleteBtnMouseExitedSetColor
+
+    private void BtnDeleteBtnMouseEnteredSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnDeleteBtnMouseEnteredSetColor
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnDeleteBtnMouseEnteredSetColor
+
+    private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
+        int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Möchten Sie diesen Datensatz wirklich vollständig löschen?", "Warnung",JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+        if(showConfirmDialog==0)
+            {
+            DB con = new DB();
+            Object sorte=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
+            Object art=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 1);            
+            
+            try {
+                // get PlantID
+                Object PlantID =con.getPlantID(sorte, art);
+                // Speichere Werte Zwischen 
+                Object EreignisID = con.getEreigniss_fk(PlantID);
+                Object PflanzenDatenID = con.getPflanzenDaten_FK(PlantID);
+
+                // Delete Pflanze:
+                con.deletePflanze(PlantID);
+
+                // Delete Pflanzen Daten:
+                con.deletePflanzenDaten(PflanzenDatenID); 
+
+                // Delete Ereignisse:    
+                con.deleteEreignis(EreignisID);
+
+                // ereignis update:
+                this.writeTblToTblChilli();
+                this.setButtons(false);
+            } 
+
+            catch (Exception ex) {System.err.println(ex.getMessage());}       
+
+
+            }
+
+        else {}            
+    }//GEN-LAST:event_BtnDeleteActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnDelete;
     private javax.swing.JButton BtnErignisse;
     private javax.swing.JButton BtnInfo;
     private javax.swing.JButton BtnLogout;
@@ -449,8 +517,8 @@ public class Chilliliste extends javax.swing.JDialog {
     private javax.swing.JPanel PanListe;
     private javax.swing.JTable TblChilli;
     private javax.swing.JTextField TxtSuche;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblSearchFilter;
     private GUI.RowSorterToStringConverter rowSorterToStringConverter;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
