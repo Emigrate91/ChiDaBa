@@ -3,7 +3,6 @@ package GUI;
 import DB.DB;
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -27,6 +26,7 @@ public class Chilliliste extends javax.swing.JDialog {
         initComponents();
         writeTblToTblChilli();
         TblChilli.setDefaultRenderer(Object.class, renderer );
+        this.TxtSuche.setText("");
     }
 
     /**
@@ -37,16 +37,20 @@ public class Chilliliste extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        rowSorterToStringConverter = new GUI.RowSorterToStringConverter();
         jScrollPane1 = new javax.swing.JScrollPane();
         TblChilli = new javax.swing.JTable();
         PanListe = new javax.swing.JPanel();
         TxtSuche = new javax.swing.JTextField();
-        BtnSuche = new javax.swing.JButton();
         BtnInfo = new javax.swing.JButton();
         BtnNew = new javax.swing.JButton();
         BtnLogout = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         BtnErignisse = new javax.swing.JButton();
+
+        rowSorterToStringConverter.setTable(TblChilli);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Chilliliste");
@@ -103,17 +107,9 @@ public class Chilliliste extends javax.swing.JDialog {
 
         PanListe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        TxtSuche.setText("Suche...");
-
-        BtnSuche.setText("Suche");
-        BtnSuche.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                BtnMouseExitedSetColor(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                BtnMouseEnteredSetColor(evt);
-            }
-        });
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, TblChilli, org.jdesktop.beansbinding.ELProperty.create("${rowSorter}"), TxtSuche, org.jdesktop.beansbinding.BeanProperty.create("text"), "null");
+        binding.setConverter(rowSorterToStringConverter);
+        bindingGroup.addBinding(binding);
 
         BtnInfo.setText("Zusatzinformation");
         BtnInfo.setEnabled(false);
@@ -161,16 +157,19 @@ public class Chilliliste extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ICONS/magnifier_24.png"))); // NOI18N
+        jLabel1.setText("Search Filter:");
+
         javax.swing.GroupLayout PanListeLayout = new javax.swing.GroupLayout(PanListe);
         PanListe.setLayout(PanListeLayout);
         PanListeLayout.setHorizontalGroup(
             PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanListeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(TxtSuche, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(BtnSuche)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtSuche, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BtnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -185,12 +184,13 @@ public class Chilliliste extends javax.swing.JDialog {
                 .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PanListeLayout.createSequentialGroup()
-                        .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BtnInfo)
-                            .addComponent(TxtSuche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnNew))
-                    .addComponent(BtnSuche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(PanListeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnNew)
+                            .addComponent(TxtSuche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -234,6 +234,8 @@ public class Chilliliste extends javax.swing.JDialog {
                 .addComponent(BtnErignisse)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -295,7 +297,6 @@ public class Chilliliste extends javax.swing.JDialog {
     this.BtnInfo.setEnabled(state);
     this.BtnLogout.setEnabled(state);
     this.BtnNew.setEnabled(state);
-    this.BtnSuche.setEnabled(state);
     this.TblChilli.setEnabled(state);
     this.TxtSuche.setEnabled(state);
     }
@@ -431,7 +432,6 @@ public class Chilliliste extends javax.swing.JDialog {
         }
      }    
     
-    
     private void BtnMouseExitedSetColor(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnMouseExitedSetColor
     evt.getComponent().setBackground(null);
     }//GEN-LAST:event_BtnMouseExitedSetColor
@@ -446,10 +446,12 @@ public class Chilliliste extends javax.swing.JDialog {
     private javax.swing.JButton BtnInfo;
     private javax.swing.JButton BtnLogout;
     private javax.swing.JButton BtnNew;
-    private javax.swing.JButton BtnSuche;
     private javax.swing.JPanel PanListe;
     private javax.swing.JTable TblChilli;
     private javax.swing.JTextField TxtSuche;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private GUI.RowSorterToStringConverter rowSorterToStringConverter;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
