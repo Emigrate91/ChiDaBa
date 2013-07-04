@@ -310,12 +310,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, SliderGrad, org.jdesktop.beansbinding.ELProperty.create("${value}"), TxtGrad, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        TxtGrad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtGradActionPerformed(evt);
-            }
-        });
-
         SpinReifPfl.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
         SpinReifPfl.setToolTipText("");
         SpinReifPfl.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -335,24 +329,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
         SpinReifErtragGw.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10000, 1));
         SpinReifErtragGw.setToolTipText("");
-        SpinReifErtragGw.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SpinReifErtragGwMouseClicked(evt);
-            }
-        });
-        SpinReifErtragGw.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                SpinReifErtragGwStateChanged(evt);
-            }
-        });
 
         SpinReifErtragStk.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10000, 1));
         SpinReifErtragStk.setToolTipText("");
-        SpinReifErtragStk.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SpinReifErtragStkMouseClicked(evt);
-            }
-        });
         SpinReifErtragStk.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 SpinReifErtragStkStateChanged(evt);
@@ -368,11 +347,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
         SpinZeit.setModel(new javax.swing.SpinnerNumberModel(1, 1, 365, 1));
         SpinZeit.setToolTipText("");
-        SpinZeit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SpinZeitMouseClicked(evt);
-            }
-        });
         SpinZeit.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 SpinZeitStateChanged(evt);
@@ -574,31 +548,16 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                             .addComponent(CBTopfgröße, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CBSorte, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CBArt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(InfoPanelLayout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                                                .addGroup(InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(LblReifPfl, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(LblGesZeit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(LblReifSort, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(LblErtragGw, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(LblErtragStk, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(LblHerkunft, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LblDatumAussaat, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(LblReifPfl, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(LblGesZeit, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(LblReifSort, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblErtragGw, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblErtragStk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblHerkunft, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblDatumAussaat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(LblDatumKeimung, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblEditReifeSort)
@@ -1025,11 +984,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     
     
     }//GEN-LAST:event_BtnDelActionPerformed
-    
-    private void TxtGradActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtGradActionPerformed
-
-    }//GEN-LAST:event_TxtGradActionPerformed
-    /**
+        /**
      * the label for the spinner changes between one day and manny days
      */
     private void SpinReifPflStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinReifPflStateChanged
@@ -1049,18 +1004,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
     else
        this.LblReifSortTag.setText("Tage"); 
     }//GEN-LAST:event_SpinReifSortStateChanged
-
-    private void SpinReifErtragGwMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinReifErtragGwMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SpinReifErtragGwMouseClicked
-
-    private void SpinReifErtragGwStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinReifErtragGwStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SpinReifErtragGwStateChanged
-
-    private void SpinReifErtragStkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinReifErtragStkMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SpinReifErtragStkMouseClicked
 
     private void SpinReifErtragStkStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpinReifErtragStkStateChanged
         // TODO add your handling code here:
@@ -1107,10 +1050,6 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
             catch(Exception e){System.err.println(e.getMessage());}
         }  
     }//GEN-LAST:event_CBHerkunftActionPerformed
-       
-    private void SpinZeitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SpinZeitMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SpinZeitMouseClicked
     /**
      * the label for the spinner changes between one day and manny days
      */
