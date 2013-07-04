@@ -953,7 +953,11 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         // Fehler anderer art
         return null;
         } 
-        
+        /**
+         * Inserts the new values into table Herkunft
+         * @param herkunft object of herkunft
+         * @throws Exception error message in case of an error
+         */
         public void InsertIntoHerkunft(String herkunft) throws Exception{
       
         try { 
@@ -971,7 +975,11 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         
         finally{this.CloseDBConnection();}
     }
-                
+       /**
+        * inserts the new value of TopfGr into the table Topf
+        * @param groesse object of Topf
+        * @throws Exception error message in case of an error
+        */         
         public void InsertIntoTopfGr(String groesse) throws Exception{
       
         try { 
@@ -990,7 +998,9 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
         finally{this.CloseDBConnection();}
     }
 
-        
+    /**
+     * get method for Herkunft_FK
+     */    
     public int getHerkunft_FK(int ArtID) throws Exception
     {
     ResultSet rsltP = null;    
@@ -1023,7 +1033,9 @@ public Object getPflanzenDaten_FK(Object PlantID) throws Exception{
     
     }
     }
-
+/** 
+ * get method of HerkunftID
+ */
 public int getHerkunftID(String herkunft) throws Exception
     {
     ResultSet rsltP = null;    
@@ -1056,7 +1068,9 @@ public int getHerkunftID(String herkunft) throws Exception
     
     }
     }    
- 
+   /**
+    * get method of ArtInfo
+    */
     public ArrayList<String> getArtInfo(Object ID) throws Exception{
         ResultSet rsltP = null;    
         // Zur Datenbank verbinden
@@ -1086,7 +1100,9 @@ public int getHerkunftID(String herkunft) throws Exception
         
         return l;
     }
-
+    /**
+     * get method of SorteReifezeit
+     */
     public int getSorteReifezeit(String sorte) throws Exception{
         ResultSet rsltP = null;    
         // Zur Datenbank verbinden
@@ -1114,7 +1130,9 @@ public int getHerkunftID(String herkunft) throws Exception
         else {return 0;}
     
     }
-
+    /**
+     * get method ArtHerkunft
+     */
     public String getArtHerkunft(String art) throws Exception{
         ResultSet rsltP = null;    
         // Zur Datenbank verbinden
@@ -1143,7 +1161,10 @@ public int getHerkunftID(String herkunft) throws Exception
         }
         return null;    
     }
-        
+    /**
+     * Checks if the Username allredy exists
+     * @exception error message in case of an error
+     */    
     public boolean CheckUsernameExists (String username) throws Exception {
         try {
             con = ConnectDB();
@@ -1158,16 +1179,18 @@ public int getHerkunftID(String herkunft) throws Exception
             }       
         }
         
-        catch (Exception e) {
-            
-        }
+        catch (Exception e) {System.err.println(e.getMessage()); }
         
         finally {
             this.CloseDBConnection();
         }
     return false;
     }
-    
+    /**
+     * get method for Duenger_Info
+     * @param name object of duenger
+     * @throws Exception error message in case of an error
+     */
     public Duenger getDuengerInfo(String name) throws Exception{
         con = ConnectDB();
         pstmt = con.prepareStatement("SELECT * FROM tbl_duenger WHERE name like (?);");
@@ -1186,7 +1209,9 @@ public int getHerkunftID(String herkunft) throws Exception
             } 
 
     }
-        
+    /**
+     * get method for List
+     */    
     public ArrayList getList(String listVariable, String tble) throws Exception
         {
         // Zur Datenbank verbinden
@@ -1214,7 +1239,9 @@ public int getHerkunftID(String herkunft) throws Exception
         this.CloseDBConnection();
         return Liste;
         }
-    
+        /**
+         * get method ArtList
+         */
         public ArrayList getArtList(String art, int fk) throws Exception
         {
         // Zur Datenbank verbinden
@@ -1241,7 +1268,9 @@ public int getHerkunftID(String herkunft) throws Exception
         this.CloseDBConnection();
         return Liste;
         }
-    
+    /**
+     * get method for SorteList
+     */
     public ArrayList getSorteList() throws Exception{
     con = ConnectDB();
     pstmt = con.prepareStatement("SELECT sorte FROM tbl_sorte ORDER BY sorte");
@@ -1254,7 +1283,9 @@ public int getHerkunftID(String herkunft) throws Exception
     this.CloseDBConnection();
     return SorteList;
     }
-    
+    /**
+     * get method for EreignissHoeheList
+     */
     public ArrayList<Object[]> getEreignissHoeheList(Object EreignissID) throws Exception{
     con = ConnectDB();
     pstmt = con.prepareStatement("SELECT * FROM tbl_hoehenmessungen WHERE tbl_ereignisse_fk like (?);");
@@ -1278,7 +1309,9 @@ public int getHerkunftID(String herkunft) throws Exception
     this.CloseDBConnection();
     return PflanzenHoeheList;
     }
-    
+    /**
+     * get method of EreignissBeWList
+     */
     public ArrayList<Object[]> getEreignissBeWList(Object EreignissID) throws Exception{
     con = ConnectDB();
     pstmt = con.prepareStatement("SELECT * FROM tbl_bewaesserung WHERE tbl_ereignisse_fk like (?);");
@@ -1302,7 +1335,9 @@ public int getHerkunftID(String herkunft) throws Exception
     this.CloseDBConnection();
     return BeWList;
     }    
-    
+    /**
+     * get method of EreignissDuengVList
+     */
     public ArrayList<Object[]> getEreignissDuengVList(Object EreignissID) throws Exception{
     con = ConnectDB();
     ResultSet privateRslt; // temporär, solange der rslt shit noch global ist :D
@@ -1327,13 +1362,17 @@ public int getHerkunftID(String herkunft) throws Exception
     privateRslt.close();
     return DuengVList;
     }
-    
+    /**
+     * transform the Date in the Database
+     */
     private String convertDBDate(String db)
     {
     String[] datum=db.split("-");
     return datum[2]+"."+datum[1]+"."+datum[0];
     }
-    
+    /**
+     * get method of TblPflanzenFormDB
+     */
     public Object[][] getTblPflanzenFromDB() throws Exception{
     con = ConnectDB();
     
@@ -1370,7 +1409,10 @@ public int getHerkunftID(String herkunft) throws Exception
     return result;
     }
     
-    
+    /**
+     * Checks if the Login is correctly executed
+     * @exception error message in case of an error
+     */
     public void CheckLogOn(String name, String pw) throws Exception {
         try{
             con = ConnectDB();
@@ -1393,7 +1435,9 @@ public int getHerkunftID(String herkunft) throws Exception
             this.CloseDBConnection();
         }
     }
-    
+       /**
+        * checks if Plant allredy exists
+        */
        public int CheckPlantExist(Object sorte, Object art ) throws Exception{
         con = ConnectDB();
     
