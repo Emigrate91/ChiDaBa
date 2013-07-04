@@ -334,8 +334,9 @@ public class Chilliliste extends javax.swing.JDialog {
     if(this.TblChilli.getSelectedRow()!=-1) {    
         
         DB con = new DB();
-        Object sorte=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 0);
-        Object art=this.TblChilli.getModel().getValueAt(this.TblChilli.getSelectedRow(), 1);
+        int selectedRow = this.TblChilli.convertRowIndexToModel(this.TblChilli.getSelectedRow());
+        Object sorte=this.TblChilli.getModel().getValueAt(selectedRow, 0);
+        Object art=this.TblChilli.getModel().getValueAt(selectedRow, 1);
         try {
             Object PlantID =con.getPlantID(sorte, art);
             this.ZusatzFrame = new PflanzenDaten(this, PlantID);
