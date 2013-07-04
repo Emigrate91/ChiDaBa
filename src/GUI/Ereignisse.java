@@ -106,20 +106,20 @@ public class Ereignisse extends javax.swing.JDialog {
         });
         ScrollPane.setViewportView(TblEreignisse);
 
-        LblDateH.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblDateH.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblDateH.setText("Datum:");
 
-        LblH.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblH.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblH.setText("Höhe:");
 
-        SpinDatMess.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        SpinDatMess.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         SpinDatMess.setModel(new javax.swing.SpinnerDateModel());
         SpinDatMess.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatMess, "dd.MM.yyyy"));
 
-        SpinH.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        SpinH.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         SpinH.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 1));
 
-        LblCm.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblCm.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblCm.setText("mm");
 
         javax.swing.GroupLayout PanelMessungLayout = new javax.swing.GroupLayout(PanelMessung);
@@ -138,7 +138,7 @@ public class Ereignisse extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LblCm))
                     .addComponent(SpinDatMess, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         PanelMessungLayout.setVerticalGroup(
             PanelMessungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,26 +157,26 @@ public class Ereignisse extends javax.swing.JDialog {
 
         TabbedPane.addTab("Höhen Messung", PanelMessung);
 
-        LblDateD.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblDateD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblDateD.setText("Datum:");
 
-        LblD.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblD.setText("Dünger:");
 
-        LblDM.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblDM.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblDM.setText("Menge:");
 
-        LblCm1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblCm1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblCm1.setText("ml");
 
-        SpinDatDuen.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        SpinDatDuen.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         SpinDatDuen.setModel(new javax.swing.SpinnerDateModel());
         SpinDatDuen.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, "dd.MM.yyyy"));
 
-        SpinM.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        SpinM.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         SpinM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 1));
 
-        CBDuenger.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        CBDuenger.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         CBDuenger.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<neu>" }));
         CBDuenger.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,7 +211,7 @@ public class Ereignisse extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LblInf))
                     .addComponent(SpinDatDuen, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         PanelDüngerLayout.setVerticalGroup(
             PanelDüngerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,19 +239,19 @@ public class Ereignisse extends javax.swing.JDialog {
 
         TabbedPane.addTab("Düngvorgang", PanelDünger);
 
-        LblDMB.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblDMB.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblDMB.setText("Menge:");
 
-        LblCmB.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblCmB.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblCmB.setText("ml");
 
-        SpinMB.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        SpinMB.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         SpinMB.setModel(new javax.swing.SpinnerNumberModel(0, 0, 200, 1));
 
-        LblDateD1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        LblDateD1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         LblDateD1.setText("Datum:");
 
-        SpinDatB.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        SpinDatB.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         SpinDatB.setModel(new javax.swing.SpinnerDateModel());
         SpinDatB.setEditor(new javax.swing.JSpinner.DateEditor(SpinDatDuen, "dd.MM.yyyy"));
 
@@ -270,7 +270,7 @@ public class Ereignisse extends javax.swing.JDialog {
                     .addComponent(SpinDatB, javax.swing.GroupLayout.PREFERRED_SIZE, 160, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblCmB)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         PanelBewässerungLayout.setVerticalGroup(
             PanelBewässerungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -62,7 +62,7 @@
               <Component id="jScrollPane1" min="-2" pref="237" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="BtnErignisse" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -133,15 +133,21 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="TxtSuche" min="-2" pref="220" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblSearchFilter" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="BtnNew" max="32767" attributes="0"/>
-                      <Component id="BtnInfo" max="32767" attributes="0"/>
+                      <Component id="BtnInfo" pref="170" max="32767" attributes="0"/>
+                      <Component id="BtnDelete" pref="170" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="BtnLogout" pref="172" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="BtnLogout" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="BtnNew" min="-2" pref="170" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -150,19 +156,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="BtnLogout" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="BtnInfo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="BtnNew" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="TxtSuche" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="BtnInfo" max="32767" attributes="0"/>
+                          <Component id="lblSearchFilter" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="BtnLogout" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="BtnNew" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="TxtSuche" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="BtnDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -177,7 +182,7 @@
               <Property name="converter" type="org.jdesktop.beansbinding.Converter" editor="org.netbeans.modules.form.ComponentChooserEditor">
                 <ComponentRef name="rowSorterToStringConverter"/>
               </Property>
-              <Property name="name" type="java.lang.String" value="null"/>
+              <Property name="name" type="java.lang.String" value=""/>
             </BindingProperty>
           </BindingProperties>
         </Component>
@@ -212,13 +217,24 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnLogoutActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="lblSearchFilter">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/ICONS/magnifier_24.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Search Filter:"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="BtnDelete">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Eintrag L&#xf6;schen"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnDeleteBtnMouseExitedSetColor"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnDeleteBtnMouseEnteredSetColor"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnDeleteActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

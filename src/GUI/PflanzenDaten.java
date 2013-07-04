@@ -841,7 +841,7 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
                     UpdateHerkunft();
                     int SorteID = con.getSorteID(new Sorte(String.valueOf(this.CBSorte.getSelectedItem())));
                     // erstelle neue Chili:
-                    this.PlantID = con.NeuePflanze((int) ArtID, SorteID);                            
+                    this.PlantID = con.NeuePflanze((int) ArtID, SorteID);  
                 }
             
                 // ändere bzw setze Daten:
@@ -851,6 +851,8 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
 
                 // Update Chilliliste View:
                 this.ParentForm.writeTblToTblChilli();
+                
+               
             
                 // Falls eine neue Chili erstellt wurde:
                 if (this.neuView) {
@@ -885,6 +887,9 @@ public final class PflanzenDaten extends javax.swing.JDialog  {
         catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+       if (this.neuView) {
+        this.ParentForm.setButtons(false);
+       }
     }//GEN-LAST:event_BtnSaveActionPerformed
 
     /**
